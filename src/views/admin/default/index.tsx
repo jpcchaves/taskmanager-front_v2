@@ -40,19 +40,16 @@ import tableDataCheck from 'views/admin/default/variables/tableDataCheck';
 import tableDataComplex from 'views/admin/default/variables/tableDataComplex';
 import {useSelector} from "react-redux";
 import {selectCurrentToken} from "../../../store/auth/authSlice";
+import RequireAuth from "../../../store/app/components/RequireAuth";
 
 export default function UserReports() {
-
-	const token = useSelector(selectCurrentToken)
-
-	console.log(token)
-
 	// Chakra Color Mode
 	const brandColor = useColorModeValue('brand.500', 'white');
 	const boxBg = useColorModeValue('secondaryGray.300', 'whiteAlpha.100');
 	return (
 		<Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
 			<SimpleGrid columns={{ base: 1, md: 2, lg: 3, '2xl': 6 }} gap='20px' mb='20px'>
+				<RequireAuth/>
 				<MiniStatistics
 					startContent={
 						<IconBox

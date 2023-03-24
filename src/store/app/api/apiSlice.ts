@@ -1,28 +1,31 @@
 import {BaseQueryApi, createApi, FetchArgs, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import authSlice, {setCredentials, logout, AuthState} from "../../auth/authSlice";
-import {ThunkDispatch} from "@reduxjs/toolkit";
+import {setCredentials, logout} from "../../auth/authSlice";
 import {RootState} from "../store";
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: process.env.REACT_API_BASE_URL,
-    credentials: "include",
-    prepareHeaders: (headers: Headers, {getState}) => {
+    baseUrl: 'http://localhost:8080/api',
+    mode: "cors",
+    credentials: "same-origin",
+    prepareHeaders: (headers, {getState}) => {
         const token = (getState() as RootState).auth.accessToken
         if (token) {
             headers.set("Authorization", `Bearer ${token}`)
+            headers.set("Content-Type", "application/json")
+
         }
         return headers;
     }
 })
 
-const baseQueryAuth = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
-    let result = await baseQuery(args, api, extraOptions);
+const baseQueryWithAuth = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
+    const result = await baseQuery(args, api, extraOptions);
 
-    if(result.data) {
+    if(result?.data) {
         const user = (api.getState() as RootState).auth.user;
         const accessToken = (api.getState() as RootState).auth.accessToken;
 
         api.dispatch(setCredentials({user, accessToken}));
+
     } else {
         api.dispatch(logout())
     }
@@ -31,7 +34,7 @@ const baseQueryAuth = async (args: string | FetchArgs, api: BaseQueryApi, extraO
 }
 
 export const apiSlice = createApi({
-    baseQuery: baseQueryAuth,
+    baseQuery: baseQueryWithAuth,
     endpoints: builder => ({})
 })
 
