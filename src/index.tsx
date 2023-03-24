@@ -8,7 +8,7 @@ import RTLLayout from './layouts/rtl';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme/theme';
 
-import {store} from "./store/store";
+import {store} from "./store/app/store";
 import {Provider} from "react-redux";
 
 ReactDOM.render(

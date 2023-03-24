@@ -1,7 +1,7 @@
 import {BaseQueryApi, createApi, FetchArgs, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import authSlice, {setCredentials, logout, AuthState} from "../../auth/authSlice";
 import {ThunkDispatch} from "@reduxjs/toolkit";
-import {RootState} from "../../store";
+import {RootState} from "../store";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: process.env.REACT_API_BASE_URL,

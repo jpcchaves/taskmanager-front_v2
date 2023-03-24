@@ -38,8 +38,15 @@ import TotalSpent from 'views/admin/default/components/TotalSpent';
 import WeeklyRevenue from 'views/admin/default/components/WeeklyRevenue';
 import tableDataCheck from 'views/admin/default/variables/tableDataCheck';
 import tableDataComplex from 'views/admin/default/variables/tableDataComplex';
+import {useSelector} from "react-redux";
+import {selectCurrentToken} from "../../../store/auth/authSlice";
 
 export default function UserReports() {
+
+	const token = useSelector(selectCurrentToken)
+
+	console.log(token)
+
 	// Chakra Color Mode
 	const brandColor = useColorModeValue('brand.500', 'white');
 	const boxBg = useColorModeValue('secondaryGray.300', 'whiteAlpha.100');
