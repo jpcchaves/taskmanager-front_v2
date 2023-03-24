@@ -8,7 +8,11 @@ yarn.lock
 /.pnp
 .pnp.js
 
+# IDE
 .idea
+
+#ENV
+.env
 
 # testing
 /coverage

@@ -9,7 +9,7 @@ interface User {
     email: string
 }
 
-interface AuthState {
+export interface AuthState {
     user: User,
     accessToken: string
 }
@@ -28,7 +28,7 @@ const authSlice = createSlice({
             state.user = user;
             state.accessToken = accessToken;
         },
-        logout: (state, action) => {
+        logout: (state) => {
             state.user = null;
             state.accessToken = null
         }
