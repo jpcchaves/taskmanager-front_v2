@@ -1,5 +1,5 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
+import {NavLink, useHistory} from "react-router-dom";
 // Chakra imports
 import {
     Box,
@@ -23,8 +23,9 @@ import illustration from "assets/img/auth/auth.png";
 import {MdOutlineRemoveRedEye} from "react-icons/md";
 import {RiEyeCloseLine} from "react-icons/ri";
 import {useDispatch} from "react-redux";
-import {setCredentials} from "../../../store/auth/authSlice";
+import {AuthState, setCredentials} from "../../../store/auth/authSlice";
 import {useLoginMutation} from "../../../store/auth/authApiSlice.js";
+import {SessionStorageUtils} from "../../../utils/SessionStorageUtils";
 
 
 function SignIn() {
@@ -48,6 +49,7 @@ function SignIn() {
     const handleClick = () => setShow(!show);
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const usuario = {
         usernameOrEmail: "jpcchaves",
@@ -58,8 +60,12 @@ function SignIn() {
 
     const handleSubmit = async () => {
         try {
-            const userData = await login(usuario).unwrap()
+            const userData: AuthState = await login(usuario).unwrap()
             dispatch(setCredentials(userData))
+
+            SessionStorageUtils.saveItems(userData);
+
+            history.push("/admin")
         } catch (e) {
             console.log(e)
         }
@@ -85,6 +91,9 @@ function SignIn() {
                     <Heading color={textColor} fontSize="36px" mb="10px">
                         Entrar
                     </Heading>
+                    <Button onClick={() => handleSubmit()} isLoading={isLoading}>
+                        Entrar
+                    </Button>
                     <Text
                         mb="36px"
                         ms="4px"

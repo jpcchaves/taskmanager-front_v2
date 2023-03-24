@@ -1,5 +1,5 @@
 import {BaseQueryApi, createApi, FetchArgs, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import {setCredentials, logout} from "../../auth/authSlice";
+import {logout, setCredentials} from "../../auth/authSlice";
 import {RootState} from "../store";
 
 const baseQuery = fetchBaseQuery({
@@ -20,7 +20,7 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithAuth = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
     const result = await baseQuery(args, api, extraOptions);
 
-    if(result?.data) {
+    if (result?.data) {
         const user = (api.getState() as RootState).auth.user;
         const accessToken = (api.getState() as RootState).auth.accessToken;
 
