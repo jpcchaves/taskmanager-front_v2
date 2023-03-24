@@ -22,6 +22,10 @@ import DefaultAuth from "layouts/auth/Default";
 import illustration from "assets/img/auth/auth.png";
 import {MdOutlineRemoveRedEye} from "react-icons/md";
 import {RiEyeCloseLine} from "react-icons/ri";
+import {useDispatch} from "react-redux";
+import {setCredentials} from "../../../store/auth/authSlice";
+import {useLoginMutation} from "../../../store/auth/authApiSlice.js";
+
 
 function SignIn() {
     // Chakra color mode
@@ -42,6 +46,26 @@ function SignIn() {
     );
     const [show, setShow] = React.useState(false);
     const handleClick = () => setShow(!show);
+
+    const dispatch = useDispatch();
+
+    const usuario = {
+        usernameOrEmail: "jpcchaves",
+        password: "123456"
+    }
+
+    const [login, {isLoading}] = useLoginMutation();
+
+    const handleSubmit = async () => {
+        try {
+            const userData = await login(usuario).unwrap()
+            dispatch(setCredentials(userData))
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+
     return (
         <DefaultAuth illustrationBackground={illustration} image={illustration}>
             <Flex

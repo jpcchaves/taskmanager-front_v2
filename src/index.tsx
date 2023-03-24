@@ -7,10 +7,12 @@ import theme from './theme/theme';
 
 import {store} from "./store/app/store";
 import {Provider} from "react-redux";
+
 import SignIn from "./views/auth/signIn";
 import SignUp from "./views/auth/signUp";
-
 import AdminLayout from './layouts/admin';
+
+import PrivateRoute from "./store/app/components/RequireAuth";
 
 
 ReactDOM.render(
@@ -21,7 +23,7 @@ ReactDOM.render(
                     <Switch>
                         <Route path='/auth/login' component={SignIn}/>
                         <Route path='/auth/register' component={SignUp}/>
-                        <Route path='/admin' component={AdminLayout}/>
+                        <PrivateRoute path='/admin' component={AdminLayout}/>
                     </Switch>
                 </BrowserRouter>
             </React.StrictMode>
