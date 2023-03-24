@@ -8,6 +8,10 @@ import theme from './theme/theme';
 import {store} from "./store/app/store";
 import {Provider} from "react-redux";
 import SignIn from "./views/auth/signIn";
+import SignUp from "./views/auth/signUp";
+
+import AdminLayout from './layouts/admin';
+
 
 ReactDOM.render(
     <Provider store={store}>
@@ -15,8 +19,9 @@ ReactDOM.render(
             <React.StrictMode>
                 <BrowserRouter>
                     <Switch>
-                        <Route exact path='/auth/login' component={SignIn}/>
-                        <Route exact path='/dashboard'/>
+                        <Route path='/auth/login' component={SignIn}/>
+                        <Route path='/auth/register' component={SignUp}/>
+                        <Route path='/admin' component={AdminLayout}/>
                     </Switch>
                 </BrowserRouter>
             </React.StrictMode>

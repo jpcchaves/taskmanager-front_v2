@@ -23,23 +23,14 @@ import illustration from "assets/img/auth/auth.png";
 import {MdOutlineRemoveRedEye} from "react-icons/md";
 import {RiEyeCloseLine} from "react-icons/ri";
 
-function SignIn() {
+function SignUp() {
     // Chakra color mode
     const textColor = useColorModeValue("navy.700", "white");
     const textColorSecondary = "gray.400";
     const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
     const textColorBrand = useColorModeValue("brand.500", "white");
     const brandStars = useColorModeValue("brand.500", "brand.400");
-    const googleBg = useColorModeValue("secondaryGray.300", "whiteAlpha.200");
-    const googleText = useColorModeValue("navy.700", "white");
-    const googleHover = useColorModeValue(
-        {bg: "gray.200"},
-        {bg: "whiteAlpha.300"}
-    );
-    const googleActive = useColorModeValue(
-        {bg: "secondaryGray.300"},
-        {bg: "whiteAlpha.200"}
-    );
+
     const [show, setShow] = React.useState(false);
     const handleClick = () => setShow(!show);
     return (
@@ -59,7 +50,7 @@ function SignIn() {
             >
                 <Box me="auto">
                     <Heading color={textColor} fontSize="36px" mb="10px">
-                        Entrar
+                        Cadastrar
                     </Heading>
                     <Text
                         mb="36px"
@@ -68,7 +59,7 @@ function SignIn() {
                         fontWeight="400"
                         fontSize="md"
                     >
-                        Insira seu e-mail e senha para acessar!
+                        Realize seu cadastro agora para acessar!
                     </Text>
                 </Box>
                 <Flex
@@ -91,6 +82,48 @@ function SignIn() {
                             color={textColor}
                             mb="8px"
                         >
+                            Nome
+                        </FormLabel>
+                        <Input
+                            isRequired={true}
+                            variant="auth"
+                            fontSize="sm"
+                            ms={{base: "0px", md: "0px"}}
+                            mb="24px"
+                            placeholder="Digite seu nome"
+                            name='name'
+                            fontWeight="500"
+                            size="lg"
+                        />
+                        <FormLabel
+                            display="flex"
+                            ms="4px"
+                            fontSize="sm"
+                            fontWeight="500"
+                            color={textColor}
+                            mb="8px"
+                        >
+                            Nome de usuário<Text color={brandStars}>*</Text>
+                        </FormLabel>
+                        <Input
+                            isRequired={true}
+                            variant="auth"
+                            fontSize="sm"
+                            ms={{base: "0px", md: "0px"}}
+                            mb="24px"
+                            placeholder="Digite seu nome de usuário"
+                            name='username'
+                            fontWeight="500"
+                            size="lg"
+                        />
+                        <FormLabel
+                            display="flex"
+                            ms="4px"
+                            fontSize="sm"
+                            fontWeight="500"
+                            color={textColor}
+                            mb="8px"
+                        >
                             Email<Text color={brandStars}>*</Text>
                         </FormLabel>
                         <Input
@@ -98,8 +131,7 @@ function SignIn() {
                             variant="auth"
                             fontSize="sm"
                             ms={{base: "0px", md: "0px"}}
-                            type="email"
-                            placeholder="mail@simmmple.com"
+                            placeholder="email@exemple.com"
                             mb="24px"
                             fontWeight="500"
                             size="lg"
@@ -117,9 +149,39 @@ function SignIn() {
                             <Input
                                 isRequired={true}
                                 fontSize="sm"
-                                placeholder="Min. 8 characters"
+                                placeholder="Digite sua senha"
                                 mb="24px"
                                 size="lg"
+                                name='password'
+                                type={show ? "text" : "password"}
+                                variant="auth"
+                            />
+                            <InputRightElement display="flex" alignItems="center" mt="4px">
+                                <Icon
+                                    color={textColorSecondary}
+                                    _hover={{cursor: "pointer"}}
+                                    as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
+                                    onClick={handleClick}
+                                />
+                            </InputRightElement>
+                        </InputGroup>
+                        <FormLabel
+                            ms="4px"
+                            fontSize="sm"
+                            fontWeight="500"
+                            color={textColor}
+                            display="flex"
+                        >
+                            Confirme a senha<Text color={brandStars}>*</Text>
+                        </FormLabel>
+                        <InputGroup size="md">
+                            <Input
+                                isRequired={true}
+                                fontSize="sm"
+                                placeholder="Confirme sua senha"
+                                mb="24px"
+                                size="lg"
+                                name='confirmPassword'
                                 type={show ? "text" : "password"}
                                 variant="auth"
                             />
@@ -177,7 +239,7 @@ function SignIn() {
                                     ms="5px"
                                     fontWeight="500"
                                 >
-                                    Crie uma agora!
+                                    Crie uma agora
                                 </Text>
                             </NavLink>
                         </Text>
@@ -188,4 +250,4 @@ function SignIn() {
     );
 }
 
-export default SignIn;
+export default SignUp;
