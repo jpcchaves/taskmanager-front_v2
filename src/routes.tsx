@@ -15,14 +15,14 @@ const routes = [
         layout: '/admin',
         path: '/default',
         icon: <Icon as={MdHome} width='20px' height='20px' color='inherit'/>,
-        component: MainDashboard
+        component: <MainDashboard/>
     },
     {
         name: 'Dashboard',
         layout: '/admin',
         path: '/nft-marketplace',
         icon: <Icon as={MdOutlineShoppingCart} width='20px' height='20px' color='inherit'/>,
-        component: NFTMarketplace,
+        component: <NFTMarketplace/>,
         secondary: true
     },
     {
@@ -30,14 +30,14 @@ const routes = [
         layout: '/admin',
         path: '/profile',
         icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit'/>,
-        component: Profile
+        component: <Profile/>
     },
     {
         name: 'RTL Admin',
         layout: '/rtl',
         path: '/rtl-default',
         icon: <Icon as={MdHome} width='20px' height='20px' color='inherit'/>,
-        component: RTL
+        component: <RTL/>
     }
 ];
 

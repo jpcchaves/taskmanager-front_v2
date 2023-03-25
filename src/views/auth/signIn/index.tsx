@@ -1,5 +1,5 @@
 import React from "react";
-import {NavLink, useHistory} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 // Chakra imports
 import {
     Box,
@@ -49,7 +49,7 @@ function SignIn() {
     const handleClick = () => setShow(!show);
 
     const dispatch = useDispatch();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const usuario = {
         usernameOrEmail: "jpcchaves",
@@ -65,7 +65,7 @@ function SignIn() {
 
             SessionStorageUtils.saveItems(userData);
 
-            history.push("/admin")
+            navigate("/admin")
         } catch (e) {
             console.log(e)
         }
@@ -203,7 +203,7 @@ function SignIn() {
                     >
                         <Text color={textColorDetails} fontWeight="400" fontSize="14px">
                             Não possui conta?
-                            <NavLink to="/auth/sign-up">
+                            <NavLink to="/register">
                                 <Text
                                     color={textColorBrand}
                                     as="span"

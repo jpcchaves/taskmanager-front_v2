@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './assets/css/App.css';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {ChakraProvider} from '@chakra-ui/react';
 import theme from './theme/theme';
 
@@ -12,7 +12,7 @@ import SignIn from "./views/auth/signIn";
 import SignUp from "./views/auth/signUp";
 import AdminLayout from './layouts/admin';
 
-import PrivateRoute from "./store/app/components/RequireAuth";
+import PrivateRoutes from "./store/app/components/RequireAuth";
 
 
 ReactDOM.render(
@@ -20,11 +20,17 @@ ReactDOM.render(
         <ChakraProvider theme={theme}>
             <React.StrictMode>
                 <BrowserRouter>
-                    <Switch>
-                        <Route path='/auth/login' component={SignIn}/>
-                        <Route path='/auth/register' component={SignUp}/>
-                        <PrivateRoute path='/admin' component={AdminLayout}/>
-                    </Switch>
+                    <Routes>
+                        <Route path='/*'>
+                            <Route index element={<SignIn/>}/>
+                            <Route path='register' element={<SignUp/>}/>
+                        </Route>
+
+                        {/* Protected Routes */}
+                        <Route element={<PrivateRoutes/>}>
+                            <Route element={<AdminLayout/>} path='/home'/>
+                        </Route>
+                    </Routes>
                 </BrowserRouter>
             </React.StrictMode>
         </ChakraProvider>

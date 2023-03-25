@@ -43,7 +43,7 @@ function SignUp() {
                 h="100%"
                 alignItems="start"
                 justifyContent="center"
-                mb={{base: "30px", md: "60px"}}
+                mb={{base: "30px", md: "60px", lg: "80px"}}
                 px={{base: "25px", md: "0px"}}
                 mt={{base: "40px", md: "14vh"}}
                 flexDirection="column"
@@ -220,7 +220,7 @@ function SignUp() {
                             h="50"
                             mb="24px"
                         >
-                            Entrar
+                            Cadastrar
                         </Button>
                     </FormControl>
                     <Flex
@@ -231,15 +231,15 @@ function SignUp() {
                         mt="0px"
                     >
                         <Text color={textColorDetails} fontWeight="400" fontSize="14px">
-                            Não possui conta?
-                            <NavLink to="/auth/sign-up">
+                            Já possui conta?
+                            <NavLink to="/">
                                 <Text
                                     color={textColorBrand}
                                     as="span"
                                     ms="5px"
                                     fontWeight="500"
                                 >
-                                    Crie uma agora
+                                    Acesse agora!
                                 </Text>
                             </NavLink>
                         </Text>
