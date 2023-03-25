@@ -6,7 +6,7 @@ import Navbar from 'components/navbar/NavbarAdmin';
 import Sidebar from 'components/sidebar/Sidebar';
 import {SidebarContext} from 'contexts/SidebarContext';
 import {ReactNode, useState} from 'react';
-import {Navigate, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import routes from 'routes';
 
 // Custom Chakra theme
@@ -16,9 +16,6 @@ export default function Dashboard(props: { [x: string]: any }) {
     const [fixed] = useState(false);
     const [toggleSidebar, setToggleSidebar] = useState(false);
     // functions for changing the states from components
-    const getRoute = () => {
-        return window.location.pathname !== '/admin/full-screen-maps';
-    };
     const getActiveRoute = (routes: RoutesType[]): string => {
         let activeRoute = 'Default Brand Text';
         for (let i = 0; i < routes.length; i++) {
@@ -48,8 +45,8 @@ export default function Dashboard(props: { [x: string]: any }) {
     };
     const getRoutes = (routes: ({ layout: string; path: string; component: ReactNode; name: string; icon: JSX.Element } | { layout: string; secondary: boolean; path: string; component: JSX.Element; name: string; icon: JSX.Element } | { layout: string; path: string; component: JSX.Element; name: string; icon: JSX.Element } | { layout: string; path: string; component: JSX.Element; name: string; icon: JSX.Element })[]): any => {
         return routes.map((route: RoutesType, key: any) => {
-            if (route.layout === '/admin') {
-                return <Route path={route.layout + route.path} element={route.component} key={key}/>;
+            if (route.layout === '/tk') {
+                return <Route path={route.path} element={route.component} key={key}/>;
             } else {
                 return null;
             }
@@ -92,14 +89,11 @@ export default function Dashboard(props: { [x: string]: any }) {
                         </Box>
                     </Portal>
 
-                    {getRoute() ? (
-                        <Box mx='auto' p={{base: '20px', md: '30px'}} pe='20px' minH='100vh' pt='50px'>
-                            <Routes>
-                                {getRoutes(routes)}
-                                <Navigate to='/admin/default'/>
-                            </Routes>
-                        </Box>
-                    ) : null}
+                    <Box mx='auto' p={{base: '20px', md: '30px'}} pe='20px' minH='100vh' pt='50px'>
+                        <Routes>
+                            {getRoutes(routes)}
+                        </Routes>
+                    </Box>
                     <Box>
                         <Footer/>
                     </Box>

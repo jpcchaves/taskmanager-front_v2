@@ -13,7 +13,7 @@ import SignUp from "./views/auth/signUp";
 import AdminLayout from './layouts/admin';
 
 import PrivateRoutes from "./store/app/components/RequireAuth";
-
+import UserReports from "./views/admin/default";
 
 ReactDOM.render(
     <Provider store={store}>
@@ -21,14 +21,16 @@ ReactDOM.render(
             <React.StrictMode>
                 <BrowserRouter>
                     <Routes>
-                        <Route path='/*'>
+                        <Route path='/login'>
                             <Route index element={<SignIn/>}/>
                             <Route path='register' element={<SignUp/>}/>
                         </Route>
 
                         {/* Protected Routes */}
                         <Route element={<PrivateRoutes/>}>
-                            <Route element={<AdminLayout/>} path='/home'/>
+                            <Route element={<AdminLayout/>} path='/tk/*'>
+                                <Route path='tarefas' element={<UserReports/>}/>
+                            </Route>
                         </Route>
                     </Routes>
                 </BrowserRouter>
