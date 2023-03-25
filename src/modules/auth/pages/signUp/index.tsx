@@ -22,6 +22,7 @@ import DefaultAuth from "layouts/auth/Default";
 import illustration from "assets/img/auth/auth.png";
 import {MdOutlineRemoveRedEye} from "react-icons/md";
 import {RiEyeCloseLine} from "react-icons/ri";
+import MakeAuthRegisterService from "../../_core/factories/makeAuthRegisterService";
 
 function SignUp() {
     // Chakra color mode
@@ -33,6 +34,9 @@ function SignUp() {
 
     const [show, setShow] = React.useState(false);
     const handleClick = () => setShow(!show);
+
+    const registerService = MakeAuthRegisterService();
+
     return (
         <DefaultAuth illustrationBackground={illustration} image={illustration}>
             <Flex

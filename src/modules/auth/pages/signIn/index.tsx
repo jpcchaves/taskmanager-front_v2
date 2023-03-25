@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {NavLink, useNavigate} from "react-router-dom";
 // Chakra imports
 import {
@@ -23,9 +23,8 @@ import illustration from "assets/img/auth/auth.png";
 import {MdOutlineRemoveRedEye} from "react-icons/md";
 import {RiEyeCloseLine} from "react-icons/ri";
 import {useDispatch} from "react-redux";
-import {AuthState, setCredentials} from "../../../../store/auth/authSlice";
-import {useLoginMutation} from "../../../../store/auth/authApiSlice.js.js";
-import {SessionStorageUtils} from "../../utils/SessionStorageUtils";
+
+import {useLoginMutation} from "../../../../store/auth/authApiSlice";
 
 
 function SignIn() {
@@ -35,41 +34,28 @@ function SignIn() {
     const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
     const textColorBrand = useColorModeValue("brand.500", "white");
     const brandStars = useColorModeValue("brand.500", "brand.400");
-    const googleBg = useColorModeValue("secondaryGray.300", "whiteAlpha.200");
-    const googleText = useColorModeValue("navy.700", "white");
-    const googleHover = useColorModeValue(
-        {bg: "gray.200"},
-        {bg: "whiteAlpha.300"}
-    );
-    const googleActive = useColorModeValue(
-        {bg: "secondaryGray.300"},
-        {bg: "whiteAlpha.200"}
-    );
-    const [show, setShow] = React.useState(false);
+
+    const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const usuario = {
-        usernameOrEmail: "jpcchaves",
-        password: "123456"
-    }
 
     const [login, {isLoading}] = useLoginMutation();
 
-    const handleSubmit = async () => {
-        try {
-            const userData: AuthState = await login(usuario).unwrap()
-            dispatch(setCredentials(userData))
-
-            SessionStorageUtils.saveItems(userData);
-
-            navigate("/admin")
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    // const handleSubmit = async () => {
+    //     try {
+    //         const userData: AuthState = await login(usuario).unwrap()
+    //         dispatch(setCredentials(userData))
+    //
+    //         SessionStorageUtils.saveItems(userData);
+    //
+    //         navigate("/admin")
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
 
 
     return (
@@ -91,9 +77,6 @@ function SignIn() {
                     <Heading color={textColor} fontSize="36px" mb="10px">
                         Entrar
                     </Heading>
-                    <Button onClick={() => handleSubmit()} isLoading={isLoading}>
-                        Entrar
-                    </Button>
                     <Text
                         mb="36px"
                         ms="4px"
