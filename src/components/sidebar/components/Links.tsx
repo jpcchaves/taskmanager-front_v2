@@ -33,7 +33,7 @@ export function SidebarLinks(props: {
             ) => {
                 if (route.layout === '/tk') {
                     return (
-                        <NavLink key={index} to={route.layout + route.path}>
+                        <NavLink key={index} to={route.path}>
                             {route.icon ? (
                                 <Box>
                                     <HStack

@@ -11,9 +11,10 @@ import {Provider} from "react-redux";
 import SignIn from "./views/auth/signIn";
 import SignUp from "./views/auth/signUp";
 import AdminLayout from './layouts/admin';
+import MainDashboard from 'views/admin/default';
 
 import PrivateRoutes from "./store/app/components/RequireAuth";
-import UserReports from "./views/admin/default";
+import Marketplace from "./views/admin/marketplace";
 
 ReactDOM.render(
     <Provider store={store}>
@@ -28,8 +29,9 @@ ReactDOM.render(
 
                         {/* Protected Routes */}
                         <Route element={<PrivateRoutes/>}>
-                            <Route element={<AdminLayout/>} path='/tk/*'>
-                                <Route path='tarefas' element={<UserReports/>}/>
+                            <Route element={<AdminLayout/>} path='/*'>
+                                <Route element={<MainDashboard/>} path='tasks'/>
+                                <Route element={<Marketplace/>} path='dashboard'/>
                             </Route>
                         </Route>
                     </Routes>
