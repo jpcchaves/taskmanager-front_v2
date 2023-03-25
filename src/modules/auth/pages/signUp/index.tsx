@@ -15,7 +15,6 @@ import {
     InputRightElement,
     Text,
     useColorModeValue,
-    useToast,
 } from "@chakra-ui/react";
 // Custom components
 import DefaultAuth from "layouts/auth/Default";
@@ -27,7 +26,7 @@ import {RiEyeCloseLine} from "react-icons/ri";
 import {useFormik} from "formik";
 import * as Yup from 'yup'
 import {IUserRegisterRequest} from "../../models/IUserRegisterRequest";
-import {useRegisterMutation} from "../../../../store/auth/authApiSlice";
+import makeAuthRegisterService from "../../_core/factories/makeAuthRegisterService";
 
 function SignUp() {
     // Chakra color mode
@@ -40,7 +39,6 @@ function SignUp() {
     const [show, setShow] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    const toast = useToast();
     const handleClick = (selector: string) => {
         if (selector === "password") {
             setShow(prevState => !prevState)
@@ -49,8 +47,7 @@ function SignUp() {
         }
     };
 
-    const [register, {isLoading}] = useRegisterMutation();
-
+    const [authService, isLoading] = makeAuthRegisterService();
 
     const validation = useFormik({
         enableReinitialize: true,
@@ -69,24 +66,7 @@ function SignUp() {
             confirmPassword: Yup.string().oneOf([Yup.ref('password')], "As senhas não correspondem").required("A senha é obrigatória"),
         }),
         onSubmit: async (values: IUserRegisterRequest) => {
-            await register(values)
-                .unwrap()
-                .then(() => toast({
-                    title: 'Conta criada.',
-                    description: "Nós criamos uma conta para você.",
-                    status: 'success',
-                    duration: 3000,
-                    position: "top-end",
-                    isClosable: true
-                }))
-                .catch(err => toast({
-                    title: 'Ocorreu um erro ao criar a conta.',
-                    description: `${err?.data?.message}`,
-                    status: 'error',
-                    duration: 3000,
-                    position: "top-end",
-                    isClosable: true
-                }))
+            await authService.register(values);
         }
     })
 
