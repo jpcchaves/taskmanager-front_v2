@@ -22,10 +22,9 @@ ReactDOM.render(
             <React.StrictMode>
                 <BrowserRouter>
                     <Routes>
-                        <Route path='/'>
-                            <Route index element={<SignIn/>}/>
-                            <Route path='register' element={<SignUp/>}/>
-                        </Route>
+                        {/* Public Routes */}
+                        <Route path='/login' element={<SignIn/>}/>
+                        <Route path='/register' element={<SignUp/>}/>
 
                         {/* Protected Routes */}
                         <Route element={<PrivateRoutes/>}>
