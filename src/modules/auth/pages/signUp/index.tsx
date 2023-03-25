@@ -15,6 +15,7 @@ import {
     InputRightElement,
     Text,
     useColorModeValue,
+    useToast,
 } from "@chakra-ui/react";
 // Custom components
 import DefaultAuth from "layouts/auth/Default";
@@ -22,11 +23,11 @@ import DefaultAuth from "layouts/auth/Default";
 import illustration from "assets/img/auth/auth.png";
 import {MdOutlineRemoveRedEye} from "react-icons/md";
 import {RiEyeCloseLine} from "react-icons/ri";
-import MakeAuthRegisterService from "../../_core/factories/makeAuthRegisterService";
-import {useRegisterMutation} from "../../../../store/auth/authApiSlice";
 
 import {useFormik} from "formik";
 import * as Yup from 'yup'
+import {IUserRegisterRequest} from "../../models/IUserRegisterRequest";
+import {useRegisterMutation} from "../../../../store/auth/authApiSlice";
 
 function SignUp() {
     // Chakra color mode
@@ -38,6 +39,8 @@ function SignUp() {
 
     const [show, setShow] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    const toast = useToast();
     const handleClick = (selector: string) => {
         if (selector === "password") {
             setShow(prevState => !prevState)
@@ -46,11 +49,7 @@ function SignUp() {
         }
     };
 
-    const registerService = MakeAuthRegisterService();
-
     const [register, {isLoading}] = useRegisterMutation();
-
-    // const userData: IUserRegisterResponse = await register(usuario).unwrap()
 
 
     const validation = useFormik({
@@ -69,7 +68,26 @@ function SignUp() {
             password: Yup.string().required("A senha é obrigatória"),
             confirmPassword: Yup.string().oneOf([Yup.ref('password')], "As senhas não correspondem").required("A senha é obrigatória"),
         }),
-        onSubmit: values => console.log(values)
+        onSubmit: async (values: IUserRegisterRequest) => {
+            await register(values)
+                .unwrap()
+                .then(() => toast({
+                    title: 'Conta criada.',
+                    description: "Nós criamos uma conta para você.",
+                    status: 'success',
+                    duration: 3000,
+                    position: "top-end",
+                    isClosable: true
+                }))
+                .catch(err => toast({
+                    title: 'Ocorreu um erro ao criar a conta.',
+                    description: `${err?.data?.message}`,
+                    status: 'error',
+                    duration: 3000,
+                    position: "top-end",
+                    isClosable: true
+                }))
+        }
     })
 
     return (
@@ -312,6 +330,7 @@ function SignUp() {
                             h="50"
                             mb="24px"
                             type="submit"
+                            isLoading={isLoading}
                         >
                             Cadastrar
                         </Button>
