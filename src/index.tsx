@@ -21,7 +21,7 @@ ReactDOM.render(
             <React.StrictMode>
                 <BrowserRouter>
                     <Routes>
-                        <Route path='/login'>
+                        <Route path='/'>
                             <Route index element={<SignIn/>}/>
                             <Route path='register' element={<SignUp/>}/>
                         </Route>
