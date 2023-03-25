@@ -1,12 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import {NavLink} from "react-router-dom";
 // Chakra imports
 import {
     Box,
     Button,
-    Checkbox,
     Flex,
     FormControl,
+    FormErrorMessage,
     FormLabel,
     Heading,
     Icon,
@@ -23,6 +23,10 @@ import illustration from "assets/img/auth/auth.png";
 import {MdOutlineRemoveRedEye} from "react-icons/md";
 import {RiEyeCloseLine} from "react-icons/ri";
 import MakeAuthRegisterService from "../../_core/factories/makeAuthRegisterService";
+import {useRegisterMutation} from "../../../../store/auth/authApiSlice";
+
+import {useFormik} from "formik";
+import * as Yup from 'yup'
 
 function SignUp() {
     // Chakra color mode
@@ -32,10 +36,41 @@ function SignUp() {
     const textColorBrand = useColorModeValue("brand.500", "white");
     const brandStars = useColorModeValue("brand.500", "brand.400");
 
-    const [show, setShow] = React.useState(false);
-    const handleClick = () => setShow(!show);
+    const [show, setShow] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const handleClick = (selector: string) => {
+        if (selector === "password") {
+            setShow(prevState => !prevState)
+        } else {
+            setShowConfirmPassword(prevState => !prevState)
+        }
+    };
 
     const registerService = MakeAuthRegisterService();
+
+    const [register, {isLoading}] = useRegisterMutation();
+
+    // const userData: IUserRegisterResponse = await register(usuario).unwrap()
+
+
+    const validation = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            name: "",
+            username: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+        },
+        validationSchema: Yup.object().shape({
+            name: Yup.string(),
+            username: Yup.string().required("O nome de usuário é obrigatório!"),
+            email: Yup.string().email("Insira um email válido!").required("O email é obrigatório!"),
+            password: Yup.string().required("A senha é obrigatória"),
+            confirmPassword: Yup.string().oneOf([Yup.ref('password')], "As senhas não correspondem").required("A senha é obrigatória"),
+        }),
+        onSubmit: values => console.log(values)
+    })
 
     return (
         <DefaultAuth illustrationBackground={illustration} image={illustration}>
@@ -77,145 +112,198 @@ function SignUp() {
                     me="auto"
                     mb={{base: "20px", md: "auto"}}
                 >
-                    <FormControl>
-                        <FormLabel
-                            display="flex"
-                            ms="4px"
-                            fontSize="sm"
-                            fontWeight="500"
-                            color={textColor}
-                            mb="8px"
-                        >
-                            Nome
-                        </FormLabel>
-                        <Input
-                            isRequired={true}
-                            variant="auth"
-                            fontSize="sm"
-                            ms={{base: "0px", md: "0px"}}
-                            mb="24px"
-                            placeholder="Digite seu nome"
-                            name='name'
-                            fontWeight="500"
-                            size="lg"
-                        />
-                        <FormLabel
-                            display="flex"
-                            ms="4px"
-                            fontSize="sm"
-                            fontWeight="500"
-                            color={textColor}
-                            mb="8px"
-                        >
-                            Nome de usuário<Text color={brandStars}>*</Text>
-                        </FormLabel>
-                        <Input
-                            isRequired={true}
-                            variant="auth"
-                            fontSize="sm"
-                            ms={{base: "0px", md: "0px"}}
-                            mb="24px"
-                            placeholder="Digite seu nome de usuário"
-                            name='username'
-                            fontWeight="500"
-                            size="lg"
-                        />
-                        <FormLabel
-                            display="flex"
-                            ms="4px"
-                            fontSize="sm"
-                            fontWeight="500"
-                            color={textColor}
-                            mb="8px"
-                        >
-                            Email<Text color={brandStars}>*</Text>
-                        </FormLabel>
-                        <Input
-                            isRequired={true}
-                            variant="auth"
-                            fontSize="sm"
-                            ms={{base: "0px", md: "0px"}}
-                            placeholder="email@exemple.com"
-                            mb="24px"
-                            fontWeight="500"
-                            size="lg"
-                        />
-                        <FormLabel
-                            ms="4px"
-                            fontSize="sm"
-                            fontWeight="500"
-                            color={textColor}
-                            display="flex"
-                        >
-                            Senha<Text color={brandStars}>*</Text>
-                        </FormLabel>
-                        <InputGroup size="md">
-                            <Input
-                                isRequired={true}
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault()
+                            validation.handleSubmit()
+                            return false
+                        }
+                        }
+
+                    >
+                        <FormControl>
+                            <FormLabel
+                                display="flex"
+                                ms="4px"
                                 fontSize="sm"
-                                placeholder="Digite sua senha"
-                                mb="24px"
-                                size="lg"
-                                name='password'
-                                type={show ? "text" : "password"}
-                                variant="auth"
-                            />
-                            <InputRightElement display="flex" alignItems="center" mt="4px">
-                                <Icon
-                                    color={textColorSecondary}
-                                    _hover={{cursor: "pointer"}}
-                                    as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                                    onClick={handleClick}
-                                />
-                            </InputRightElement>
-                        </InputGroup>
-                        <FormLabel
-                            ms="4px"
-                            fontSize="sm"
-                            fontWeight="500"
-                            color={textColor}
-                            display="flex"
-                        >
-                            Confirme a senha<Text color={brandStars}>*</Text>
-                        </FormLabel>
-                        <InputGroup size="md">
+                                fontWeight="500"
+                                color={textColor}
+                                mb="8px"
+                            >
+                                Nome
+                            </FormLabel>
                             <Input
-                                isRequired={true}
                                 fontSize="sm"
-                                placeholder="Confirme sua senha"
+                                ms={{base: "0px", md: "0px"}}
                                 mb="24px"
+                                placeholder="Digite seu nome"
+                                name='name'
+                                fontWeight="500"
                                 size="lg"
-                                name='confirmPassword'
-                                type={show ? "text" : "password"}
-                                variant="auth"
+                                onChange={(e) => {
+                                    validation.handleChange(e);
+                                }}
+                                value={validation.values.name || ''}
                             />
-                            <InputRightElement display="flex" alignItems="center" mt="4px">
-                                <Icon
-                                    color={textColorSecondary}
-                                    _hover={{cursor: "pointer"}}
-                                    as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                                    onClick={handleClick}
-                                />
-                            </InputRightElement>
-                        </InputGroup>
-                        <Flex justifyContent="space-between" align="center" mb="24px">
-                            <FormControl display="flex" alignItems="center">
-                                <Checkbox
-                                    id="remember-login"
-                                    colorScheme="brandScheme"
-                                    me="10px"
-                                />
-                                <FormLabel
-                                    htmlFor="remember-login"
-                                    mb="0"
-                                    fontWeight="normal"
-                                    color={textColor}
+                        </FormControl>
+
+                        <FormControl isInvalid={!!(
+                            validation.touched.username &&
+                            validation.errors.username
+                        )}>
+                            <FormLabel
+                                display="flex"
+                                ms="4px"
+                                fontSize="sm"
+                                fontWeight="500"
+                                color={textColor}
+                                mb="8px"
+                            >
+                                Nome de usuário<Text color={brandStars}>*</Text>
+                            </FormLabel>
+
+                            <Input
+                                fontSize="sm"
+                                ms={{base: "0px", md: "0px"}}
+                                mb={!!(
+                                    validation.touched.username &&
+                                    validation.errors.username
+                                ) ? "" : "24px"}
+                                placeholder="Digite seu nome de usuário"
+                                name='username'
+                                fontWeight="500"
+                                size="lg"
+                                onChange={(e) => {
+                                    validation.handleChange(e);
+                                }}
+                                value={validation.values.username || ''}
+                            />
+                            <FormErrorMessage mb='10px'>
+                                {validation.errors.username}
+                            </FormErrorMessage>
+                        </FormControl>
+
+                        <FormControl isInvalid={!!(
+                            validation.touched.email &&
+                            validation.errors.email
+                        )}>
+                            <FormLabel
+                                display="flex"
+                                ms="4px"
+                                fontSize="sm"
+                                fontWeight="500"
+                                color={textColor}
+                                mb="8px"
+                            >
+                                Email<Text color={brandStars}>*</Text>
+                            </FormLabel>
+                            <Input
+                                fontSize="sm"
+                                name="email"
+                                ms={{base: "0px", md: "0px"}}
+                                placeholder="email@exemple.com"
+                                mb={!!(
+                                    validation.touched.email &&
+                                    validation.errors.email
+                                ) ? "" : "24px"}
+                                fontWeight="500"
+                                size="lg"
+                                onChange={(e) => {
+                                    validation.handleChange(e);
+                                }}
+                                value={validation.values.email || ''}
+                            />
+                            <FormErrorMessage mb='10px'>
+                                {validation.errors.email}
+                            </FormErrorMessage>
+                        </FormControl>
+
+                        <FormControl isInvalid={!!(
+                            validation.touched.password &&
+                            validation.errors.password)}>
+                            <FormLabel
+                                ms="4px"
+                                fontSize="sm"
+                                fontWeight="500"
+                                color={textColor}
+                                display="flex"
+                            >
+                                Senha<Text color={brandStars}>*</Text>
+                            </FormLabel>
+
+                            <InputGroup size="md">
+                                <Input
                                     fontSize="sm"
-                                >
-                                    Lembrar de mim
-                                </FormLabel>
-                            </FormControl>
-                        </Flex>
+                                    placeholder="Digite sua senha"
+                                    mb={!!(
+                                        validation.touched.password &&
+                                        validation.errors.password
+                                    ) ? "" : "24px"}
+                                    size="lg"
+                                    name='password'
+                                    onChange={(e) => {
+                                        validation.handleChange(e);
+                                    }}
+                                    value={validation.values.password}
+                                    type={show ? "text" : "password"}
+                                />
+                                <InputRightElement display="flex" alignItems="center" mt="4px">
+                                    <Icon
+                                        color={textColorSecondary}
+                                        _hover={{cursor: "pointer"}}
+                                        as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
+                                        onClick={() => handleClick("password")}
+                                    />
+                                </InputRightElement>
+                            </InputGroup>
+                            <FormErrorMessage mb='10px'>
+                                {validation.errors.password}
+                            </FormErrorMessage>
+                        </FormControl>
+
+                        <FormControl isInvalid={!!(
+                            validation.touched.confirmPassword &&
+                            validation.errors.confirmPassword)}>
+                            <FormLabel
+                                ms="4px"
+                                fontSize="sm"
+                                fontWeight="500"
+                                color={textColor}
+                                display="flex"
+                            >
+                                Confirme a senha<Text color={brandStars}>*</Text>
+                            </FormLabel>
+                            <InputGroup size="md">
+                                <Input
+                                    fontSize="sm"
+                                    placeholder="Confirme sua senha"
+                                    mb={!!(
+                                        validation.touched.confirmPassword &&
+                                        validation.errors.confirmPassword
+                                    ) ? "" : "24px"}
+                                    size="lg"
+                                    name='confirmPassword'
+                                    onChange={(e) => {
+                                        validation.handleChange(e);
+                                    }}
+                                    value={validation.values.confirmPassword}
+                                    type={showConfirmPassword ? "text" : "password"}
+                                />
+                                <InputRightElement display="flex" alignItems="center" mt="4px">
+                                    <Icon
+                                        color={textColorSecondary}
+                                        _hover={{cursor: "pointer"}}
+                                        as={showConfirmPassword ? RiEyeCloseLine : MdOutlineRemoveRedEye}
+                                        onClick={() => handleClick("confirmPassword")}
+                                    />
+                                </InputRightElement>
+                            </InputGroup>
+                            <FormErrorMessage mb='24px'>
+                                {validation.errors.confirmPassword}
+                            </FormErrorMessage>
+                        </FormControl>
+
+
                         <Button
                             fontSize="sm"
                             variant="brand"
@@ -223,10 +311,11 @@ function SignUp() {
                             w="100%"
                             h="50"
                             mb="24px"
+                            type="submit"
                         >
                             Cadastrar
                         </Button>
-                    </FormControl>
+                    </form>
                     <Flex
                         flexDirection="column"
                         justifyContent="center"
