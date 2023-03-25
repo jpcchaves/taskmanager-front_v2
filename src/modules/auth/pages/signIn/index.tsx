@@ -25,7 +25,7 @@ import {RiEyeCloseLine} from "react-icons/ri";
 import {useDispatch} from "react-redux";
 import {AuthState, setCredentials} from "../../../../store/auth/authSlice";
 import {useLoginMutation} from "../../../../store/auth/authApiSlice.js.js";
-import {SessionStorageUtils} from "../../../../utils/SessionStorageUtils";
+import {SessionStorageUtils} from "../../utils/SessionStorageUtils";
 
 
 function SignIn() {

@@ -1,5 +1,5 @@
-import {AuthState} from "../store/auth/authSlice";
-import {makeItems} from "../factories/makeItemsFactory";
+import {AuthState} from "../../../store/auth/authSlice";
+import {makeItems} from "../_core/factories/makeItemsFactory";
 
 export interface IItems {
     key: string,
