@@ -23,9 +23,9 @@ import illustration from "assets/img/auth/auth.png";
 import {MdOutlineRemoveRedEye} from "react-icons/md";
 import {RiEyeCloseLine} from "react-icons/ri";
 import {useDispatch} from "react-redux";
-import {AuthState, setCredentials} from "../../../store/auth/authSlice";
-import {useLoginMutation} from "../../../store/auth/authApiSlice.js";
-import {SessionStorageUtils} from "../../../utils/SessionStorageUtils";
+import {AuthState, setCredentials} from "../../../../store/auth/authSlice";
+import {useLoginMutation} from "../../../../store/auth/authApiSlice.js.js";
+import {SessionStorageUtils} from "../../../../utils/SessionStorageUtils";
 
 
 function SignIn() {

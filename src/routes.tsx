@@ -2,9 +2,9 @@ import {Icon} from '@chakra-ui/react';
 import {MdHome, MdOutlineShoppingCart, MdPerson} from 'react-icons/md';
 
 // Admin Imports
-import MainDashboard from 'views/admin/default';
-import NFTMarketplace from 'views/admin/marketplace';
-import Profile from 'views/admin/profile';
+import MainDashboard from 'modules/admin/default';
+import NFTMarketplace from 'modules/admin/marketplace';
+import Profile from 'modules/admin/profile';
 
 // Auth Imports
 

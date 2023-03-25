@@ -30,15 +30,15 @@ import MiniStatistics from 'components/card/MiniStatistics';
 import IconBox from 'components/icons/IconBox';
 import React from 'react';
 import { MdAddTask, MdAttachMoney, MdBarChart, MdFileCopy } from 'react-icons/md';
-import CheckTable from 'views/admin/rtl/components/CheckTable';
-import ComplexTable from 'views/admin/rtl/components/ComplexTable';
-import DailyTraffic from 'views/admin/rtl/components/DailyTraffic';
-import PieCard from 'views/admin/rtl/components/PieCard';
-import Tasks from 'views/admin/rtl/components/Tasks';
-import TotalSpent from 'views/admin/rtl/components/TotalSpent';
-import WeeklyRevenue from 'views/admin/rtl/components/WeeklyRevenue';
-import tableDataCheck from 'views/admin/rtl/variables/tableDataCheck';
-import tableDataComplex from 'views/admin/rtl/variables/tableDataComplex';
+import CheckTable from 'modules/admin/rtl/components/CheckTable';
+import ComplexTable from 'modules/admin/rtl/components/ComplexTable';
+import DailyTraffic from 'modules/admin/rtl/components/DailyTraffic';
+import PieCard from 'modules/admin/rtl/components/PieCard';
+import Tasks from 'modules/admin/rtl/components/Tasks';
+import TotalSpent from 'modules/admin/rtl/components/TotalSpent';
+import WeeklyRevenue from 'modules/admin/rtl/components/WeeklyRevenue';
+import tableDataCheck from 'modules/admin/rtl/variables/tableDataCheck';
+import tableDataComplex from 'modules/admin/rtl/variables/tableDataComplex';
 
 export default function UserReports() {
 	// Chakra Color Mode

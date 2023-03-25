@@ -29,15 +29,15 @@ import MiniCalendar from 'components/calendar/MiniCalendar';
 import MiniStatistics from 'components/card/MiniStatistics';
 import IconBox from 'components/icons/IconBox';
 import {MdAddTask, MdAttachMoney, MdBarChart, MdFileCopy} from 'react-icons/md';
-import CheckTable from 'views/admin/rtl/components/CheckTable';
-import ComplexTable from 'views/admin/default/components/ComplexTable';
-import DailyTraffic from 'views/admin/default/components/DailyTraffic';
-import PieCard from 'views/admin/default/components/PieCard';
-import Tasks from 'views/admin/default/components/Tasks';
-import TotalSpent from 'views/admin/default/components/TotalSpent';
-import WeeklyRevenue from 'views/admin/default/components/WeeklyRevenue';
-import tableDataCheck from 'views/admin/default/variables/tableDataCheck';
-import tableDataComplex from 'views/admin/default/variables/tableDataComplex';
+import CheckTable from 'modules/admin/rtl/components/CheckTable';
+import ComplexTable from 'modules/admin/default/components/ComplexTable';
+import DailyTraffic from 'modules/admin/default/components/DailyTraffic';
+import PieCard from 'modules/admin/default/components/PieCard';
+import Tasks from 'modules/admin/default/components/Tasks';
+import TotalSpent from 'modules/admin/default/components/TotalSpent';
+import WeeklyRevenue from 'modules/admin/default/components/WeeklyRevenue';
+import tableDataCheck from 'modules/admin/default/variables/tableDataCheck';
+import tableDataComplex from 'modules/admin/default/variables/tableDataComplex';
 
 export default function UserReports() {
     // Chakra Color Mode
