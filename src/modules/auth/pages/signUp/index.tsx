@@ -123,6 +123,7 @@ function SignUp() {
                                 Nome
                             </FormLabel>
                             <Input
+                                variant='auth'
                                 fontSize="sm"
                                 ms={{base: "0px", md: "0px"}}
                                 mb="24px"
@@ -153,12 +154,17 @@ function SignUp() {
                             </FormLabel>
 
                             <Input
+                                variant='auth'
                                 fontSize="sm"
                                 ms={{base: "0px", md: "0px"}}
                                 mb={!!(
                                     validation.touched.username &&
                                     validation.errors.username
                                 ) ? "" : "24px"}
+                                isInvalid={!!(
+                                    validation.touched.username &&
+                                    validation.errors.username
+                                )}
                                 placeholder="Digite seu nome de usuário"
                                 name='username'
                                 fontWeight="500"
@@ -188,6 +194,7 @@ function SignUp() {
                                 Email<Text color={brandStars}>*</Text>
                             </FormLabel>
                             <Input
+                                variant='auth'
                                 fontSize="sm"
                                 name="email"
                                 ms={{base: "0px", md: "0px"}}
@@ -202,6 +209,10 @@ function SignUp() {
                                     validation.handleChange(e);
                                 }}
                                 value={validation.values.email || ''}
+                                isInvalid={!!(
+                                    validation.touched.email &&
+                                    validation.errors.email
+                                )}
                             />
                             <FormErrorMessage mb='10px'>
                                 {validation.errors.email}
@@ -223,6 +234,7 @@ function SignUp() {
 
                             <InputGroup size="md">
                                 <Input
+                                    variant='auth'
                                     fontSize="sm"
                                     placeholder="Digite sua senha"
                                     mb={!!(
@@ -236,6 +248,9 @@ function SignUp() {
                                     }}
                                     value={validation.values.password}
                                     type={show ? "text" : "password"}
+                                    isInvalid={!!(
+                                        validation.touched.password &&
+                                        validation.errors.password)}
                                 />
                                 <InputRightElement display="flex" alignItems="center" mt="4px">
                                     <Icon
@@ -265,6 +280,7 @@ function SignUp() {
                             </FormLabel>
                             <InputGroup size="md">
                                 <Input
+                                    variant='auth'
                                     fontSize="sm"
                                     placeholder="Confirme sua senha"
                                     mb={!!(
@@ -278,6 +294,9 @@ function SignUp() {
                                     }}
                                     value={validation.values.confirmPassword}
                                     type={showConfirmPassword ? "text" : "password"}
+                                    isInvalid={!!(
+                                        validation.touched.confirmPassword &&
+                                        validation.errors.confirmPassword)}
                                 />
                                 <InputRightElement display="flex" alignItems="center" mt="4px">
                                     <Icon
