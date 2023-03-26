@@ -3,7 +3,7 @@ import {logout, setCredentials} from "../../auth/authSlice";
 import {RootState} from "../store";
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_BASE_URL,
+    baseUrl: import.meta.env.VITE_API_BASE_URL,
     mode: "cors",
     credentials: "same-origin",
     prepareHeaders: (headers, {getState}) => {

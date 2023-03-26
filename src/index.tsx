@@ -11,7 +11,7 @@ import {Provider} from "react-redux";
 import SignIn from "./modules/auth/pages/signIn";
 import SignUp from "./modules/auth/pages/signUp";
 import AdminLayout from './layouts/admin';
-import MainDashboard from 'modules/admin/default';
+import MainDashboard from './modules/admin/default';
 
 import PrivateRoutes from "./store/app/components/RequireAuth";
 import Marketplace from "./modules/admin/marketplace";
