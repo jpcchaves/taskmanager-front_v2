@@ -23,9 +23,8 @@ import DefaultAuth from "layouts/auth/Default";
 import illustration from "assets/img/auth/auth.png";
 import {MdOutlineRemoveRedEye} from "react-icons/md";
 import {RiEyeCloseLine} from "react-icons/ri";
-
-import * as Yup from 'yup'
 import {useFormik} from "formik";
+import {signInValidation} from "../../utils/validation/signInValidation";
 
 function SignIn() {
     // Chakra color mode
@@ -44,10 +43,7 @@ function SignIn() {
             usernameOrEmail: '',
             password: ''
         },
-        validationSchema: Yup.object().shape({
-            usernameOrEmail: Yup.string().required("O nome de usuário ou email é obrigatório!"),
-            password: Yup.string().min(6, "A senha deve conter pelo menos 6 caracteres").required("A senha é obrigatória!")
-        }),
+        validationSchema: signInValidation,
         onSubmit: values => console.log(values)
     })
 
