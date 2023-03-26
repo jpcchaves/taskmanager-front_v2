@@ -105,13 +105,11 @@ function SignUp() {
                     mb={{base: "20px", md: "auto"}}
                 >
                     <form
-                        onSubmit={(e) => {
+                        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                             e.preventDefault()
                             validation.handleSubmit()
                             return false
-                        }
-                        }
-
+                        }}
                     >
                         <FormControl>
                             <FormLabel
@@ -193,7 +191,7 @@ function SignUp() {
                                 fontSize="sm"
                                 name="email"
                                 ms={{base: "0px", md: "0px"}}
-                                placeholder="email@exemple.com"
+                                placeholder="email@exemplo.com"
                                 mb={!!(
                                     validation.touched.email &&
                                     validation.errors.email

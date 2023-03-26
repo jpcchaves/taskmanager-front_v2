@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 // Chakra imports
 import {
     Box,
@@ -7,6 +7,7 @@ import {
     Checkbox,
     Flex,
     FormControl,
+    FormErrorMessage,
     FormLabel,
     Heading,
     Icon,
@@ -22,10 +23,9 @@ import DefaultAuth from "layouts/auth/Default";
 import illustration from "assets/img/auth/auth.png";
 import {MdOutlineRemoveRedEye} from "react-icons/md";
 import {RiEyeCloseLine} from "react-icons/ri";
-import {useDispatch} from "react-redux";
 
-import {useLoginMutation} from "../../../../store/auth/authApiSlice";
-
+import * as Yup from 'yup'
+import {useFormik} from "formik";
 
 function SignIn() {
     // Chakra color mode
@@ -38,25 +38,18 @@ function SignIn() {
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-
-    const [login, {isLoading}] = useLoginMutation();
-
-    // const handleSubmit = async () => {
-    //     try {
-    //         const userData: AuthState = await login(usuario).unwrap()
-    //         dispatch(setCredentials(userData))
-    //
-    //         SessionStorageUtils.saveItems(userData);
-    //
-    //         navigate("/admin")
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-
+    const validation = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            usernameOrEmail: '',
+            password: ''
+        },
+        validationSchema: Yup.object().shape({
+            usernameOrEmail: Yup.string().required("O nome de usuário ou email é obrigatório!"),
+            password: Yup.string().min(6, "A senha deve conter pelo menos 6 caracteres").required("A senha é obrigatória!")
+        }),
+        onSubmit: values => console.log(values)
+    })
 
     return (
         <DefaultAuth illustrationBackground={illustration} image={illustration}>
@@ -98,56 +91,90 @@ function SignIn() {
                     me="auto"
                     mb={{base: "20px", md: "auto"}}
                 >
-                    <FormControl>
-                        <FormLabel
-                            display="flex"
-                            ms="4px"
-                            fontSize="sm"
-                            fontWeight="500"
-                            color={textColor}
-                            mb="8px"
-                        >
-                            Email<Text color={brandStars}>*</Text>
-                        </FormLabel>
-                        <Input
-                            isRequired={true}
-                            variant="auth"
-                            fontSize="sm"
-                            ms={{base: "0px", md: "0px"}}
-                            type="email"
-                            placeholder="mail@simmmple.com"
-                            mb="24px"
-                            fontWeight="500"
-                            size="lg"
-                        />
-                        <FormLabel
-                            ms="4px"
-                            fontSize="sm"
-                            fontWeight="500"
-                            color={textColor}
-                            display="flex"
-                        >
-                            Senha<Text color={brandStars}>*</Text>
-                        </FormLabel>
-                        <InputGroup size="md">
-                            <Input
-                                isRequired={true}
+                    <form
+                        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                            e.preventDefault()
+                            validation.handleSubmit()
+                            return false
+                        }}
+                    >
+                        <FormControl isInvalid={!!(
+                            validation.touched.usernameOrEmail &&
+                            validation.errors.usernameOrEmail
+                        )}>
+                            <FormLabel
+                                display="flex"
+                                ms="4px"
                                 fontSize="sm"
-                                placeholder="Min. 8 characters"
-                                mb="24px"
+                                fontWeight="500"
+                                color={textColor}
+                                mb="8px"
+                            >
+                                Usuário ou Email<Text color={brandStars}>*</Text>
+                            </FormLabel>
+                            <Input
+                                fontSize="sm"
+                                ms={{base: "0px", md: "0px"}}
+                                type="usernameOrEmail"
+                                placeholder="Digite seu usuário ou email"
+                                fontWeight="500"
                                 size="lg"
-                                type={show ? "text" : "password"}
-                                variant="auth"
+                                mb={!!(
+                                    validation.touched.usernameOrEmail &&
+                                    validation.errors.usernameOrEmail
+                                ) ? "" : "24px"}
+                                onChange={(e) => {
+                                    validation.handleChange(e);
+                                }}
+                                value={validation.values.usernameOrEmail || ''}
                             />
-                            <InputRightElement display="flex" alignItems="center" mt="4px">
-                                <Icon
-                                    color={textColorSecondary}
-                                    _hover={{cursor: "pointer"}}
-                                    as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                                    onClick={handleClick}
+                            <FormErrorMessage mb='10px'>
+                                {validation.errors.usernameOrEmail}
+                            </FormErrorMessage>
+                        </FormControl>
+
+                        <FormControl isInvalid={!!(
+                            validation.touched.password &&
+                            validation.errors.password)}>
+                            <FormLabel
+                                ms="4px"
+                                fontSize="sm"
+                                fontWeight="500"
+                                color={textColor}
+                                display="flex"
+                            >
+                                Senha<Text color={brandStars}>*</Text>
+                            </FormLabel>
+                            <InputGroup size="md">
+                                <Input
+                                    fontSize="sm"
+                                    placeholder="Digite sua senha"
+                                    name="password"
+                                    size="lg"
+                                    type={show ? "text" : "password"}
+                                    mb={!!(
+                                        validation.touched.password &&
+                                        validation.errors.password
+                                    ) ? "" : "24px"}
+                                    onChange={(e) => {
+                                        validation.handleChange(e);
+                                    }}
+                                    value={validation.values.password}
                                 />
-                            </InputRightElement>
-                        </InputGroup>
+                                <InputRightElement display="flex" alignItems="center" mt="4px">
+                                    <Icon
+                                        color={textColorSecondary}
+                                        _hover={{cursor: "pointer"}}
+                                        as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
+                                        onClick={handleClick}
+                                    />
+                                </InputRightElement>
+                            </InputGroup>
+                            <FormErrorMessage mb='24px'>
+                                {validation.errors.password}
+                            </FormErrorMessage>
+                        </FormControl>
+
                         <Flex justifyContent="space-between" align="center" mb="24px">
                             <FormControl display="flex" alignItems="center">
                                 <Checkbox
@@ -173,10 +200,12 @@ function SignIn() {
                             w="100%"
                             h="50"
                             mb="24px"
+                            type="submit"
                         >
                             Entrar
                         </Button>
-                    </FormControl>
+
+                    </form>
                     <Flex
                         flexDirection="column"
                         justifyContent="center"
