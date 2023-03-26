@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-interface PayloadSetCredentials extends PayloadAction<AuthState> {}
+interface PayloadSetCredentials extends PayloadAction<AuthState> {
+}
 
 interface User {
     id: number,

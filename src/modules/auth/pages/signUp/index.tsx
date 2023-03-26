@@ -25,7 +25,7 @@ import {RiEyeCloseLine} from "react-icons/ri";
 
 import {useFormik} from "formik";
 import {IUserRegisterRequest} from "../../models/register/IUserRegisterRequest";
-import makeAuthRegisterService from "../../_core/factories/makeAuthRegisterService";
+import makeAuthRegisterService from "../../_core/factories/auth/makeRegisterService";
 import {signUpValidation} from "../../utils/validation/signUpValidation";
 
 function SignUp() {

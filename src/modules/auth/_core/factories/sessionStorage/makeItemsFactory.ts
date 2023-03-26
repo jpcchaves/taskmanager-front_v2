@@ -1,5 +1,5 @@
-import {AuthState} from "../../../../store/auth/authSlice";
-import {IItems} from "../../utils/cache/SessionStorageUtils";
+import {AuthState} from "../../../../../store/auth/authSlice";
+import {IItems} from "../../../utils/cache/SessionStorageUtils";
 
 export const makeItems = ({user, accessToken}: AuthState): IItems[] => {
     return [

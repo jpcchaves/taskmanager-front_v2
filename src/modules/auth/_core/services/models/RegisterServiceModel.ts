@@ -1,6 +1,6 @@
 import {IUserRegisterRequest} from "../../../models/register/IUserRegisterRequest";
 
-export interface AuthServiceModel {
+export interface RegisterServiceModel {
     register(user: IUserRegisterRequest): Promise<void>;
 
 }

@@ -25,6 +25,9 @@ import {MdOutlineRemoveRedEye} from "react-icons/md";
 import {RiEyeCloseLine} from "react-icons/ri";
 import {useFormik} from "formik";
 import {signInValidation} from "../../utils/validation/signInValidation";
+import makeLoginService from "../../_core/factories/auth/makeLoginService";
+import {SessionStorageUtils} from "../../utils/cache/SessionStorageUtils";
+import {IUserRegisterResponse} from "../../models/register/IUserRegisterResponse";
 
 function SignIn() {
     // Chakra color mode
@@ -37,14 +40,21 @@ function SignIn() {
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
 
+    const [loginService, isLoading] = makeLoginService();
+
+    const cachedUser: IUserRegisterResponse = SessionStorageUtils.getItem("user");
+
     const validation = useFormik({
         enableReinitialize: true,
         initialValues: {
-            usernameOrEmail: '',
-            password: ''
+            usernameOrEmail: cachedUser ? (cachedUser.email || cachedUser.username) : "",
+            password: '',
+            remember: false,
         },
         validationSchema: signInValidation,
-        onSubmit: values => console.log(values)
+        onSubmit: async values => {
+            await loginService.login(values)
+        }
     })
 
     return (
@@ -110,8 +120,9 @@ function SignIn() {
                             </FormLabel>
                             <Input
                                 fontSize="sm"
+                                variant="auth"
                                 ms={{base: "0px", md: "0px"}}
-                                type="usernameOrEmail"
+                                name="usernameOrEmail"
                                 placeholder="Digite seu usuário ou email"
                                 fontWeight="500"
                                 size="lg"
@@ -123,6 +134,10 @@ function SignIn() {
                                     validation.handleChange(e);
                                 }}
                                 value={validation.values.usernameOrEmail || ''}
+                                isInvalid={!!(
+                                    validation.touched.usernameOrEmail &&
+                                    validation.errors.usernameOrEmail
+                                )}
                             />
                             <FormErrorMessage mb='10px'>
                                 {validation.errors.usernameOrEmail}
@@ -144,6 +159,7 @@ function SignIn() {
                             <InputGroup size="md">
                                 <Input
                                     fontSize="sm"
+                                    variant="auth"
                                     placeholder="Digite sua senha"
                                     name="password"
                                     size="lg"
@@ -156,6 +172,10 @@ function SignIn() {
                                         validation.handleChange(e);
                                     }}
                                     value={validation.values.password}
+                                    isInvalid={!!(
+                                        validation.touched.password &&
+                                        validation.errors.password
+                                    )}
                                 />
                                 <InputRightElement display="flex" alignItems="center" mt="4px">
                                     <Icon
@@ -174,12 +194,15 @@ function SignIn() {
                         <Flex justifyContent="space-between" align="center" mb="24px">
                             <FormControl display="flex" alignItems="center">
                                 <Checkbox
-                                    id="remember-login"
+                                    id="remember"
                                     colorScheme="brandScheme"
                                     me="10px"
+                                    onChange={(e) => {
+                                        validation.handleChange(e);
+                                    }}
                                 />
                                 <FormLabel
-                                    htmlFor="remember-login"
+                                    htmlFor="remember"
                                     mb="0"
                                     fontWeight="normal"
                                     color={textColor}
@@ -197,6 +220,7 @@ function SignIn() {
                             h="50"
                             mb="24px"
                             type="submit"
+                            isLoading={isLoading}
                         >
                             Entrar
                         </Button>
