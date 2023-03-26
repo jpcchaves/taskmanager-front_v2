@@ -1,7 +1,7 @@
 import {NavigateFunction} from "react-router/dist/lib/hooks";
 import {Dispatch} from "@reduxjs/toolkit";
 import {AuthServiceModel} from "../models/AuthServiceModel";
-import {IUserRegisterRequest} from "../../../models/IUserRegisterRequest";
+import {IUserRegisterRequest} from "../../../models/register/IUserRegisterRequest";
 import {FetchBaseQueryError, FetchBaseQueryMeta, MutationDefinition} from "@reduxjs/toolkit/query";
 import {BaseQueryApi, FetchArgs} from "@reduxjs/toolkit/query/react";
 import {QueryReturnValue} from "@reduxjs/toolkit/dist/query/baseQueryTypes";

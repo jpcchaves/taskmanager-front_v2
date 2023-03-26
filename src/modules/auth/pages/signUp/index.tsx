@@ -24,7 +24,7 @@ import {MdOutlineRemoveRedEye} from "react-icons/md";
 import {RiEyeCloseLine} from "react-icons/ri";
 
 import {useFormik} from "formik";
-import {IUserRegisterRequest} from "../../models/IUserRegisterRequest";
+import {IUserRegisterRequest} from "../../models/register/IUserRegisterRequest";
 import makeAuthRegisterService from "../../_core/factories/makeAuthRegisterService";
 import {signUpValidation} from "../../utils/validation/signUpValidation";
 
