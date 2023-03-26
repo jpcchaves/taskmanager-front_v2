@@ -24,9 +24,9 @@ import {MdOutlineRemoveRedEye} from "react-icons/md";
 import {RiEyeCloseLine} from "react-icons/ri";
 
 import {useFormik} from "formik";
-import * as Yup from 'yup'
 import {IUserRegisterRequest} from "../../models/IUserRegisterRequest";
 import makeAuthRegisterService from "../../_core/factories/makeAuthRegisterService";
+import {signUpValidation} from "../../utils/validation/signUpValidation";
 
 function SignUp() {
     // Chakra color mode
@@ -58,13 +58,7 @@ function SignUp() {
             password: "",
             confirmPassword: "",
         },
-        validationSchema: Yup.object().shape({
-            name: Yup.string(),
-            username: Yup.string().required("O nome de usuário é obrigatório!"),
-            email: Yup.string().email("Insira um email válido!").required("O email é obrigatório!"),
-            password: Yup.string().required("A senha é obrigatória"),
-            confirmPassword: Yup.string().oneOf([Yup.ref('password')], "As senhas não correspondem").required("A senha é obrigatória"),
-        }),
+        validationSchema: signUpValidation,
         onSubmit: async (values: IUserRegisterRequest) => {
             await authService.register(values);
         }
