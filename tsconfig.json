@@ -2,13 +2,15 @@
   "compilerOptions": {
     "target": "ESNext",
     "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
     ],
     "types": [
       "vite/client",
-      "vite-plugin-svgr/client"
+      "vite-plugin-svgr/client",
+      "react",
+      "react-dom"
     ],
     "allowJs": true,
     "skipLibCheck": true,
