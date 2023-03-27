@@ -57,7 +57,7 @@ export class LoginServiceImpl implements LoginServiceModel {
 
                 this.makeToast("Usuário autenticado com sucesso!", "Você será redirecionado para o dashboard", ToastStatus.success, 3000, "top-end", true)
 
-                this.navigate("/tasks")
+                this.navigate("/tk/tarefas")
 
                 if (remember) {
                     SessionStorageUtils.saveUserAndToken(res)

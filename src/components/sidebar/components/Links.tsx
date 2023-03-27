@@ -2,7 +2,9 @@
 
 import {NavLink, useLocation} from 'react-router-dom';
 // chakra imports
-import {Box, Flex, HStack, Text, useColorModeValue} from '@chakra-ui/react';
+import {Box, Flex, HStack, Icon, Text, useColorModeValue} from '@chakra-ui/react';
+
+import {MdLogout} from 'react-icons/md'
 
 export function SidebarLinks(props: {
     routes: RoutesType[];
@@ -26,6 +28,7 @@ export function SidebarLinks(props: {
     const createLinks = (
         routes: RoutesType[],
     ) => {
+
         return routes.map(
             (
                 route: RoutesType,
@@ -33,7 +36,7 @@ export function SidebarLinks(props: {
             ) => {
                 if (route.layout === '/tk') {
                     return (
-                        <NavLink key={index} to={route.path}>
+                        <NavLink key={index} to={route.layout + route.path}>
                             {route.icon ? (
                                 <Box>
                                     <HStack
@@ -84,7 +87,40 @@ export function SidebarLinks(props: {
         );
     };
     //  BRAND
-    return <>{createLinks(routes)}</>
+    return (
+        <>
+            {createLinks(routes)}
+                <NavLink to='/login'>
+                    <Box>
+                        <HStack
+                            spacing={'26px'}
+                            py='5px'
+                            ps='10px'>
+                            <Flex w='100%' alignItems='center' justifyContent='center'>
+                                <Box
+                                    color={activeIcon}
+                                    me='18px'>
+                                    <Icon as={MdLogout} width='20px' height='20px' color='inherit'/>
+                                </Box>
+                                <Text
+                                    me='auto'
+                                    color={activeColor}
+                                    fontWeight={'bold'}>
+                                    Sair
+                                </Text>
+                            </Flex>
+                            <Box
+                                h='36px'
+                                w='4px'
+                                bg={'transparent'}
+                                borderRadius='5px'
+                            />
+                        </HStack>
+                    </Box>
+                </NavLink>
+            </Box>
+        </>
+    )
 }
 
 export default SidebarLinks;

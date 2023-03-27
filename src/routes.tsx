@@ -12,7 +12,7 @@ const routes = [
     {
         name: 'Tarefas',
         layout: '/tk',
-        path: '/tasks',
+        path: '/tarefas',
         icon: <Icon as={MdHome} width='20px' height='20px' color='inherit'/>,
         component: <MainDashboard/>
     },
@@ -27,7 +27,7 @@ const routes = [
     {
         name: 'Perfil',
         layout: '/tk',
-        path: '/profile',
+        path: '/perfil',
         icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit'/>,
         component: <Profile/>
     },

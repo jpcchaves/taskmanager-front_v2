@@ -6,6 +6,8 @@ import PrivateRoutes from "./store/app/components/RequireAuth";
 import AdminLayout from "./layouts/admin";
 import MainDashboard from "./modules/admin/default";
 import Marketplace from "./modules/admin/marketplace";
+import Profile from './modules/admin/profile';
+
 import {store} from "./store/app/store";
 import theme from "./theme/theme";
 import {Provider} from "react-redux";
@@ -22,9 +24,10 @@ const App = () => {
 
                     {/* Protected Routes */}
                     <Route element={<PrivateRoutes/>}>
-                        <Route element={<AdminLayout/>} path='/*'>
-                            <Route element={<MainDashboard/>} path='tasks'/>
+                        <Route element={<AdminLayout/>} path='/tk/*'>
+                            <Route element={<MainDashboard/>} path='tarefas'/>
                             <Route element={<Marketplace/>} path='dashboard'/>
+                            <Route element={<Profile/>} path='perfil'/>
                         </Route>
                     </Route>
                 </Routes>
