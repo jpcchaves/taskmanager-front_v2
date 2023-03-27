@@ -1,7 +1,24 @@
 import {defineConfig} from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import reactRefresh from '@vitejs/plugin-react'
+import svgrPlugin from 'vite-plugin-svgr'
 
-// https://vitejs.dev/config/
+import path from 'path'
+
 export default defineConfig({
-    plugins: [react()],
+    build: {
+        outDir: 'build',
+    },
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, './src')
+        }
+    },
+    plugins: [
+        reactRefresh(),
+        svgrPlugin({
+            svgrOptions: {
+                icon: true,
+            },
+        }),
+    ],
 })

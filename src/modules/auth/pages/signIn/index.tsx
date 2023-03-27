@@ -49,7 +49,7 @@ function SignIn() {
         initialValues: {
             usernameOrEmail: cachedUser ? (cachedUser.email || cachedUser.username) : "",
             password: '',
-            remember: false,
+            remember: !!cachedUser,
         },
         validationSchema: signInValidation,
         onSubmit: async values => {
@@ -200,6 +200,7 @@ function SignIn() {
                                     onChange={(e) => {
                                         validation.handleChange(e);
                                     }}
+                                    defaultChecked={validation.values.remember}
                                 />
                                 <FormLabel
                                     htmlFor="remember"
