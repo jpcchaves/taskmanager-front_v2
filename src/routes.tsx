@@ -3,8 +3,8 @@ import {MdHome, MdOutlineShoppingCart, MdPerson} from 'react-icons/md';
 
 // Admin Imports
 import MainDashboard from './modules/admin/default';
-import NFTMarketplace from './modules/admin/marketplace';
 import Profile from './modules/admin/profile';
+import TasksView from "./modules/admin/tasks";
 
 // Auth Imports
 
@@ -14,14 +14,14 @@ const routes = [
         layout: '/tk',
         path: '/tarefas',
         icon: <Icon as={MdHome} width='20px' height='20px' color='inherit'/>,
-        component: <MainDashboard/>
+        component: <TasksView/>
     },
     {
         name: 'Dashboard',
         layout: '/tk',
         path: '/dashboard',
         icon: <Icon as={MdOutlineShoppingCart} width='20px' height='20px' color='inherit'/>,
-        component: <NFTMarketplace/>,
+        component: <MainDashboard/>,
         secondary: true
     },
     {
