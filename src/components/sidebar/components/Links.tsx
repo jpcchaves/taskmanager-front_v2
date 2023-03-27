@@ -5,6 +5,8 @@ import {NavLink, useLocation} from 'react-router-dom';
 import {Box, Flex, HStack, Icon, Text, useColorModeValue} from '@chakra-ui/react';
 
 import {MdLogout} from 'react-icons/md'
+import {useDispatch} from "react-redux";
+import {logout} from "../../../store/auth/authSlice";
 
 export function SidebarLinks(props: {
     routes: RoutesType[];
@@ -19,10 +21,16 @@ export function SidebarLinks(props: {
 
     const {routes} = props;
 
+    const dispatch = useDispatch();
+
     // verifies if routeName is the one active (in browser input)
     const activeRoute = (routeName: string) => {
         return location.pathname.includes(routeName);
     };
+
+    const handleLogout = () => {
+        dispatch(logout())
+    }
 
     // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
     const createLinks = (
@@ -90,35 +98,34 @@ export function SidebarLinks(props: {
     return (
         <>
             {createLinks(routes)}
-                <NavLink to='/login'>
-                    <Box>
-                        <HStack
-                            spacing={'26px'}
-                            py='5px'
-                            ps='10px'>
-                            <Flex w='100%' alignItems='center' justifyContent='center'>
-                                <Box
-                                    color={activeIcon}
-                                    me='18px'>
-                                    <Icon as={MdLogout} width='20px' height='20px' color='inherit'/>
-                                </Box>
-                                <Text
-                                    me='auto'
-                                    color={activeColor}
-                                    fontWeight={'bold'}>
-                                    Sair
-                                </Text>
-                            </Flex>
+            <NavLink to='/login' onClick={() => handleLogout()}>
+                <Box>
+                    <HStack
+                        spacing={'26px'}
+                        py='5px'
+                        ps='10px'>
+                        <Flex w='100%' alignItems='center' justifyContent='center'>
                             <Box
-                                h='36px'
-                                w='4px'
-                                bg={'transparent'}
-                                borderRadius='5px'
-                            />
-                        </HStack>
-                    </Box>
-                </NavLink>
-            </Box>
+                                color={activeIcon}
+                                me='18px'>
+                                <Icon as={MdLogout} width='20px' height='20px' color='inherit'/>
+                            </Box>
+                            <Text
+                                me='auto'
+                                color={activeColor}
+                                fontWeight={'bold'}>
+                                Sair
+                            </Text>
+                        </Flex>
+                        <Box
+                            h='36px'
+                            w='4px'
+                            bg={'transparent'}
+                            borderRadius='5px'
+                        />
+                    </HStack>
+                </Box>
+            </NavLink>
         </>
     )
 }
