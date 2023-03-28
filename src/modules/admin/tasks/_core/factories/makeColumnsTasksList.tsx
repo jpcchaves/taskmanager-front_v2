@@ -1,7 +1,9 @@
 import * as React from "react";
 import {ITasks} from "../../variables/tableDataTasks";
 import {TableColumn} from "react-data-table-component";
-import {Link} from "react-router-dom";
+
+import {MdCheckCircleOutline, MdDelete, MdEditSquare, MdOutlineCancel} from 'react-icons/md'
+import {Box, Icon} from "@chakra-ui/react";
 
 interface IProps {
 }
@@ -27,9 +29,9 @@ export const makeColumnsTasksList = (): TableColumn<ITasks>[] => {
             name: 'Situação',
             cell: (row) => {
                 return (
-                    <div className='w-25 d-flex justify-content-center align-items-center'>
-                        <i className={row.concluded ? 'bi bi-check-circle' : 'bi bi-x-circle'}/>
-                    </div>
+                    <Box display='flex' alignItems='center' justifyContent='center'>
+                        {row.concluded ? <MdCheckCircleOutline size={'22px'}/> : <MdOutlineCancel size={"22px"}/>}
+                    </Box>
                 );
             },
         },
@@ -40,21 +42,38 @@ export const makeColumnsTasksList = (): TableColumn<ITasks>[] => {
             },
             cell: (cell) => {
                 return (
-                    <div className='actions-hidden'>
-                        <div onClick={() => console.log('editar')}>
-                            <Link
-                                color='success'
-                                to='/'
-                            >
+                    <Box className='actions-hidden' px='2' py='1' justifyContent='center' alignItems='center' gap='2'>
+                        <Box onClick={() => console.log('editar')}>
+                            <Icon
+                                cursor='pointer'
+                                as={MdEditSquare}
+                                color='green.300'
+                                _hover={{
+                                    transitionDuration: '0.2s',
+                                    transitionTimingFunction: "ease-in-out",
+                                    transform: "scale(1.1)",
+                                    color: 'green.500'
+                                }}
+                                boxSize={5}>
                                 Editar{' '}
-                            </Link>
-                        </div>
-                        <div onClick={() => console.log("editar")}>
-                            <Link to='/' color='danger'>
+                            </Icon>
+                        </Box>
+                        <Box onClick={() => console.log("editar")}>
+                            <Icon
+                                cursor='pointer'
+                                as={MdDelete}
+                                boxSize={5}
+                                color='red.300'
+                                _hover={{
+                                    transitionDuration: '0.2s',
+                                    transitionTimingFunction: "ease-in-out",
+                                    transform: "scale(1.1)",
+                                    color: 'red.500'
+                                }}>
                                 excluir
-                            </Link>
-                        </div>
-                    </div>
+                            </Icon>
+                        </Box>
+                    </Box>
                 );
             },
         },
