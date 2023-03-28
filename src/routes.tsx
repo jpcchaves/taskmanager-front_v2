@@ -11,14 +11,14 @@ import TasksView from "./modules/admin/tasks";
 const routes = [
     {
         name: 'Tarefas',
-        layout: '/tk',
+        layout: '/',
         path: '/tarefas',
         icon: <Icon as={MdHome} width='20px' height='20px' color='inherit'/>,
         component: <TasksView/>
     },
     {
         name: 'Dashboard',
-        layout: '/tk',
+        layout: '/',
         path: '/dashboard',
         icon: <Icon as={MdOutlineShoppingCart} width='20px' height='20px' color='inherit'/>,
         component: <MainDashboard/>,
@@ -26,7 +26,7 @@ const routes = [
     },
     {
         name: 'Perfil',
-        layout: '/tk',
+        layout: '/',
         path: '/perfil',
         icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit'/>,
         component: <Profile/>

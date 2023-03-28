@@ -17,7 +17,7 @@ export default function AdminNavbar(props: {
 
     const location = useLocation();
 
-    const locationPath = location.pathname.split("tk/")[1];
+    const locationPath = location.pathname.split("/")[1];
 
     const path = locationPath.slice(1, 99);
     const currentPath = locationPath.slice(0, 1).toUpperCase() + path

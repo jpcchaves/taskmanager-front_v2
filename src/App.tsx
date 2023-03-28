@@ -24,7 +24,7 @@ const App = () => {
 
                     {/* Protected Routes */}
                     <Route element={<PrivateRoutes/>}>
-                        <Route element={<AdminLayout/>} path='/tk/*'>
+                        <Route element={<AdminLayout/>} path='/*'>
                             <Route element={<MainDashboard/>} path='tarefas'/>
                             <Route element={<Marketplace/>} path='dashboard'/>
                             <Route element={<Profile/>} path='perfil'/>
