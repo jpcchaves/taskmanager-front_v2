@@ -3,8 +3,8 @@ import {Box, SimpleGrid} from '@chakra-ui/react';
 // Assets
 // Custom components
 import {makeColumnsTasksList} from "./_core/factories/makeColumnsTasksList";
-import tableDataTasks from "./variables/tableDataTasks";
 import {Datatable} from "./components/datatable";
+import {tableDataTasks} from "./variables/tableDataTasks";
 
 export default function TasksView() {
 
