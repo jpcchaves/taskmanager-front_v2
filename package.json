@@ -66,6 +66,7 @@
     ]
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@types/react-calendar": "^3.5.2",
     "@types/react-router-dom": "^5.3.3",
     "@types/sass-loader": "^8.0.4",
