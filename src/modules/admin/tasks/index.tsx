@@ -4,15 +4,26 @@ import {Box, SimpleGrid} from '@chakra-ui/react';
 // Custom components
 import {makeColumnsTasksList} from "./_core/factories/makeColumnsTasksList";
 import {Datatable} from "./components/datatable";
-import {tableDataTasks} from "./variables/tableDataTasks";
+import {useGetTasksQuery} from "../../../store/tasks/tasksApiSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {selectTasksList, setTasks} from "../../../store/tasks/taskSlice";
 
 export default function TasksView() {
+    const dispatch = useDispatch();
+    const {data, isLoading} = useGetTasksQuery(null)
 
-    // Chakra Color Mode
+    if (data) {
+        dispatch(setTasks(data.content))
+    }
+
+    const tasksList = useSelector(selectTasksList)
+
+    console.log(tasksList)
+
     return (
         <Box pt={{base: '130px', md: '80px', xl: '80px'}}>
             <SimpleGrid columns={{base: 1, md: 1, xl: 1}} gap='20px'>
-                <Datatable columns={makeColumnsTasksList()} data={tableDataTasks}/>
+                <Datatable columns={makeColumnsTasksList()} data={data?.content || []}/>
             </SimpleGrid>
         </Box>
     );

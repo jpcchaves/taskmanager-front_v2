@@ -4,32 +4,27 @@ import {RootState} from "../store";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_BASE_URL,
-    mode: "cors",
-    credentials: "same-origin",
-    prepareHeaders: (headers, {getState}) => {
+    prepareHeaders: (headers: Headers, {getState}) => {
         const token = (getState() as RootState).auth.accessToken
-        if (token) {
-            headers.set("Authorization", `Bearer ${token}`)
-            headers.set("Content-Type", "application/json")
 
+        if (token) {
+            headers.append("Authorization", `Bearer ${token}`)
         }
         return headers;
-    }
+    },
 })
 
-const baseQueryWithAuth = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
+export const baseQueryWithAuth = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
     const result = await baseQuery(args, api, extraOptions);
 
-    if (result?.data) {
+    if (result.data) {
         const user = (api.getState() as RootState).auth.user;
         const accessToken = (api.getState() as RootState).auth.accessToken;
 
-        api.dispatch(setCredentials({user, accessToken}));
-
+        api.dispatch(setCredentials({user, accessToken}))
     } else {
         api.dispatch(logout())
     }
-
     return result;
 }
 
