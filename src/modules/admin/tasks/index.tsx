@@ -7,6 +7,7 @@ import {Datatable} from "./components/datatable";
 import {useGetTasksQuery} from "../../../store/tasks/tasksApiSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {selectTasksList, setTasks} from "../../../store/tasks/taskSlice";
+import {TableWrapper} from "./components/tableWrapper";
 
 export default function TasksView() {
     const dispatch = useDispatch();
@@ -23,7 +24,9 @@ export default function TasksView() {
     return (
         <Box pt={{base: '130px', md: '80px', xl: '80px'}}>
             <SimpleGrid columns={{base: 1, md: 1, xl: 1}} gap='20px'>
-                <Datatable columns={makeColumnsTasksList()} data={data?.content || []}/>
+                <TableWrapper>
+                    <Datatable columns={makeColumnsTasksList()} data={data?.content || []}/>
+                </TableWrapper>
             </SimpleGrid>
         </Box>
     );
