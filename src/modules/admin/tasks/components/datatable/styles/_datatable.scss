@@ -14,6 +14,28 @@
   border-radius: 8px;
 }
 
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #233070 #111c44;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #111c44;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #233070;
+  border-radius: 10px;
+  border: 1px solid #333333;
+}
+
+
 // Classes referêntes ao header da datatable (modo dark e modo light)
 [data-theme='dark'] .rdt_TableHeadRow {
   background-color: transparent !important;
