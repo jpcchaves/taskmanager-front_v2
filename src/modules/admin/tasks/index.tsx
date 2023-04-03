@@ -1,30 +1,21 @@
 // Chakra imports
-import {
-    Box,
-    Button,
-    Checkbox,
-    FormControl,
-    FormLabel,
-    Input,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
-    SimpleGrid
-} from '@chakra-ui/react';
+import {Box, SimpleGrid} from '@chakra-ui/react';
 // Assets
 // Custom components
 import {makeColumnsTasksList} from "./_core/factories/makeColumnsTasksList";
 import {Datatable} from "./components/datatable";
-import {useGetTasksQuery} from "../../../store/tasks/tasksApiSlice";
+import {useAddTaskMutation, useGetTasksQuery} from "../../../store/tasks/tasksApiSlice";
 import {useDispatch} from "react-redux";
-import {setTasks} from "../../../store/tasks/taskSlice";
 import {TableWrapper} from "./components/tableWrapper";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {ITasks} from "./components/models/ITasks";
+import TasksFormModal from "./components/tasksModal";
+import {useFormik} from "formik";
+
+import moment from 'moment'
+
+import * as Yup from 'yup'
+import {useParams} from "react-router-dom";
 
 interface ITasksList {
     content: ITasks[],
@@ -38,7 +29,11 @@ interface ITasksList {
 export default function TasksView() {
     const [openTaskModal, setOpenTaskModal] = useState(false);
 
+    const {id} = useParams();
+
     const dispatch = useDispatch();
+
+    const [addTask, {isLoading: addTaskLoading}] = useAddTaskMutation();
 
     const toggleOpenModal = (): void => {
         setOpenTaskModal(prevState => !prevState);
@@ -46,48 +41,48 @@ export default function TasksView() {
 
     const {data, isLoading} = useGetTasksQuery(null)
 
-    useEffect(() => {
-        dispatch(setTasks(data?.content))
-    }, [])
+    const validation = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            task: '',
+            deadline: '',
+            concluded: false,
+        },
+        validationSchema: Yup.object().shape({
+            task: Yup.string().trim().required('A task é obrigatória!'),
+            deadline: Yup.date().required('O prazo é obrigatório!'),
+            concluded: Yup.boolean(),
+        }),
+        onSubmit: async values => {
+            const {task, deadline} = values;
+
+            const formattedDate = moment(deadline).utc().format("YYYY-MM-DDTHH:mm")
+
+            const valuesToSubmit = {
+                task,
+                deadline: formattedDate
+            }
+
+            if (id) {
+                console.log({id, values})
+            } else {
+                await addTask(valuesToSubmit);
+                validation.resetForm();
+                toggleOpenModal();
+            }
+
+        }
+    })
 
     return (
         <Box pt={{base: '130px', md: '80px', xl: '80px'}}>
             <SimpleGrid columns={{base: 1, md: 1, xl: 1}} gap='20px'>
-                <Modal
-                    isOpen={openTaskModal}
-                    isCentered
-                    onClose={() => toggleOpenModal()}
-                >
-                    <ModalOverlay/>
-                    <ModalContent>
-                        <ModalHeader>Adicione novas tarefas</ModalHeader>
-                        <ModalCloseButton/>
-                        <ModalBody pb={6}>
-                            <FormControl>
-                                <FormLabel>Tarefa</FormLabel>
-                                <Input variant="auth" placeholder='Tarefa'/>
-                            </FormControl>
 
-                            <FormControl mt={4}>
-                                <FormLabel>Prazo</FormLabel>
-                                <Input variant="auth" type='datetime-local'/>
-                            </FormControl>
-
-                            <FormControl mt={4}>
-                                <Checkbox>
-                                    Concluida?
-                                </Checkbox>
-                            </FormControl>
-                        </ModalBody>
-
-                        <ModalFooter>
-                            <Button colorScheme='blue' mr={3}>
-                                Adicionar
-                            </Button>
-                            <Button onClick={() => toggleOpenModal()}>Cancelar</Button>
-                        </ModalFooter>
-                    </ModalContent>
-                </Modal>
+                <TasksFormModal
+                    openTaskModal={openTaskModal}
+                    toggleOpenModal={toggleOpenModal}
+                    validation={validation}
+                />
 
                 <TableWrapper toggleOpenModal={toggleOpenModal}>
                     <Datatable columns={makeColumnsTasksList()} data={data?.content || []}/>

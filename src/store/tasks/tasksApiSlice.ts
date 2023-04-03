@@ -4,9 +4,10 @@ const tasksApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getTasks: builder.query({
             query: () => ({
-                url: "/v1/tasks",
+                url: "/v1/tasks?size=50",
                 method: "GET"
             }),
+            providesTags: ['Tasks'],
             keepUnusedDataFor: 5,
         }),
         addTask: builder.mutation({
@@ -14,21 +15,24 @@ const tasksApiSlice = apiSlice.injectEndpoints({
                 url: "/v1/tasks",
                 method: "POST",
                 body: task
-            })
+            }),
+            invalidatesTags: ["Tasks"]
         }),
         updateTask: builder.mutation({
             query: ({task, id}) => ({
                 url: `/v1/tasks/${id}`,
                 method: 'PUT',
                 body: task
-            })
+            }),
+            invalidatesTags: ["Tasks"]
         }),
         deleteTask: builder.mutation({
             query: ({id}) => ({
                 url: `/todos/${id}`,
                 method: "DELETE",
                 body: id
-            })
+            }),
+            invalidatesTags: ["Tasks"]
         })
     })
 })

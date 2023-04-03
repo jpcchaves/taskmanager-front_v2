@@ -30,7 +30,8 @@ export const baseQueryWithAuth = async (args: string | FetchArgs, api: BaseQuery
 
 export const apiSlice = createApi({
     baseQuery: baseQueryWithAuth,
-    endpoints: builder => ({})
+    endpoints: builder => ({}),
+    tagTypes: ['Tasks']
 })
 
 
