@@ -5,21 +5,29 @@ import {Box, SimpleGrid} from '@chakra-ui/react';
 import {makeColumnsTasksList} from "./_core/factories/makeColumnsTasksList";
 import {Datatable} from "./components/datatable";
 import {useGetTasksQuery} from "../../../store/tasks/tasksApiSlice";
-import {useDispatch, useSelector} from "react-redux";
-import {selectTasksList, setTasks} from "../../../store/tasks/taskSlice";
+import {useDispatch} from "react-redux";
+import {setTasks} from "../../../store/tasks/taskSlice";
 import {TableWrapper} from "./components/tableWrapper";
+import {useEffect} from "react";
+import {ITasks} from "./components/models/ITasks";
+
+interface ITasksList {
+    content: ITasks[],
+    pageNo: number,
+    pageSize: number,
+    totalElements: number,
+    totalPages: number,
+    last: boolean
+}
 
 export default function TasksView() {
     const dispatch = useDispatch();
+
     const {data, isLoading} = useGetTasksQuery(null)
 
-    if (data) {
-        dispatch(setTasks(data.content))
-    }
-
-    const tasksList = useSelector(selectTasksList)
-
-    console.log(tasksList)
+    useEffect(() => {
+        dispatch(setTasks(data?.content))
+    }, [])
 
     return (
         <Box pt={{base: '130px', md: '80px', xl: '80px'}}>
