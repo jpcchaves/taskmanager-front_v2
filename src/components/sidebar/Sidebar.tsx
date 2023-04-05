@@ -59,18 +59,15 @@ export function SidebarResponsive(props: { routes: RoutesType[] }) {
     let menuColor = useColorModeValue('gray.400', 'white');
     // // SIDEBAR
     const {isOpen, onOpen, onClose} = useDisclosure();
-    const btnRef = React.useRef();
 
     const {routes} = props;
-    // let isWindows = navigator.platform.startsWith("Win");
     //  BRAND
 
     return (
         <Flex display={{sm: 'flex', xl: 'none'}} alignItems='center'>
 
             <Flex
-                // @ts-ignore
-                ref={btnRef} w='max-content' h='max-content' onClick={onOpen}>
+                w='max-content' h='max-content' onClick={() => onOpen()}>
                 <Icon
                     as={IoMenuOutline}
                     color={menuColor}
@@ -83,15 +80,15 @@ export function SidebarResponsive(props: { routes: RoutesType[] }) {
             </Flex>
             <Drawer
                 isOpen={isOpen}
-                onClose={onClose}
-                placement={document.documentElement.dir === 'rtl' ? 'right' : 'left'}
+                onClose={() => onClose()}
+                placement={'left'}
                 // @ts-ignore
-                finalFocusRef={btnRef}>
+            >
                 <DrawerOverlay/>
                 <DrawerContent w='285px' maxW='285px' bg={sidebarBackgroundColor}>
                     <DrawerCloseButton
                         zIndex='3'
-                        onClick={onClose}
+                        onClick={() => onClose()}
                         _focus={{boxShadow: 'none'}}
                         _hover={{boxShadow: 'none'}}
                     />
