@@ -4,7 +4,7 @@ import {UserLoginRequest} from "../../types/user/login/UserLoginRequest";
 
 export type AuthContextType = {
     user: User | null;
-    login: (args: UserLoginRequest) => Promise<boolean>;
+    login: (data: UserLoginRequest) => Promise<boolean>;
     logout: () => void;
 };
 
