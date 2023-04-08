@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { User } from "../../../types/user/User";
 import AuthService from "../../../modules/auth/_core/services/auth/impl/AuthServiceImpl";
 import { AuthContext } from "../context/AuthContext";
-import { ILoginResponse } from "../../../modules/auth/models/login/ILoginResponse";
 import { UserLoginRequest } from "../../../types/user/login/UserLoginRequest";
 import Toast, { ToastStatus } from "../../../factories/toast/makeToastFactory";
 import { SessionStorageUtils } from "../../../utils/SessionStorageUtils";
+import { isValidLoginResponse } from "../utils/isValidLoginResponse";
+import { UserRegisterRequest } from "../../../types/user/register/UserRegisterRequest";
 
 interface IProps {
   children: JSX.Element;
@@ -16,12 +17,12 @@ const AuthProvider = ({ children }: IProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [makeToast] = Toast();
 
-  const isValidLoginResponse = (args: ILoginResponse): boolean => {
-    return !!(args.user && args.tokenType && args.accessToken);
+  const toggleLoading = () => {
+    setIsLoading((prevState) => !prevState);
   };
 
-  const login = async (data: UserLoginRequest) => {
-    setIsLoading(true);
+  const login = async (data: UserLoginRequest): Promise<boolean> => {
+    toggleLoading();
     const valuesToSubmit = {
       usernameOrEmail: data.usernameOrEmail,
       password: data.password,
@@ -30,7 +31,7 @@ const AuthProvider = ({ children }: IProps) => {
     try {
       const { data: res } = await AuthService.login(valuesToSubmit);
 
-      setIsLoading(false);
+      toggleLoading();
       makeToast(
         "Usuário autenticado com sucesso!",
         "Você será redirecionado para o dashboard",
@@ -62,9 +63,14 @@ const AuthProvider = ({ children }: IProps) => {
         "top-right",
         true
       );
-      setIsLoading(false);
+      toggleLoading();
       // console.log(e);
     }
+  };
+
+  const register = (data: UserRegisterRequest) => {
+    toggleLoading();
+    return true;
   };
 
   const logout = () => {
@@ -74,7 +80,7 @@ const AuthProvider = ({ children }: IProps) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ user, isLoading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
