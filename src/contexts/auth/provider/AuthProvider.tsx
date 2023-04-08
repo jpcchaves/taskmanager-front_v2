@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {User} from "../../types/user/User";
-import AuthService from "../../services/auth/AuthService";
-import {AuthContext} from "./AuthContext";
-import {ILoginResponse} from "../../modules/auth/models/login/ILoginResponse";
-import {UserLoginRequest} from "../../types/user/login/UserLoginRequest";
-import {UserLoginResponse} from "../../types/user/login/UserLoginResponse";
+import {User} from "../../../types/user/User";
+import AuthService from "../../../services/auth/AuthService";
+import {AuthContext} from "../context/AuthContext";
+import {ILoginResponse} from "../../../modules/auth/models/login/ILoginResponse";
+import {UserLoginRequest} from "../../../types/user/login/UserLoginRequest";
+import {UserLoginResponse} from "../../../types/user/login/UserLoginResponse";
 
 interface IProps {
     children: JSX.Element
