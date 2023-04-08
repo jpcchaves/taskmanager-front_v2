@@ -4,10 +4,10 @@ import AuthService from "../../../modules/auth/_core/services/auth/impl/AuthServ
 import { AuthContext } from "../context/AuthContext";
 import { ILoginResponse } from "../../../modules/auth/models/login/ILoginResponse";
 import { UserLoginRequest } from "../../../types/user/login/UserLoginRequest";
-import { SessionStorageUtils } from "../../../modules/auth/utils/cache/SessionStorageUtils";
 import Toast, {
   ToastStatus,
 } from "../../../modules/auth/_core/factories/toast/makeToastFactory";
+import { SessionStorageUtils } from "../../../utils/SessionStorageUtils";
 
 interface IProps {
   children: JSX.Element;
