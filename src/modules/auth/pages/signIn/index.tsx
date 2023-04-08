@@ -41,7 +41,7 @@ function SignIn(props: any) {
     const textColorBrand = useColorModeValue("brand.500", "white");
     const brandStars = useColorModeValue("brand.500", "brand.400");
 
-    const {login} = useContext(AuthContext);
+    const {login, isLoading} = useContext(AuthContext);
 
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
@@ -247,7 +247,7 @@ function SignIn(props: any) {
                             h="50"
                             mb="24px"
                             type="submit"
-                            //   isLoading={isLoading}
+                            isLoading={isLoading}
                         >
                             Entrar
                         </Button>
