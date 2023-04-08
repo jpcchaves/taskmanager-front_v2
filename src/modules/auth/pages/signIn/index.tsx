@@ -1,21 +1,21 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {NavLink} from "react-router-dom";
 // Chakra imports
 import {
-  Box,
-  Button,
-  Checkbox,
-  Flex,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Heading,
-  Icon,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Text,
-  useColorModeValue,
+    Box,
+    Button,
+    Checkbox,
+    Flex,
+    FormControl,
+    FormErrorMessage,
+    FormLabel,
+    Heading,
+    Icon,
+    Input,
+    InputGroup,
+    InputRightElement,
+    Text,
+    useColorModeValue,
 } from "@chakra-ui/react";
 // Custom components
 import DefaultAuth from "../../../../layouts/auth/Default";
@@ -30,6 +30,7 @@ import {IUserRegisterResponse} from "../../models/register/IUserRegisterResponse
 
 import {connect} from 'react-redux';
 import {login} from "../../../../store/actions/user/actions";
+import {AuthContext} from "../../../../contexts/auth/context/AuthContext";
 
 
 function SignIn(props: any) {
@@ -40,10 +41,10 @@ function SignIn(props: any) {
     const textColorBrand = useColorModeValue("brand.500", "white");
     const brandStars = useColorModeValue("brand.500", "brand.400");
 
+    const {login} = useContext(AuthContext);
+
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
-
-    // const [loginService, isLoading] = makeLoginService();
 
     const cachedUser: IUserRegisterResponse = SessionStorageUtils.getItem("user");
 
@@ -58,20 +59,13 @@ function SignIn(props: any) {
         },
         validationSchema: signInValidation,
         onSubmit: async (values) => {
-            console.log(values);
-
-            // await loginService.login(values)
+            try {
+                await login(values);
+            } catch (e) {
+                console.log(values)
+            }
         },
     });
-
-    const login = () => {
-        const data = {
-            usernameOrEmail: "jpcchaves",
-            password: "123456"
-        }
-
-        return props.login(data);
-    }
 
     return (
         <DefaultAuth illustrationBackground={illustration} image={illustration}>
@@ -89,9 +83,6 @@ function SignIn(props: any) {
                 flexDirection="column"
             >
                 <Box me="auto">
-                    <Button onClick={() => login()}>
-                        logar
-                    </Button>
                     <Heading color={textColor} fontSize="36px" mb="10px">
                         Entrar
                     </Heading>

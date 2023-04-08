@@ -4,7 +4,7 @@ import AuthService from "../../../services/auth/AuthService";
 import {AuthContext} from "../context/AuthContext";
 import {ILoginResponse} from "../../../modules/auth/models/login/ILoginResponse";
 import {UserLoginRequest} from "../../../types/user/login/UserLoginRequest";
-import {UserLoginResponse} from "../../../types/user/login/UserLoginResponse";
+import {SessionStorageUtils} from "../../../modules/auth/utils/cache/SessionStorageUtils";
 
 interface IProps {
     children: JSX.Element
@@ -18,7 +18,18 @@ const AuthProvider = ({children}: IProps) => {
     }
 
     const login = async (data: UserLoginRequest) => {
-        const res: UserLoginResponse = await AuthService.login(data);
+
+        const valuesToSubmit = {
+            usernameOrEmail: data.usernameOrEmail,
+            password: data.password
+        }
+        const {data: res} = await AuthService.login(valuesToSubmit);
+
+        if (data.remember) {
+            SessionStorageUtils.saveUserAndToken(res);
+        } else {
+            SessionStorageUtils.saveToken("accessToken", res.accessToken);
+        }
 
         if (isValidLoginResponse(res)) {
             setUser(res.user)
