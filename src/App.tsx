@@ -9,6 +9,7 @@ import Profile from './modules/admin/profile';
 
 import theme from "./theme/theme";
 import {ChakraProvider} from "@chakra-ui/react";
+import RequireAuth from "./contexts/auth/components/RequireAuth";
 
 const App = () => {
     return (
@@ -19,13 +20,13 @@ const App = () => {
                 <Route path='/register' element={<SignUp/>}/>
 
                 {/* Protected Routes */}
-                {/*<Route element={<PrivateRoutes/>}>*/}
-                <Route element={<AdminLayout/>} path='/*'>
-                    <Route element={<MainDashboard/>} path='tarefas'/>
-                    <Route element={<Marketplace/>} path='dashboard'/>
-                    <Route element={<Profile/>} path='perfil'/>
+                <Route element={<RequireAuth/>}>
+                    <Route element={<AdminLayout/>} path='/*'>
+                        <Route element={<MainDashboard/>} path='tarefas'/>
+                        <Route element={<Marketplace/>} path='dashboard'/>
+                        <Route element={<Profile/>} path='perfil'/>
+                    </Route>
                 </Route>
-                {/*</Route>*/}
             </Routes>
         </ChakraProvider>
     );
