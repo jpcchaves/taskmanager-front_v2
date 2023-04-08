@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { User } from "../../../types/user/User";
-import AuthService from "../../../services/auth/AuthService";
+import AuthService from "../../../modules/auth/_core/services/auth/impl/AuthServiceImpl";
 import { AuthContext } from "../context/AuthContext";
 import { ILoginResponse } from "../../../modules/auth/models/login/ILoginResponse";
 import { UserLoginRequest } from "../../../types/user/login/UserLoginRequest";
@@ -65,7 +65,7 @@ const AuthProvider = ({ children }: IProps) => {
         true
       );
       setIsLoading(false);
-      console.log(e);
+      // console.log(e);
     }
   };
 
