@@ -1,4 +1,4 @@
-import { makeItems } from "../modules/auth/_core/factories/sessionStorage/makeItemsFactory";
+import { makeItems } from "../factories/makeSessionStorageItems/makeItemsFactory";
 
 export interface IItems {
   key: string;

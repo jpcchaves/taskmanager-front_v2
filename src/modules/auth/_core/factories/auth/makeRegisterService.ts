@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 // import {useRegisterMutation} from "../../../../../store/auth/authApiSlice";
 // import {RegisterServiceImpl} from "../../services/impl/RegisterServiceImpl";
-import Toast from "../toast/makeToastFactory";
+import Toast from "../../../../../factories/toast/makeToastFactory";
 
 const MakeRegisterService = (): null => {
   const navigate = useNavigate();

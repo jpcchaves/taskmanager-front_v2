@@ -7,7 +7,7 @@ import { UserRegisterRequest } from "../../../../../../types/user/register/UserR
 import { UserRegisterResponse } from "../../../../../../types/user/register/UserRegisterResponse";
 
 class AuthServiceImpl implements AuthService {
-  login(
+  async login(
     data: UserLoginRequest
   ): Promise<AxiosResponse<UserLoginResponse, UserLoginRequest>> {
     return http.post<UserLoginResponse>(
@@ -16,7 +16,7 @@ class AuthServiceImpl implements AuthService {
     );
   }
 
-  register(
+  async register(
     data: UserRegisterRequest
   ): Promise<AxiosResponse<UserRegisterResponse, UserRegisterRequest>> {
     return http.post<UserRegisterResponse>(
