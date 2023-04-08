@@ -1,4 +1,4 @@
-import {ToastPositionWithLogical, useToast} from "@chakra-ui/react";
+import {ToastPosition, useToast} from "@chakra-ui/react";
 
 export enum ToastStatus {
     info = "info",
@@ -14,7 +14,7 @@ const Toast = () => {
                        description: string,
                        status: ToastStatus,
                        duration: number,
-                       position: ToastPositionWithLogical,
+                       position: ToastPosition,
                        isClosable: boolean,
     ) => {
         toast({
