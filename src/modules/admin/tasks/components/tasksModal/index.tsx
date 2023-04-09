@@ -107,7 +107,7 @@ const TasksFormModal = ({ id, isOpen, onClose }: IProps) => {
               <FormLabel>Prazo</FormLabel>
               <Input
                 variant="auth"
-                type="date"
+                type="datetime-local"
                 name="deadline"
                 onChange={(e) => {
                   validation.handleChange(e);
