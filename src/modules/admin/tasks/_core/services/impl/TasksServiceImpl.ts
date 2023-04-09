@@ -6,24 +6,26 @@ import { Task } from "../../../../../../types/tasks/Task";
 import { TaskCreate } from "../../../../../../types/tasks/TaskCreate";
 
 class TasksServiceImpl implements TasksService {
+  private readonly taskApiUrl = import.meta.env.VITE_API_TASKS_ENDPOINT;
+
   async getAll(): Promise<AxiosResponse<TasksPaginated>> {
-    return http.get(import.meta.env.VITE_API_TASKS_ENDPOINT + "?size=100");
+    return http.get(this.taskApiUrl + "?size=100");
   }
 
   async create(data: TaskCreate): Promise<AxiosResponse<Task>> {
-    return Promise.resolve(undefined);
+    return http.post(this.taskApiUrl, data);
   }
 
   async delete(id: string): Promise<void> {
-    return Promise.resolve(undefined);
+    return http.delete(`${this.taskApiUrl}/${id}`);
   }
 
   async getById(id: string): Promise<AxiosResponse<Task>> {
-    return Promise.resolve(undefined);
+    return http.get(`${this.taskApiUrl}/${id}`);
   }
 
   async update(id: string, data: Task): Promise<AxiosResponse<Task>> {
-    return Promise.resolve(undefined);
+    return http.put(`${this.taskApiUrl}/${id}`, data);
   }
 }
 
