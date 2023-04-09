@@ -18,7 +18,9 @@ const App = () => {
       {/* Protected Routes */}
       <Route element={<RequireAuth />}>
         <Route element={<AdminLayout />} path="/*">
-          <Route element={<MainDashboard />} path="tarefas" />
+          <Route element={<MainDashboard />} path="tarefas/*">
+            <Route element={<MainDashboard />} path="editar/:id" />
+          </Route>
           <Route element={<Marketplace />} path="dashboard" />
           <Route element={<Profile />} path="perfil" />
         </Route>

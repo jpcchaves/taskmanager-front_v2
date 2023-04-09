@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 import { MdLogout } from "react-icons/md";
-import { useDispatch } from "react-redux";
+
 // import {logout} from "../../../store/auth/authSlice";
 
 export function SidebarLinks(props: { routes: RoutesType[] }) {
@@ -43,7 +43,12 @@ export function SidebarLinks(props: { routes: RoutesType[] }) {
     return routes.map((route: RoutesType, index: number) => {
       if (route.layout === "/") {
         return (
-          <NavLink key={index} to={route.path}>
+          <NavLink
+            key={index}
+            to={
+              route.path.includes("*") ? route.path.split("/*")[0] : route.path
+            }
+          >
             {route.icon ? (
               <Box>
                 <HStack

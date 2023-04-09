@@ -11,9 +11,13 @@ import {
 } from "react-icons/md";
 import { Box, Icon } from "@chakra-ui/react";
 
-interface IProps {}
+interface IProps {
+  handleEdit: (id: string) => void;
+}
 
-export const makeColumnsTasksList = (): TableColumn<any>[] => {
+export const makeColumnsTasksList = ({
+  handleEdit,
+}: IProps): TableColumn<any>[] => {
   return [
     {
       name: "Tarefa",
@@ -59,7 +63,7 @@ export const makeColumnsTasksList = (): TableColumn<any>[] => {
             alignItems="center"
             gap="2"
           >
-            <Box onClick={() => console.log("editar")}>
+            <Box onClick={() => handleEdit(cell.id)}>
               <Icon
                 cursor="pointer"
                 as={MdEditSquare}

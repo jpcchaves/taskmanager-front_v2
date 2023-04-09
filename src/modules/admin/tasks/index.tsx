@@ -7,7 +7,7 @@ import { Datatable } from "./components/datatable";
 import { TableWrapper } from "./components/tableWrapper";
 import { useCallback, useContext, useEffect } from "react";
 import { TasksContext } from "../../../contexts/tasks/context/TasksContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TasksFormModal from "./components/tasksModal";
 
 export default function TasksView() {
@@ -15,6 +15,7 @@ export default function TasksView() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const getTasks = useCallback(async () => {
     await getAll();
@@ -24,13 +25,17 @@ export default function TasksView() {
     getTasks();
   }, []);
 
+  const handleEdit = (id: string) => {
+    navigate(`/tarefas/editar/${id}`);
+  };
+
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap="20px">
         <TasksFormModal id={id} isOpen={isOpen} onClose={onClose} />
         <TableWrapper onOpen={onOpen}>
           <Datatable
-            columns={makeColumnsTasksList()}
+            columns={makeColumnsTasksList({ handleEdit })}
             data={tasks?.content || []}
           />
         </TableWrapper>
