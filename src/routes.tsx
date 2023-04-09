@@ -3,31 +3,31 @@ import {MdHome, MdOutlineShoppingCart, MdPerson} from 'react-icons/md';
 
 // Admin Imports
 import MainDashboard from './modules/admin/default';
-import NFTMarketplace from './modules/admin/marketplace';
 import Profile from './modules/admin/profile';
+import TasksView from "./modules/admin/tasks";
 
 // Auth Imports
 
 const routes = [
     {
         name: 'Tarefas',
-        layout: '/tk',
-        path: '/tasks',
+        layout: '/',
+        path: '/tarefas',
         icon: <Icon as={MdHome} width='20px' height='20px' color='inherit'/>,
-        component: <MainDashboard/>
+        component: <TasksView/>
     },
     {
         name: 'Dashboard',
-        layout: '/tk',
+        layout: '/',
         path: '/dashboard',
         icon: <Icon as={MdOutlineShoppingCart} width='20px' height='20px' color='inherit'/>,
-        component: <NFTMarketplace/>,
+        component: <MainDashboard/>,
         secondary: true
     },
     {
         name: 'Perfil',
-        layout: '/tk',
-        path: '/profile',
+        layout: '/',
+        path: '/perfil',
         icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit'/>,
         component: <Profile/>
     },

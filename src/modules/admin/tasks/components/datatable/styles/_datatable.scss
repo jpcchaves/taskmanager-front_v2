@@ -1,0 +1,147 @@
+[data-theme='dark'] .rdt_Table {
+  background-color: transparent !important;
+  color: white;
+  border-radius: 8px !important;
+}
+
+.rdt_TableRow:hover .actions-hidden {
+  display: flex !important;
+  position: absolute;
+  right: 10%;
+}
+
+.table-container {
+  border-radius: 8px;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #233070 #111c44;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #111c44;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #233070;
+  border-radius: 10px;
+  border: 1px solid #333333;
+}
+
+
+// Classes referêntes ao header da datatable (modo dark e modo light)
+[data-theme='dark'] .rdt_TableHeadRow {
+  background-color: transparent !important;
+  border-bottom-style: dashed !important;
+  border-bottom-color: transparent !important;
+  color: white;
+}
+
+.rdt_TableHeadRow {
+  border-bottom-color: transparent !important;
+}
+
+
+[data-theme='dark'] .actions-hidden {
+  display: none !important;
+}
+
+.actions-hidden {
+  display: none !important;
+}
+
+[data-theme='light'] .actions-hidden {
+  border-radius: 10px;
+  background-color: rgba(218, 218, 218, 0.3) !important;
+}
+
+.rdt_TableRow {
+  background-color: rgba(0, 0, 0, 0.01) !important;
+  color: white;
+  border-bottom-color: transparent !important;
+  border-bottom: none !important;
+  margin-top: 5px;
+  border-radius: 8px;
+}
+
+[data-theme='dark'] .rdt_TableRow {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: white;
+  border-bottom-style: dashed !important;
+  border-bottom-width: 0 !important;
+  border-bottom-color: transparent !important;
+  margin-top: 5px;
+  border-radius: 8px;
+}
+
+[data-theme='dark'] .rdt_TableCol {
+  background-color: transparent !important;
+  color: white;
+}
+
+[data-theme='dark'] .rdt_TableCol_Sortable {
+  background-color: transparent !important;
+  color: white;
+}
+
+[data-theme='dark'] .rdt_TableCell {
+  background-color: transparent !important;
+  color: white;
+}
+
+[data-theme='dark'] .rdt_TableHeader {
+  background-color: transparent !important;
+  color: white;
+}
+
+[data-theme='dark'] .rdt_TableFooter {
+  background-color: transparent !important;
+  color: white;
+}
+
+[data-theme='dark'] .rdt_TableHead {
+  background-color: transparent !important;
+  color: white;
+}
+
+
+[data-theme='dark'] .rdt_TableBody {
+  background-color: transparent !important;
+  color: white;
+}
+
+[data-theme='dark'] .rdt_ExpanderRow {
+  background-color: transparent !important;
+  color: white;
+}
+
+// Pagination (modo dark / light)
+[data-theme='dark'] .rdt_Pagination {
+  background-color: transparent !important;
+  color: white !important;
+  fill: #fff5f8 !important;
+  border-top-color: red !important;
+  border-top: none !important;
+  margin-top: 10px !important;
+}
+
+.rdt_Pagination {
+  border-top: none !important;
+  border-radius: 8px;
+  margin-top: 10px !important;
+}
+
+// Buttons pagination in dark
+[data-theme='dark'] .rdt_Pagination button {
+  fill: #fff5f8 !important;
+}
+
+// Fim de pagination

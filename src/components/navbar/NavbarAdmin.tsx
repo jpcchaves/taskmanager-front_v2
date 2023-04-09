@@ -3,6 +3,7 @@
 import {Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Link, useColorModeValue} from '@chakra-ui/react';
 import {useEffect, useState} from 'react';
 import AdminNavbarLinks from "../../components/navbar/NavbarLinksAdmin";
+import {useLocation} from "react-router-dom";
 
 export default function AdminNavbar(props: {
     secondary: boolean;
@@ -13,6 +14,14 @@ export default function AdminNavbar(props: {
     onOpen: (...args: any[]) => any;
 }) {
     const [scrolled, setScrolled] = useState(false);
+
+    const location = useLocation();
+
+    const locationPath = location.pathname.split("/")[1];
+
+    const path = locationPath.slice(1, 99);
+    const currentPath = locationPath.slice(0, 1).toUpperCase() + path
+
 
     useEffect(() => {
         window.addEventListener('scroll', changeNavbar);
@@ -36,6 +45,7 @@ export default function AdminNavbar(props: {
     let secondaryMargin = '0px';
     let paddingX = '15px';
     let gap = '0px';
+
     const changeNavbar = () => {
         if (window.scrollY > 1) {
             setScrolled(true);
@@ -98,13 +108,13 @@ export default function AdminNavbar(props: {
                     <Breadcrumb>
                         <BreadcrumbItem color={secondaryText} fontSize='sm' mb='5px'>
                             <BreadcrumbLink href='#' color={secondaryText}>
-                                Pages
+                                Página
                             </BreadcrumbLink>
                         </BreadcrumbItem>
 
                         <BreadcrumbItem color={secondaryText} fontSize='sm'>
                             <BreadcrumbLink href='#' color={secondaryText}>
-                                {brandText}
+                                {currentPath}
                             </BreadcrumbLink>
                         </BreadcrumbItem>
                     </Breadcrumb>
@@ -125,7 +135,7 @@ export default function AdminNavbar(props: {
                         _focus={{
                             boxShadow: 'none'
                         }}>
-                        {brandText}
+                        {currentPath}
                     </Link>
                 </Box>
                 <Box ms='auto' w={{sm: '100%', md: 'unset'}}>

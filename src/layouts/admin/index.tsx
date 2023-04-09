@@ -46,7 +46,7 @@ export default function Dashboard(props: { [x: string]: any }) {
     };
     const getRoutes = (routes: ({ layout: string; path: string; component: ReactNode; name: string; icon: JSX.Element } | { layout: string; secondary: boolean; path: string; component: JSX.Element; name: string; icon: JSX.Element } | { layout: string; path: string; component: JSX.Element; name: string; icon: JSX.Element } | { layout: string; path: string; component: JSX.Element; name: string; icon: JSX.Element })[]): any => {
         return routes.map((route: RoutesType, key: any) => {
-            if (route.layout === '/tk') {
+            if (route.layout === '/') {
                 return <Route path={route.path} element={route.component} key={key}/>;
             } else {
                 return null;
