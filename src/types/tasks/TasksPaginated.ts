@@ -1,4 +1,4 @@
-import { ITasks } from "../../modules/admin/tasks/components/models/ITasks";
+import { ITasks } from "../../modules/admin/tasks/models/ITasks";
 
 export type TasksPaginated = {
   content: ITasks[];
