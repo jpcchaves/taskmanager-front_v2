@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 // Chakra imports
 import {
@@ -25,10 +25,12 @@ import { RiEyeCloseLine } from "react-icons/ri";
 
 import { useFormik } from "formik";
 import { IUserRegisterRequest } from "../../models/register/IUserRegisterRequest";
-import makeAuthRegisterService from "../../_core/factories/auth/makeRegisterService";
 import { signUpValidation } from "../../utils/validation/signUpValidation";
+import { AuthContext } from "../../../../contexts/auth/context/AuthContext";
 
 function SignUp() {
+  const { register } = useContext(AuthContext);
+
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
@@ -60,9 +62,7 @@ function SignUp() {
     },
     validationSchema: signUpValidation,
     onSubmit: async (values: IUserRegisterRequest) => {
-      console.log(values);
-
-      // await authService.register(values);
+      await register(values);
     },
   });
 

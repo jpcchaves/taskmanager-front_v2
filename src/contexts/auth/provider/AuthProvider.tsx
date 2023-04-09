@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { User } from "../../../types/user/User";
 import AuthService from "../../../modules/auth/_core/services/auth/impl/AuthServiceImpl";
 import { AuthContext } from "../context/AuthContext";
@@ -15,6 +16,9 @@ interface IProps {
 const AuthProvider = ({ children }: IProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+
   const [makeToast] = Toast();
 
   const toggleLoading = () => {
@@ -23,6 +27,7 @@ const AuthProvider = ({ children }: IProps) => {
 
   const login = async (data: UserLoginRequest): Promise<boolean> => {
     toggleLoading();
+
     const valuesToSubmit = {
       usernameOrEmail: data.usernameOrEmail,
       password: data.password,
@@ -30,10 +35,12 @@ const AuthProvider = ({ children }: IProps) => {
 
     try {
       const { data: res } = await AuthService.login(valuesToSubmit);
-
       toggleLoading();
+
+      navigate("/tarefas");
+
       makeToast(
-        "Usuário autenticado com sucesso!",
+        "Usuário autenticado com sucesso",
         "Você será redirecionado para o dashboard",
         ToastStatus.success,
         3000,
@@ -57,7 +64,7 @@ const AuthProvider = ({ children }: IProps) => {
       makeToast(
         "Ocorreu um erro!",
         e?.response?.data?.message ||
-          "Ocorreu um erro inesperado! Por favor, tente novamente.",
+          "Ocorreu um erro inesperado! Por favor, tente novamente",
         ToastStatus.error,
         3000,
         "top-right",
@@ -68,8 +75,37 @@ const AuthProvider = ({ children }: IProps) => {
     }
   };
 
-  const register = (data: UserRegisterRequest) => {
+  const register = async (data: UserRegisterRequest) => {
     toggleLoading();
+
+    await AuthService.register(data)
+      .then(() => {
+        toggleLoading();
+        makeToast(
+          "Usuário criado com sucesso!",
+          "Você será redirecionado para a tela de login",
+          ToastStatus.success,
+          3000,
+          "top-right",
+          true
+        );
+
+        setTimeout(() => {
+          navigate("/login");
+        }, 1000);
+      })
+      .catch((e) => {
+        toggleLoading();
+        makeToast(
+          "Ocorreu um erro!",
+          e?.response?.data?.message ||
+            "Ocorreu um erro inesperado! Por favor, tente novamente",
+          ToastStatus.error,
+          3000,
+          "top-right",
+          true
+        );
+      });
     return true;
   };
 
