@@ -18,6 +18,7 @@ import { TasksContext } from "../../../../../contexts/tasks/context/TasksContext
 import { tasKValidation } from "../../utils/validation/taskValidationSchema";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { TaskCreateAndUpdate } from "../../../../../types/tasks/TaskCreateAndUpdate";
 
 interface IProps {
   id: string;
@@ -52,16 +53,16 @@ const TasksFormModal = ({ id, isOpen, onClose }: IProps) => {
         .format("YYYY-MM-DDTHH:mm")
         .toString();
 
-      const valuesToSubmit = {
+      const valuesToSubmit: TaskCreateAndUpdate = {
         task,
         deadline: formattedDate,
         concluded,
       };
 
       if (id) {
-        await update(id, valuesToSubmit);
+        await update({ id, data: valuesToSubmit, onClose, validation });
       } else {
-        await create(valuesToSubmit, onClose, validation);
+        await create({ data: valuesToSubmit, onClose, validation });
       }
     },
   });

@@ -1,19 +1,15 @@
 import { Task } from "../../../types/tasks/Task";
 import { createContext } from "react";
 import { TasksPaginated } from "../../../types/tasks/TasksPaginated";
-import { TaskCreateAndUpdate } from "../../../types/tasks/TaskCreateAndUpdate";
-import { FormikValues } from "formik";
+import { IArgsUpdate } from "../types/IArgsUpdate";
+import { IArgsCreate } from "../types/IArgsCreate";
 
 export type TasksContextType = {
   isLoading: boolean;
-  create: (
-    data: TaskCreateAndUpdate,
-    onClose: () => void,
-    validation: FormikValues
-  ) => Promise<void>;
+  create: ({ data, onClose, validation }: IArgsCreate) => Promise<void>;
   getAll: () => Promise<void>;
   getById: (id: string) => Promise<void>;
-  update: (id: string, data: TaskCreateAndUpdate) => Promise<void>;
+  update: ({ onClose, validation, data, id }: IArgsUpdate) => Promise<void>;
   deleteTask: (id: string) => Promise<void>;
   clearTask: () => void;
   tasks: TasksPaginated;

@@ -3,9 +3,9 @@ import { useState } from "react";
 import { Task } from "../../../types/tasks/Task";
 import TasksServiceImpl from "../../../modules/admin/tasks/_core/services/impl/TasksServiceImpl";
 import { TasksPaginated } from "../../../types/tasks/TasksPaginated";
-import { TaskCreateAndUpdate } from "../../../types/tasks/TaskCreateAndUpdate";
 import Toast, { ToastStatus } from "../../../factories/toast/makeToastFactory";
-import { FormikValues } from "formik";
+import { IArgsUpdate } from "../types/IArgsUpdate";
+import { IArgsCreate } from "../types/IArgsCreate";
 
 interface IProps {
   children: JSX.Element;
@@ -22,11 +22,7 @@ const TasksProvider = ({ children }: IProps) => {
     setIsLoading((prevState) => !prevState);
   };
 
-  const create = async (
-    data: TaskCreateAndUpdate,
-    onClose: () => void,
-    validation: FormikValues
-  ) => {
+  const create = async ({ data, onClose, validation }: IArgsCreate) => {
     toggleLoading();
     try {
       await TasksServiceImpl.create(data);
@@ -90,7 +86,7 @@ const TasksProvider = ({ children }: IProps) => {
     }
   };
 
-  const update = async (id: string, data: TaskCreateAndUpdate) => {
+  const update = async ({ onClose, validation, id, data }: IArgsUpdate) => {
     toggleLoading();
     try {
       await TasksServiceImpl.update(id, data);
@@ -108,6 +104,8 @@ const TasksProvider = ({ children }: IProps) => {
 
       await getAll();
 
+      onClose();
+      validation.resetForm();
       toggleLoading();
     } catch (e: any) {
       makeToast(
