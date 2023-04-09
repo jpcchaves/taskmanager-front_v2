@@ -17,7 +17,6 @@ import { useFormik } from "formik";
 import { TasksContext } from "../../../../../contexts/tasks/context/TasksContext";
 import { tasKValidation } from "../../utils/validation/taskValidationSchema";
 import moment from "moment";
-import { TaskCreate } from "../../../../../types/tasks/TaskCreate";
 import { useNavigate } from "react-router-dom";
 
 interface IProps {
@@ -27,17 +26,23 @@ interface IProps {
 }
 
 const TasksFormModal = ({ id, isOpen, onClose }: IProps) => {
-  const { isLoading, create, task, clearTask } = useContext(TasksContext);
+  const {
+    isLoading,
+    create,
+    update,
+    task: taskById,
+    clearTask,
+  } = useContext(TasksContext);
   const navigate = useNavigate();
 
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      task: task ? task.task : "",
-      deadline: task
-        ? moment(task.deadline).utc().format("YYYY-MM-DDThh:mm")
+      task: taskById ? taskById.task : "",
+      deadline: taskById
+        ? moment(taskById.deadline).utc().format("YYYY-MM-DDThh:mm")
         : "",
-      concluded: task ? task.concluded : false,
+      concluded: taskById ? taskById.concluded : false,
     },
     validationSchema: tasKValidation,
     onSubmit: async (values) => {
@@ -47,20 +52,16 @@ const TasksFormModal = ({ id, isOpen, onClose }: IProps) => {
         .format("YYYY-MM-DDTHH:mm")
         .toString();
 
-      const valuesToSubmit: TaskCreate = {
+      const valuesToSubmit = {
         task,
         deadline: formattedDate,
         concluded,
       };
 
       if (id) {
-        //
+        await update(id, valuesToSubmit);
       } else {
-        try {
-          await create(valuesToSubmit, onClose, validation);
-        } catch (e) {
-          // console.log(e);
-        }
+        await create(valuesToSubmit, onClose, validation);
       }
     },
   });

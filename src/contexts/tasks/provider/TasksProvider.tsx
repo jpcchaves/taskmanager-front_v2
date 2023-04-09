@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Task } from "../../../types/tasks/Task";
 import TasksServiceImpl from "../../../modules/admin/tasks/_core/services/impl/TasksServiceImpl";
 import { TasksPaginated } from "../../../types/tasks/TasksPaginated";
-import { TaskCreate } from "../../../types/tasks/TaskCreate";
+import { TaskCreateAndUpdate } from "../../../types/tasks/TaskCreateAndUpdate";
 import Toast, { ToastStatus } from "../../../factories/toast/makeToastFactory";
 import { FormikValues } from "formik";
 
@@ -23,7 +23,7 @@ const TasksProvider = ({ children }: IProps) => {
   };
 
   const create = async (
-    data: TaskCreate,
+    data: TaskCreateAndUpdate,
     onClose: () => void,
     validation: FormikValues
   ) => {
@@ -34,7 +34,7 @@ const TasksProvider = ({ children }: IProps) => {
       toggleLoading();
 
       makeToast(
-        "Task criada",
+        "Task criada com sucesso!",
         `Você criou a task: ${data?.task}`,
         ToastStatus.success,
         3000,
@@ -44,7 +44,38 @@ const TasksProvider = ({ children }: IProps) => {
 
       onClose();
       validation.resetForm();
-      return true;
+    } catch (e: any) {
+      toggleLoading();
+      makeToast(
+        "Ocorreu um erro!",
+        e?.response?.data?.message ||
+          "Ocorreu um erro inesperado! Por favor, tente novamente",
+        ToastStatus.error,
+        3000,
+        "top-right",
+        true
+      );
+    }
+  };
+
+  const getAll = async () => {
+    toggleLoading();
+    try {
+      const { data: res } = await TasksServiceImpl.getAll();
+      setTasks(res);
+      toggleLoading();
+    } catch (e) {
+      toggleLoading();
+      // console.log(e)
+    }
+  };
+
+  const getById = async (id: string) => {
+    toggleLoading();
+    try {
+      const { data: res } = await TasksServiceImpl.getById(id);
+      setTask(res);
+      toggleLoading();
     } catch (e: any) {
       makeToast(
         "Ocorreu um erro!",
@@ -55,35 +86,40 @@ const TasksProvider = ({ children }: IProps) => {
         "top-right",
         true
       );
-      return false;
+      toggleLoading();
     }
   };
 
-  const getAll = async () => {
+  const update = async (id: string, data: TaskCreateAndUpdate) => {
     toggleLoading();
     try {
-      const { data: res } = await TasksServiceImpl.getAll();
-      setTasks(res);
-      toggleLoading();
-      return true;
-    } catch (e) {
-      toggleLoading();
-      // console.log(e)
-      return false;
-    }
-  };
+      await TasksServiceImpl.update(id, data);
 
-  const getById = async (id: string) => {
-    toggleLoading();
-    try {
-      const { data: res } = await TasksServiceImpl.getById(id);
-      setTask(res);
-      toggleLoading();
+      makeToast(
+        "Task editada com sucesso!",
+        `Você editou a task: ${data?.task}`,
+        ToastStatus.success,
+        3000,
+        "top-right",
+        true
+      );
 
-      return true;
+      clearTask();
+
+      getAll();
+
+      toggleLoading();
     } catch (e: any) {
+      makeToast(
+        "Ocorreu um erro!",
+        e?.response?.data?.message ||
+          "Ocorreu um erro inesperado! Por favor, tente novamente",
+        ToastStatus.error,
+        3000,
+        "top-right",
+        true
+      );
       toggleLoading();
-      return false;
     }
   };
 
@@ -93,7 +129,16 @@ const TasksProvider = ({ children }: IProps) => {
 
   return (
     <TasksContext.Provider
-      value={{ isLoading, task, tasks, getAll, create, getById, clearTask }}
+      value={{
+        isLoading,
+        task,
+        tasks,
+        getAll,
+        create,
+        getById,
+        clearTask,
+        update,
+      }}
     >
       {children}
     </TasksContext.Provider>

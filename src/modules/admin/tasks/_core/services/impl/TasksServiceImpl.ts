@@ -3,7 +3,7 @@ import { AxiosResponse } from "axios";
 import http from "../../../../../../http-common/http";
 import { TasksPaginated } from "../../../../../../types/tasks/TasksPaginated";
 import { Task } from "../../../../../../types/tasks/Task";
-import { TaskCreate } from "../../../../../../types/tasks/TaskCreate";
+import { TaskCreateAndUpdate } from "../../../../../../types/tasks/TaskCreateAndUpdate";
 
 class TasksServiceImpl implements TasksService {
   private readonly taskApiUrl = import.meta.env.VITE_API_TASKS_ENDPOINT;
@@ -12,7 +12,7 @@ class TasksServiceImpl implements TasksService {
     return http.get(this.taskApiUrl + "?size=100");
   }
 
-  async create(data: TaskCreate): Promise<AxiosResponse<Task>> {
+  async create(data: TaskCreateAndUpdate): Promise<AxiosResponse<Task>> {
     return http.post(this.taskApiUrl, data);
   }
 
@@ -24,7 +24,10 @@ class TasksServiceImpl implements TasksService {
     return http.get(`${this.taskApiUrl}/${id}`);
   }
 
-  async update(id: string, data: Task): Promise<AxiosResponse<Task>> {
+  async update(
+    id: string,
+    data: TaskCreateAndUpdate
+  ): Promise<AxiosResponse<Task>> {
     return http.put(`${this.taskApiUrl}/${id}`, data);
   }
 }
