@@ -1,10 +1,10 @@
-import http from "../../../../../../http-common/http";
+import http from "../../../../../http-common/http";
 import { AxiosResponse } from "axios";
-import { UserLoginRequest } from "../../../../../../types/user/login/UserLoginRequest";
-import { UserLoginResponse } from "../../../../../../types/user/login/UserLoginResponse";
+import { UserLoginRequest } from "../../../../../types/user/login/UserLoginRequest";
+import { UserLoginResponse } from "../../../../../types/user/login/UserLoginResponse";
 import { AuthService } from "../models/AuthService";
-import { UserRegisterRequest } from "../../../../../../types/user/register/UserRegisterRequest";
-import { UserRegisterResponse } from "../../../../../../types/user/register/UserRegisterResponse";
+import { UserRegisterRequest } from "../../../../../types/user/register/UserRegisterRequest";
+import { UserRegisterResponse } from "../../../../../types/user/register/UserRegisterResponse";
 
 class AuthServiceImpl implements AuthService {
   async login(

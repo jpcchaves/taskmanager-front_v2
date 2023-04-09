@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "../../../types/user/User";
-import AuthService from "../../../modules/auth/_core/services/auth/impl/AuthServiceImpl";
+import AuthService from "../../../modules/auth/_core/services/impl/AuthServiceImpl";
 import { AuthContext } from "../context/AuthContext";
 import { UserLoginRequest } from "../../../types/user/login/UserLoginRequest";
 import Toast, { ToastStatus } from "../../../factories/toast/makeToastFactory";
 import { SessionStorageUtils } from "../../../utils/SessionStorageUtils";
 import { isValidLoginResponse } from "../utils/isValidLoginResponse";
 import { UserRegisterRequest } from "../../../types/user/register/UserRegisterRequest";
+import http from "../../../http-common/http";
 
 interface IProps {
   children: JSX.Element;
@@ -37,8 +38,6 @@ const AuthProvider = ({ children }: IProps) => {
       const { data: res } = await AuthService.login(valuesToSubmit);
       toggleLoading();
 
-      navigate("/tarefas");
-
       makeToast(
         "Usuário autenticado com sucesso",
         "Você será redirecionado para o dashboard",
@@ -56,6 +55,12 @@ const AuthProvider = ({ children }: IProps) => {
 
       if (isValidLoginResponse(res)) {
         setUser(res.user);
+
+        http.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${res?.accessToken}`;
+
+        navigate("/tarefas");
         return true;
       } else {
         return false;
