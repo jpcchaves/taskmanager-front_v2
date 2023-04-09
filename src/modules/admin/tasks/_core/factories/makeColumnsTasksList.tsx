@@ -1,6 +1,7 @@
 import * as React from "react";
 // import {ITasks} from "../../variables/tableDataTasks";
 import { TableColumn } from "react-data-table-component";
+import moment from "moment";
 
 import {
   MdCheckCircleOutline,
@@ -21,12 +22,12 @@ export const makeColumnsTasksList = (): TableColumn<any>[] => {
     },
     {
       name: "Data de Criação",
-      selector: (row) => row.createdAt,
+      selector: (row) => moment(row.createdAt).format("DD/MM/YYYY"),
       sortable: true,
     },
     {
       name: "Prazo",
-      selector: (row) => row.deadline,
+      selector: (row) => moment(row.deadline).utc().format("DD/MM/YYYY"),
       sortable: true,
     },
     {
