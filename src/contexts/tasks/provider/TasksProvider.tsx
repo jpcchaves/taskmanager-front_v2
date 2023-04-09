@@ -77,7 +77,6 @@ const TasksProvider = ({ children }: IProps) => {
     toggleLoading();
     try {
       const { data: res } = await TasksServiceImpl.getById(id);
-      console.log(res);
       setTask(res);
       toggleLoading();
 
