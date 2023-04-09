@@ -30,6 +30,7 @@ const TasksProvider = ({ children }: IProps) => {
     toggleLoading();
     try {
       await TasksServiceImpl.create(data);
+      await getAll();
       toggleLoading();
 
       makeToast(
