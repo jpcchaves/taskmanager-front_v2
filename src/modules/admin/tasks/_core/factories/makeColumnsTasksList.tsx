@@ -13,10 +13,12 @@ import { Box, Icon } from "@chakra-ui/react";
 
 interface IProps {
   handleEdit: (id: string) => void;
+  handleDelete: (id: string) => void;
 }
 
 export const makeColumnsTasksList = ({
   handleEdit,
+  handleDelete,
 }: IProps): TableColumn<any>[] => {
   return [
     {
@@ -75,11 +77,9 @@ export const makeColumnsTasksList = ({
                   color: "green.500",
                 }}
                 boxSize={5}
-              >
-                Editar{" "}
-              </Icon>
+              />
             </Box>
-            <Box onClick={() => console.log("editar")}>
+            <Box onClick={() => handleDelete(cell.id)}>
               <Icon
                 cursor="pointer"
                 as={MdDelete}
@@ -91,9 +91,7 @@ export const makeColumnsTasksList = ({
                   transform: "scale(1.1)",
                   color: "red.500",
                 }}
-              >
-                excluir
-              </Icon>
+              />
             </Box>
           </Box>
         );

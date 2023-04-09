@@ -14,6 +14,7 @@ export type TasksContextType = {
   getAll: () => Promise<void>;
   getById: (id: string) => Promise<void>;
   update: (id: string, data: TaskCreateAndUpdate) => Promise<void>;
+  deleteTask: (id: string) => Promise<void>;
   clearTask: () => void;
   tasks: TasksPaginated;
   task: Task;

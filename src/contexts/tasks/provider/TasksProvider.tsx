@@ -106,7 +106,38 @@ const TasksProvider = ({ children }: IProps) => {
 
       clearTask();
 
-      getAll();
+      await getAll();
+
+      toggleLoading();
+    } catch (e: any) {
+      makeToast(
+        "Ocorreu um erro!",
+        e?.response?.data?.message ||
+          "Ocorreu um erro inesperado! Por favor, tente novamente",
+        ToastStatus.error,
+        3000,
+        "top-right",
+        true
+      );
+      toggleLoading();
+    }
+  };
+
+  const deleteTask = async (id: string) => {
+    toggleLoading();
+    try {
+      await TasksServiceImpl.delete(id);
+
+      await getAll();
+
+      makeToast(
+        "Task deletada com sucesso!",
+        `Você deletou uma task!`,
+        ToastStatus.success,
+        3000,
+        "top-right",
+        true
+      );
 
       toggleLoading();
     } catch (e: any) {
@@ -138,6 +169,7 @@ const TasksProvider = ({ children }: IProps) => {
         getById,
         clearTask,
         update,
+        deleteTask,
       }}
     >
       {children}

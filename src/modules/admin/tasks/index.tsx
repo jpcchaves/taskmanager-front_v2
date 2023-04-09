@@ -11,7 +11,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import TasksFormModal from "./components/tasksModal";
 
 export default function TasksView() {
-  const { isLoading, tasks, getAll, getById } = useContext(TasksContext);
+  const { isLoading, tasks, getAll, getById, deleteTask } =
+    useContext(TasksContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { id } = useParams();
@@ -30,9 +31,13 @@ export default function TasksView() {
   }, []);
 
   const handleEdit = async (id: string) => {
-    getTask(id);
+    await getTask(id);
     navigate(`/tarefas/editar/${id}`);
     onOpen();
+  };
+
+  const handleDelete = async (id: string) => {
+    await deleteTask(id);
   };
 
   return (
@@ -41,7 +46,7 @@ export default function TasksView() {
         <TasksFormModal id={id} isOpen={isOpen} onClose={onClose} />
         <TableWrapper onOpen={onOpen}>
           <Datatable
-            columns={makeColumnsTasksList({ handleEdit })}
+            columns={makeColumnsTasksList({ handleEdit, handleDelete })}
             data={tasks?.content || []}
           />
         </TableWrapper>
