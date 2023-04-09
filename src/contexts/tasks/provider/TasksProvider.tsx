@@ -5,6 +5,7 @@ import TasksServiceImpl from "../../../modules/admin/tasks/_core/services/impl/T
 import { TasksPaginated } from "../../../types/tasks/TasksPaginated";
 import { TaskCreate } from "../../../types/tasks/TaskCreate";
 import Toast, { ToastStatus } from "../../../factories/toast/makeToastFactory";
+import { FormikValues } from "formik";
 
 interface IProps {
   children: JSX.Element;
@@ -21,7 +22,11 @@ const TasksProvider = ({ children }: IProps) => {
     setIsLoading((prevState) => !prevState);
   };
 
-  const create = async (data: TaskCreate) => {
+  const create = async (
+    data: TaskCreate,
+    onClose: () => void,
+    validation: FormikValues
+  ) => {
     toggleLoading();
     try {
       await TasksServiceImpl.create(data);
@@ -35,6 +40,9 @@ const TasksProvider = ({ children }: IProps) => {
         "top-right",
         true
       );
+
+      onClose();
+      validation.resetForm();
       return true;
     } catch (e: any) {
       makeToast(
