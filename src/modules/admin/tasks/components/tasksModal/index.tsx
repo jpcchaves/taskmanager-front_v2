@@ -18,6 +18,7 @@ import { TasksContext } from "../../../../../contexts/tasks/context/TasksContext
 import { tasKValidation } from "../../utils/validation/taskValidationSchema";
 import moment from "moment";
 import { TaskCreate } from "../../../../../types/tasks/TaskCreate";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
   id: string;
@@ -26,16 +27,17 @@ interface IProps {
 }
 
 const TasksFormModal = ({ id, isOpen, onClose }: IProps) => {
-  const { isLoading, create } = useContext(TasksContext);
-
-  // moment(taskById.deadline).utc().format('YYYY-MM-DDThh:mm')
+  const { isLoading, create, task, clearTask } = useContext(TasksContext);
+  const navigate = useNavigate();
 
   const validation = useFormik({
     enableReinitialize: true,
     initialValues: {
-      task: "",
-      deadline: "",
-      concluded: false,
+      task: task ? task.task : "",
+      deadline: task
+        ? moment(task.deadline).utc().format("YYYY-MM-DDThh:mm")
+        : "",
+      concluded: task ? task.concluded : false,
     },
     validationSchema: tasKValidation,
     onSubmit: async (values) => {
@@ -63,8 +65,15 @@ const TasksFormModal = ({ id, isOpen, onClose }: IProps) => {
     },
   });
 
+  const handleCloseModal = () => {
+    clearTask();
+    navigate("/tarefas");
+    validation.resetForm();
+    onClose();
+  };
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={() => handleCloseModal()}>
       <ModalOverlay />
       <ModalContent>
         <form
@@ -124,10 +133,17 @@ const TasksFormModal = ({ id, isOpen, onClose }: IProps) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} type="submit">
+            <Button
+              colorScheme="blue"
+              mr={3}
+              type="submit"
+              isLoading={isLoading}
+            >
               {id ? "Editar" : "Criar"}
             </Button>
-            <Button onClick={onClose}>Cancelar</Button>
+            <Button onClick={() => handleCloseModal()} isLoading={isLoading}>
+              Cancelar
+            </Button>
           </ModalFooter>
         </form>
       </ModalContent>

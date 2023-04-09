@@ -73,8 +73,29 @@ const TasksProvider = ({ children }: IProps) => {
     }
   };
 
+  const getById = async (id: string) => {
+    toggleLoading();
+    try {
+      const { data: res } = await TasksServiceImpl.getById(id);
+      console.log(res);
+      setTask(res);
+      toggleLoading();
+
+      return true;
+    } catch (e: any) {
+      toggleLoading();
+      return false;
+    }
+  };
+
+  const clearTask = () => {
+    setTask(null);
+  };
+
   return (
-    <TasksContext.Provider value={{ isLoading, task, tasks, getAll, create }}>
+    <TasksContext.Provider
+      value={{ isLoading, task, tasks, getAll, create, getById, clearTask }}
+    >
       {children}
     </TasksContext.Provider>
   );

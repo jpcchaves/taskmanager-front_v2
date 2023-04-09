@@ -11,7 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import TasksFormModal from "./components/tasksModal";
 
 export default function TasksView() {
-  const { isLoading, tasks, getAll } = useContext(TasksContext);
+  const { isLoading, tasks, getAll, getById } = useContext(TasksContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { id } = useParams();
@@ -21,12 +21,18 @@ export default function TasksView() {
     await getAll();
   }, []);
 
+  const getTask = useCallback(async (id: string) => {
+    await getById(id);
+  }, []);
+
   useEffect(() => {
     getTasks();
   }, []);
 
-  const handleEdit = (id: string) => {
+  const handleEdit = async (id: string) => {
+    getTask(id);
     navigate(`/tarefas/editar/${id}`);
+    onOpen();
   };
 
   return (

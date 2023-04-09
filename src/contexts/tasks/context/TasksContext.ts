@@ -6,12 +6,14 @@ import { FormikValues } from "formik";
 
 export type TasksContextType = {
   isLoading: boolean;
-  getAll: () => Promise<boolean>;
   create: (
     data: TaskCreate,
     onClose: () => void,
     validation: FormikValues
   ) => Promise<boolean>;
+  getAll: () => Promise<boolean>;
+  getById: (id: string) => Promise<boolean>;
+  clearTask: () => void;
   tasks: TasksPaginated;
   task: Task;
 };
