@@ -8,7 +8,7 @@ import Toast, { ToastStatus } from "../../../factories/toast/makeToastFactory";
 import { SessionStorageUtils } from "../../../utils/SessionStorageUtils";
 import { isValidLoginResponse } from "../utils/isValidLoginResponse";
 import { UserRegisterRequest } from "../../../types/user/register/UserRegisterRequest";
-import http from "../../../http-common/http";
+import { setDefaultAuthorization } from "../utils/setDefaultAuthorization";
 
 interface IProps {
   children: JSX.Element;
@@ -56,9 +56,7 @@ const AuthProvider = ({ children }: IProps) => {
       if (isValidLoginResponse(res)) {
         setUser(res.user);
 
-        http.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${res?.accessToken}`;
+        setDefaultAuthorization(res?.accessToken);
 
         navigate("/tarefas");
         return true;
