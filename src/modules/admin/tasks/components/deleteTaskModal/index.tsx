@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Button,
   Modal,
@@ -10,6 +10,7 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
+import { TasksContext } from "../../../../../contexts/tasks/context/TasksContext";
 
 interface IProps {
   openDeleteModal: boolean;
@@ -22,6 +23,8 @@ const DeleteTaskModal = ({
   toggleOpenDeleteModal,
   handleDelete,
 }: IProps) => {
+  const { isLoading } = useContext(TasksContext);
+
   return (
     <Modal
       isOpen={openDeleteModal}
@@ -31,7 +34,7 @@ const DeleteTaskModal = ({
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Cuidado!</ModalHeader>
-        <ModalCloseButton />
+        <ModalCloseButton disabled={isLoading} />
         <ModalBody>
           <Text>
             Esta ação acarretará na <strong>exclusão</strong> da tarefa. Deseja
@@ -44,10 +47,15 @@ const DeleteTaskModal = ({
             variant="ghost"
             mr={3}
             onClick={() => toggleOpenDeleteModal("")}
+            isLoading={isLoading}
           >
             Cancelar
           </Button>
-          <Button colorScheme="red" onClick={() => handleDelete()}>
+          <Button
+            colorScheme="red"
+            onClick={() => handleDelete()}
+            isLoading={isLoading}
+          >
             Deletar
           </Button>
         </ModalFooter>
