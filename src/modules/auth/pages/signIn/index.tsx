@@ -27,8 +27,6 @@ import { useFormik } from "formik";
 import { signInValidation } from "../../utils/validation/signInValidation";
 import { IUserRegisterResponse } from "../../models/register/IUserRegisterResponse";
 
-import { connect } from "react-redux";
-import { login } from "../../../../store/actions/user/actions";
 import { AuthContext } from "../../../../contexts/auth/context/AuthContext";
 import { SessionStorageUtils } from "../../../../utils/SessionStorageUtils";
 
@@ -278,8 +276,4 @@ function SignIn(props: any) {
   );
 }
 
-const mapDispatchToProps = (dispatch: any) => ({
-  login: (params: any) => dispatch(login(params)),
-});
-
-export default connect(null, mapDispatchToProps)(SignIn);
+export default SignIn;
