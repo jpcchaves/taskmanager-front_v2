@@ -40,7 +40,7 @@ const TasksFormModal = ({ id, isOpen, onClose }: IProps) => {
     initialValues: {
       task: taskById ? taskById.task : "",
       deadline: taskById
-        ? moment(taskById.deadline).utc().format("YYYY-MM-DDThh:mm")
+        ? moment(taskById.deadline).format("YYYY-MM-DDTHH:mm")
         : "",
       concluded: taskById ? taskById.concluded : false,
     },
