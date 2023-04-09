@@ -1,7 +1,7 @@
-import { ITasks } from "../models/ITasks";
 import { faker } from "@faker-js/faker";
+import { Task } from "../../../../types/tasks/Task";
 
-export const tableDataTasks: ITasks[] = [
+export const tableDataTasks: Task[] = [
   {
     id: Number(faker.datatype.uuid()),
     task: faker.lorem.words(3),

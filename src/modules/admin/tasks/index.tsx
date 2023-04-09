@@ -5,15 +5,18 @@ import { Box, SimpleGrid, useDisclosure } from "@chakra-ui/react";
 import { makeColumnsTasksList } from "./_core/factories/makeColumnsTasksList";
 import { Datatable } from "./components/datatable";
 import { TableWrapper } from "./components/tableWrapper";
-import { useCallback, useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { TasksContext } from "../../../contexts/tasks/context/TasksContext";
 import { useNavigate, useParams } from "react-router-dom";
 import TasksFormModal from "./components/tasksModal";
+import DeleteTaskModal from "./components/deleteTaskModal";
 
 export default function TasksView() {
   const { isLoading, tasks, getAll, getById, deleteTask } =
     useContext(TasksContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [taskToDeleteId, setTaskToDeleteId] = useState("");
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -36,17 +39,31 @@ export default function TasksView() {
     onOpen();
   };
 
-  const handleDelete = async (id: string) => {
-    await deleteTask(id);
+  const toggleOpenDeleteModal = (id?: string) => {
+    setTaskToDeleteId(id);
+    setOpenDeleteModal((prevState) => !prevState);
+  };
+
+  const handleDelete = async () => {
+    await deleteTask(taskToDeleteId);
+    toggleOpenDeleteModal();
   };
 
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap="20px">
         <TasksFormModal id={id} isOpen={isOpen} onClose={onClose} />
+        <DeleteTaskModal
+          openDeleteModal={openDeleteModal}
+          toggleOpenDeleteModal={toggleOpenDeleteModal}
+          handleDelete={handleDelete}
+        />
         <TableWrapper onOpen={onOpen}>
           <Datatable
-            columns={makeColumnsTasksList({ handleEdit, handleDelete })}
+            columns={makeColumnsTasksList({
+              handleEdit,
+              toggleOpenDeleteModal,
+            })}
             data={tasks?.content || []}
           />
         </TableWrapper>
