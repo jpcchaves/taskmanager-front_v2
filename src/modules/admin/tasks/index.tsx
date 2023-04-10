@@ -12,7 +12,7 @@ import TasksFormModal from "./components/tasksModal";
 import DeleteTaskModal from "./components/deleteTaskModal";
 
 export default function TasksView() {
-  const { isLoading, tasks, getAll, getById, deleteTask } =
+  const { tasks, getAll, getById, deleteTask } =
     useContext(TasksContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
