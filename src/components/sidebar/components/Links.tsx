@@ -31,11 +31,13 @@ export function SidebarLinks(props: { routes: RoutesType[] }) {
 
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName: string) => {
-    return location.pathname.includes(routeName);
-  };
-
-  const handleLogout = () => {
-    // dispatch(logout())
+    console.log(routeName);
+    if (routeName.includes("*")) {
+      const route = routeName.split("/*")[0];
+      return location.pathname.includes(route);
+    } else {
+      return location.pathname.includes(routeName);
+    }
   };
 
   // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
@@ -132,7 +134,7 @@ export function SidebarLinks(props: { routes: RoutesType[] }) {
   return (
     <>
       {createLinks(routes)}
-      <NavLink to="/login" onClick={() => handleLogout()}>
+      <NavLink to="/login">
         <Box>
           <HStack spacing={"26px"} py="5px" ps="10px">
             <Flex w="100%" alignItems="center" justifyContent="center">
