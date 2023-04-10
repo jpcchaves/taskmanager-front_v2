@@ -156,16 +156,16 @@ const TasksFormModal = ({ id, isOpen, onClose }: IProps) => {
           </ModalBody>
 
           <ModalFooter>
+            <Button onClick={() => handleCloseModal()} isLoading={isLoading}>
+              Cancelar
+            </Button>
             <Button
               colorScheme="blue"
-              mr={3}
+              ml={3}
               type="submit"
               isLoading={isLoading}
             >
               {id ? "Editar" : "Criar"}
-            </Button>
-            <Button onClick={() => handleCloseModal()} isLoading={isLoading}>
-              Cancelar
             </Button>
           </ModalFooter>
         </form>
