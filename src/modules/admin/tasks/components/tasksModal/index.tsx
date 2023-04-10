@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import {
   Button,
+  Checkbox,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -75,7 +76,12 @@ const TasksFormModal = ({ id, isOpen, onClose }: IProps) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={() => handleCloseModal()}>
+    <Modal
+      isOpen={isOpen}
+      onClose={() => handleCloseModal()}
+      isCentered
+      size={"2xl"}
+    >
       <ModalOverlay />
       <ModalContent>
         <form
@@ -132,6 +138,21 @@ const TasksFormModal = ({ id, isOpen, onClose }: IProps) => {
                 {validation.errors.deadline}
               </FormErrorMessage>
             </FormControl>
+
+            {id ? (
+              <FormControl ml={1} mt={4}>
+                <Checkbox
+                  colorScheme="blue"
+                  defaultChecked={taskById?.concluded}
+                  name="concluded"
+                  onChange={(e) => {
+                    validation.handleChange(e);
+                  }}
+                >
+                  Marcar como concluida
+                </Checkbox>
+              </FormControl>
+            ) : null}
           </ModalBody>
 
           <ModalFooter>
