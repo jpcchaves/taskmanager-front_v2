@@ -31,7 +31,6 @@ export function SidebarLinks(props: { routes: RoutesType[] }) {
 
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName: string) => {
-    console.log(routeName);
     if (routeName.includes("*")) {
       const route = routeName.split("/*")[0];
       return location.pathname.includes(route);
