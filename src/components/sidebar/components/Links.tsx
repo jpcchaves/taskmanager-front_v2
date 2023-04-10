@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 // chakra imports
 import {
   Box,
@@ -12,10 +12,13 @@ import {
 } from "@chakra-ui/react";
 
 import { MdLogout } from "react-icons/md";
-
-// import {logout} from "../../../store/auth/authSlice";
+import { useContext } from "react";
+import { AuthContext } from "../../../contexts/auth/context/AuthContext";
 
 export function SidebarLinks(props: { routes: RoutesType[] }) {
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   //   Chakra color mode
   let location = useLocation();
   let activeColor = useColorModeValue("gray.700", "white");
@@ -129,11 +132,16 @@ export function SidebarLinks(props: { routes: RoutesType[] }) {
       }
     });
   };
+
+  const handleLogout = (): void => {
+    logout(navigate);
+  };
+
   //  BRAND
   return (
     <>
       {createLinks(routes)}
-      <NavLink to="/login">
+      <NavLink to="/login" onClick={() => handleLogout()}>
         <Box>
           <HStack spacing={"26px"} py="5px" ps="10px">
             <Flex w="100%" alignItems="center" justifyContent="center">

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { User } from "../../../types/user/User";
 import AuthService from "../../../modules/auth/_core/services/impl/AuthServiceImpl";
 import { AuthContext } from "../context/AuthContext";
@@ -17,6 +17,7 @@ interface IProps {
 const AuthProvider = ({ children }: IProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [remember, setRemember] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -49,7 +50,10 @@ const AuthProvider = ({ children }: IProps) => {
 
       if (data.remember) {
         SessionStorageUtils.saveUserAndToken(res);
+        setRemember(true);
       } else {
+        setRemember(false);
+        sessionStorage.removeItem("user");
         SessionStorageUtils.saveToken("accessToken", res.accessToken);
       }
 
@@ -112,10 +116,14 @@ const AuthProvider = ({ children }: IProps) => {
     return true;
   };
 
-  const logout = () => {
+  const logout = (navigate: NavigateFunction) => {
+    if (remember) {
+      sessionStorage.removeItem("accessToken");
+    } else {
+      sessionStorage.removeItem("user");
+      sessionStorage.removeItem("accessToken");
+    }
     setUser(null);
-    localStorage.removeItem("user");
-    localStorage.removeItem("accessToken");
   };
 
   return (
