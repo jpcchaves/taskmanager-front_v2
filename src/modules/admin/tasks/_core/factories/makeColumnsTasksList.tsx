@@ -9,7 +9,7 @@ import {
   MdEditSquare,
   MdOutlineCancel,
 } from "react-icons/md";
-import { Box, Icon } from "@chakra-ui/react";
+import { Box, Icon, Text } from "@chakra-ui/react";
 
 interface IProps {
   handleEdit: (id: string) => void;
@@ -23,7 +23,13 @@ export const makeColumnsTasksList = ({
   return [
     {
       name: "Tarefa",
-      selector: (row) => row.task,
+      cell: (row) => {
+        return row.concluded ? (
+          <Text textDecoration="line-through">{row.task}</Text>
+        ) : (
+          <>{row.task}</>
+        );
+      },
       sortable: true,
     },
     {
