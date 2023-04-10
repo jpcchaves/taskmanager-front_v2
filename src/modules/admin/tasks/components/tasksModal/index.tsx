@@ -142,7 +142,7 @@ const TasksFormModal = ({ id, isOpen, onClose }: IProps) => {
             {id ? (
               <FormControl ml={1} mt={4}>
                 <Checkbox
-                  colorScheme="blue"
+                  colorScheme="brandScheme"
                   defaultChecked={taskById?.concluded}
                   name="concluded"
                   onChange={(e) => {
@@ -159,12 +159,7 @@ const TasksFormModal = ({ id, isOpen, onClose }: IProps) => {
             <Button onClick={() => handleCloseModal()} isLoading={isLoading}>
               Cancelar
             </Button>
-            <Button
-              colorScheme="blue"
-              ml={3}
-              type="submit"
-              isLoading={isLoading}
-            >
+            <Button variant="brand" ml={3} type="submit" isLoading={isLoading}>
               {id ? "Editar" : "Criar"}
             </Button>
           </ModalFooter>

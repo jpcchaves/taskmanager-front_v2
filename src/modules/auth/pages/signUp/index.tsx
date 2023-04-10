@@ -19,7 +19,7 @@ import {
 // Custom components
 import DefaultAuth from "../../../../layouts/auth/Default";
 // Assets
-import illustration from "../../../../assets/img/auth/auth.png";
+import illustration from "../../../../assets/img/auth/auth.jpg";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 
