@@ -6,12 +6,19 @@ import FixedPlugin from "../../components/fixedPlugin/FixedPlugin";
 // Custom components
 // Assets
 
+import registerAnimation from "../../assets/animations/register.json";
+import Lottie from "lottie-react";
+
 function AuthIllustration(props: {
   children: JSX.Element | string;
   illustrationBackground: string;
 }) {
   const { children, illustrationBackground } = props;
-  // Chakra color mode
+
+  const style = {
+    height: 450,
+  };
+
   return (
     <Flex position="relative" h="max-content">
       <Flex
@@ -39,18 +46,36 @@ function AuthIllustration(props: {
           position="absolute"
           right="0px"
         >
+          {/*
+           #0B1437
+           #7551FF
+           #A0AEC0
+           */}
           <Flex
-            bg={`url(${illustrationBackground})`}
             justify="center"
-            bgSize="cover"
-            align="end"
+            align="center"
             w="100%"
             h="100%"
-            bgRepeat="no-repeat"
-            bgPosition="50%"
             position="absolute"
+            bgGradient={
+              "linear(to-r, #0b1437, #0a1334, #091230, #09102d, #080f29, #080e26, #070c23, #060b20, #050a1d, #04081a, #020717, #010514)"
+            }
             borderBottomLeftRadius={{ lg: "120px", xl: "200px" }}
-          />
+          >
+            <Lottie animationData={registerAnimation} style={style} />
+          </Flex>
+          {/*<Flex*/}
+          {/*  bg={`url(${illustrationBackground})`}*/}
+          {/*  justify="center"*/}
+          {/*  bgSize="cover"*/}
+          {/*  align="end"*/}
+          {/*  w="100%"*/}
+          {/*  h="100%"*/}
+          {/*  bgRepeat="no-repeat"*/}
+          {/*  bgPosition="50%"*/}
+          {/*  position="absolute"*/}
+          {/*  borderBottomLeftRadius={{ lg: "120px", xl: "200px" }}*/}
+          {/*/>*/}
         </Box>
         <Footer />
       </Flex>
