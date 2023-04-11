@@ -30,11 +30,27 @@ import TotalSpent from "../../../modules/admin/default/components/TotalSpent";
 import WeeklyRevenue from "../../../modules/admin/default/components/WeeklyRevenue";
 import tableDataCheck from "../../../modules/admin/default/variables/tableDataCheck";
 import tableDataComplex from "../../../modules/admin/default/variables/tableDataComplex";
+import { useCallback, useContext, useEffect } from "react";
+import { DashboardContext } from "../../../contexts/dashboard/context/DashboardContext";
 
 export default function Dashboard() {
   // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
+
+  const { getDashboard, dashboardData, isLoading } =
+    useContext(DashboardContext);
+
+  const getDashboardData = useCallback(async () => {
+    await getDashboard();
+  }, []);
+
+  useEffect(() => {
+    getDashboard();
+  }, []);
+
+  console.log(dashboardData);
+
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid

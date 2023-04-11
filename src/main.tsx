@@ -9,6 +9,7 @@ import AuthProvider from "./contexts/auth/provider/AuthProvider";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./theme/theme";
 import TasksProvider from "./contexts/tasks/provider/TasksProvider";
+import DashboardProvider from "./contexts/dashboard/provider/DashboardProvider";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,7 +17,9 @@ ReactDOM.render(
       <ChakraProvider theme={theme}>
         <AuthProvider>
           <TasksProvider>
-            <App />
+            <DashboardProvider>
+              <App />
+            </DashboardProvider>
           </TasksProvider>
         </AuthProvider>
       </ChakraProvider>
