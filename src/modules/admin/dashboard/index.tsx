@@ -1,36 +1,17 @@
 // Chakra imports
-import {
-  Avatar,
-  Box,
-  Flex,
-  FormLabel,
-  Icon,
-  Select,
-  SimpleGrid,
-  useColorModeValue,
-} from "@chakra-ui/react";
-// Assets
-import Usa from "../../../assets/img/dashboards/usa.png";
+import { Box, Icon, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
 // Custom components
-import MiniCalendar from "../../../components/calendar/MiniCalendar";
 import MiniStatistics from "../../../components/card/MiniStatistics";
 import IconBox from "../../../components/icons/IconBox";
 import {
   MdAddTask,
-  MdAttachMoney,
-  MdBarChart,
+  MdRocketLaunch,
+  MdTrendingUp,
+  MdTrendingDown,
   MdFileCopy,
   MdClear,
 } from "react-icons/md";
-import CheckTable from "../../../modules/admin/rtl/components/CheckTable";
-import ComplexTable from "../../../modules/admin/default/components/ComplexTable";
-import DailyTraffic from "../../../modules/admin/default/components/DailyTraffic";
 import PieCard from "../../../modules/admin/default/components/PieCard";
-import Tasks from "../../../modules/admin/default/components/Tasks";
-import TotalSpent from "../../../modules/admin/default/components/TotalSpent";
-import WeeklyRevenue from "../../../modules/admin/default/components/WeeklyRevenue";
-import tableDataCheck from "../../../modules/admin/default/variables/tableDataCheck";
-import tableDataComplex from "../../../modules/admin/default/variables/tableDataComplex";
 import { useCallback, useContext, useEffect } from "react";
 import { DashboardContext } from "../../../contexts/dashboard/context/DashboardContext";
 
@@ -64,7 +45,12 @@ export default function Dashboard() {
               h="56px"
               bg={boxBg}
               icon={
-                <Icon w="32px" h="32px" as={MdBarChart} color={brandColor} />
+                <Icon
+                  w="32px"
+                  h="32px"
+                  as={MdRocketLaunch}
+                  color={brandColor}
+                />
               }
             />
           }
@@ -93,7 +79,7 @@ export default function Dashboard() {
             />
           }
           name="Tarefas Não Concluídas"
-          value={dashboardData?.dashboard?.concludedPercentage || ""}
+          value={dashboardData?.dashboard?.totalTasksNotConcluded || ""}
         />
         <MiniStatistics
           startContent={
@@ -101,7 +87,9 @@ export default function Dashboard() {
               w="56px"
               h="56px"
               bg={boxBg}
-              icon={<Icon w="32px" h="32px" as={MdClear} color={brandColor} />}
+              icon={
+                <Icon w="32px" h="32px" as={MdTrendingUp} color={brandColor} />
+              }
             />
           }
           name="Porcentagem de Tarefas Concluídas"
@@ -114,7 +102,12 @@ export default function Dashboard() {
               h="56px"
               bg={boxBg}
               icon={
-                <Icon w="32px" h="32px" as={MdFileCopy} color={brandColor} />
+                <Icon
+                  w="32px"
+                  h="32px"
+                  as={MdTrendingDown}
+                  color={brandColor}
+                />
               }
             />
           }
