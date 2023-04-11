@@ -20,6 +20,7 @@ import {
   MdAttachMoney,
   MdBarChart,
   MdFileCopy,
+  MdClear,
 } from "react-icons/md";
 import CheckTable from "../../../modules/admin/rtl/components/CheckTable";
 import ComplexTable from "../../../modules/admin/default/components/ComplexTable";
@@ -46,10 +47,8 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    getDashboard();
+    getDashboardData();
   }, []);
-
-  console.log(dashboardData);
 
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
@@ -69,8 +68,8 @@ export default function Dashboard() {
               }
             />
           }
-          name="Earnings"
-          value="$350.4"
+          name="Total de Tarefas"
+          value={dashboardData?.dashboard?.totalTasksAmount || 0}
         />
         <MiniStatistics
           startContent={
@@ -78,48 +77,35 @@ export default function Dashboard() {
               w="56px"
               h="56px"
               bg={boxBg}
-              icon={
-                <Icon w="32px" h="32px" as={MdAttachMoney} color={brandColor} />
-              }
+              icon={<Icon w="28px" h="28px" as={MdAddTask} color="white" />}
             />
           }
-          name="Spend this month"
-          value="$642.39"
-        />
-        <MiniStatistics growth="+23%" name="Sales" value="$574.34" />
-        <MiniStatistics
-          endContent={
-            <Flex me="-16px" mt="10px">
-              <FormLabel htmlFor="balance">
-                <Avatar src={Usa} />
-              </FormLabel>
-              <Select
-                id="balance"
-                variant="mini"
-                mt="5px"
-                me="0px"
-                defaultValue="usd"
-              >
-                <option value="usd">USD</option>
-                <option value="eur">EUR</option>
-                <option value="gba">GBA</option>
-              </Select>
-            </Flex>
-          }
-          name="Your balance"
-          value="$1,000"
+          name="Tarefas Concluidas"
+          value={dashboardData?.dashboard?.totalTasksConcluded || 0}
         />
         <MiniStatistics
           startContent={
             <IconBox
               w="56px"
               h="56px"
-              bg="linear-gradient(90deg, #4481EB 0%, #04BEFE 100%)"
-              icon={<Icon w="28px" h="28px" as={MdAddTask} color="white" />}
+              bg={boxBg}
+              icon={<Icon w="32px" h="32px" as={MdClear} color={brandColor} />}
             />
           }
-          name="New Tasks"
-          value="154"
+          name="Tarefas Não Concluídas"
+          value={dashboardData?.dashboard?.concludedPercentage || ""}
+        />
+        <MiniStatistics
+          startContent={
+            <IconBox
+              w="56px"
+              h="56px"
+              bg={boxBg}
+              icon={<Icon w="32px" h="32px" as={MdClear} color={brandColor} />}
+            />
+          }
+          name="Porcentagem de Tarefas Concluídas"
+          value={dashboardData?.dashboard?.concludedPercentage || ""}
         />
         <MiniStatistics
           startContent={
@@ -132,27 +118,14 @@ export default function Dashboard() {
               }
             />
           }
-          name="Total Projects"
-          value="2935"
+          name="Porcentagem de Tarefas Não Concluídas"
+          value={dashboardData?.dashboard?.notConcludedPercentage || ""}
         />
       </SimpleGrid>
 
-      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px" mb="20px">
-        <TotalSpent />
-        <WeeklyRevenue />
-      </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap="20px" mb="20px">
-        <CheckTable tableData={tableDataCheck} />
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
-          <DailyTraffic />
+        <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap="20px">
           <PieCard />
-        </SimpleGrid>
-      </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap="20px" mb="20px">
-        <ComplexTable tableData={tableDataComplex} />
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
-          <Tasks />
-          <MiniCalendar h="100%" minW="100%" selectRange={false} />
         </SimpleGrid>
       </SimpleGrid>
     </Box>
