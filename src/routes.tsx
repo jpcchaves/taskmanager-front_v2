@@ -1,10 +1,11 @@
 import { Icon } from "@chakra-ui/react";
-import { MdHome, MdOutlineShoppingCart, MdPerson } from "react-icons/md";
+import { MdHome, MdPerson, MdBarChart } from "react-icons/md";
 
 // Admin Imports
 import MainDashboard from "./modules/admin/default";
 import Profile from "./modules/admin/profile";
 import TasksView from "./modules/admin/tasks";
+import Dashboard from "./modules/admin/dashboard";
 
 // Auth Imports
 
@@ -20,15 +21,8 @@ const routes = [
     name: "Dashboard",
     layout: "/",
     path: "/dashboard",
-    icon: (
-      <Icon
-        as={MdOutlineShoppingCart}
-        width="20px"
-        height="20px"
-        color="inherit"
-      />
-    ),
-    component: <MainDashboard />,
+    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
+    component: <Dashboard />,
     secondary: true,
   },
   {
