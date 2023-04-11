@@ -28,13 +28,14 @@ const TasksProvider = ({ children }: IProps) => {
     toggleLoading();
     try {
       await TasksServiceImpl.create(data);
-      await getAll();
 
       if (currentFilter) {
         const { data: res } = await TasksServiceImpl.getTasksByFilter(
           currentFilter
         );
         setFilteredTasks(res);
+      } else {
+        await getAll();
       }
 
       toggleLoading();
@@ -106,6 +107,8 @@ const TasksProvider = ({ children }: IProps) => {
           currentFilter
         );
         setFilteredTasks(res);
+      } else {
+        await getAll();
       }
 
       makeToast(
@@ -118,8 +121,6 @@ const TasksProvider = ({ children }: IProps) => {
       );
 
       clearTask();
-
-      await getAll();
 
       onClose();
       validation.resetForm();
@@ -143,13 +144,13 @@ const TasksProvider = ({ children }: IProps) => {
     try {
       await TasksServiceImpl.delete(id);
 
-      await getAll();
-
       if (currentFilter) {
         const { data: res } = await TasksServiceImpl.getTasksByFilter(
           currentFilter
         );
         setFilteredTasks(res);
+      } else {
+        await getAll();
       }
 
       makeToast(
@@ -213,8 +214,9 @@ const TasksProvider = ({ children }: IProps) => {
     setTask(null);
   };
 
-  const clearFilter = () => {
+  const clearFilter = async () => {
     setFilteredTasks(null);
+    await getAll();
   };
 
   return (
