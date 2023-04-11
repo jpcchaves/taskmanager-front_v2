@@ -15,7 +15,7 @@ export function SidebarBrand() {
   return (
     <Flex alignItems="center" flexDirection="column">
       <Box cursor="pointer" onClick={() => navigate("/tarefas")}>
-        <Image src={logo} w={150} mb={15} />
+        <Image src={logo} w={120} mb={15} />
       </Box>
       <HSeparator mb="20px" />
     </Flex>
