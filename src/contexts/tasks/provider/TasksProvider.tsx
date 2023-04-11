@@ -15,6 +15,7 @@ const TasksProvider = ({ children }: IProps) => {
   const [task, setTask] = useState<Task>(null);
   const [tasks, setTasks] = useState<TasksPaginated>(null);
   const [filteredTasks, setFilteredTasks] = useState<Task[]>(null);
+  const [currentFilter, setCurrentFilter] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [makeToast] = Toast();
@@ -28,6 +29,14 @@ const TasksProvider = ({ children }: IProps) => {
     try {
       await TasksServiceImpl.create(data);
       await getAll();
+
+      if (currentFilter) {
+        const { data: res } = await TasksServiceImpl.getTasksByFilter(
+          currentFilter
+        );
+        setFilteredTasks(res);
+      }
+
       toggleLoading();
 
       makeToast(
@@ -92,6 +101,13 @@ const TasksProvider = ({ children }: IProps) => {
     try {
       await TasksServiceImpl.update(id, data);
 
+      if (currentFilter) {
+        const { data: res } = await TasksServiceImpl.getTasksByFilter(
+          currentFilter
+        );
+        setFilteredTasks(res);
+      }
+
       makeToast(
         "Task editada com sucesso!",
         `Você editou a task: ${data?.task}`,
@@ -129,6 +145,13 @@ const TasksProvider = ({ children }: IProps) => {
 
       await getAll();
 
+      if (currentFilter) {
+        const { data: res } = await TasksServiceImpl.getTasksByFilter(
+          currentFilter
+        );
+        setFilteredTasks(res);
+      }
+
       makeToast(
         "Task deletada com sucesso!",
         `Você deletou uma task!`,
@@ -155,9 +178,11 @@ const TasksProvider = ({ children }: IProps) => {
 
   const getTasksByFilter = async (situation: string) => {
     toggleLoading();
+    setCurrentFilter(situation);
     try {
       const { data: res } = await TasksServiceImpl.getTasksByFilter(situation);
       setFilteredTasks(res);
+
       makeToast(
         "Filtro aplicado com sucesso!",
         `Você filtrou as tasks por: ${
