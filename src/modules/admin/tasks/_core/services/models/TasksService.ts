@@ -9,4 +9,5 @@ export interface TasksService {
   create: (data: TaskCreateAndUpdate) => Promise<AxiosResponse<Task>>;
   update: (id: string, data: Task) => Promise<AxiosResponse<Task>>;
   delete: (id: string) => Promise<void>;
+  getTasksByFilter: (situation: string) => Promise<AxiosResponse<Task[]>>;
 }

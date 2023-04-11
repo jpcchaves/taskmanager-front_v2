@@ -10,6 +10,7 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import { MdOutlineAdd } from "react-icons/md";
+import FiltersBar from "../filtersBar";
 
 // Custom components
 
@@ -27,15 +28,18 @@ export const TableWrapper = ({ children, onOpen }: IProps) => {
         justifyContent="space-between"
         borderBottom="2"
         borderColor={"gray.300"}
+        mb={6}
       >
         <HStack>
           <Text
             color={colorMode === "light" ? "gray.700" : "white"}
             fontSize={"18px"}
             fontWeight={"bold"}
+            mr={5}
           >
             Listagem de Tarefas
           </Text>
+          <FiltersBar />
         </HStack>
         <HStack>
           <Button size={"sm"} rounded={"full"} onClick={() => onOpen()}>

@@ -30,6 +30,14 @@ class TasksServiceImpl implements TasksService {
   ): Promise<AxiosResponse<Task>> {
     return http.put(`${this.taskApiUrl}/${id}`, data);
   }
+
+  async getTasksByFilter(situation: string): Promise<AxiosResponse<Task[]>> {
+    if (situation === "1") {
+      return http.get(`${this.taskApiUrl}/filter?concluded=${true}`);
+    } else {
+      return http.get(`${this.taskApiUrl}/filter?concluded=${false}`);
+    }
+  }
 }
 
 export default new TasksServiceImpl();

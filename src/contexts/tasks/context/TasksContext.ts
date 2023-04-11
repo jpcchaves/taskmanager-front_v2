@@ -11,9 +11,11 @@ export type TasksContextType = {
   getById: (id: string) => Promise<void>;
   update: ({ onClose, validation, data, id }: IArgsUpdate) => Promise<void>;
   deleteTask: (id: string) => Promise<void>;
+  getTasksByFilter: (situation: string) => Promise<void>;
   clearTask: () => void;
   tasks: TasksPaginated;
   task: Task;
+  filteredTasks: Task[];
 };
 
 export const TasksContext = createContext<TasksContextType>(null);

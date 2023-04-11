@@ -14,6 +14,7 @@ interface IProps {
 const TasksProvider = ({ children }: IProps) => {
   const [task, setTask] = useState<Task>(null);
   const [tasks, setTasks] = useState<TasksPaginated>(null);
+  const [filteredTasks, setFilteredTasks] = useState<Task[]>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [makeToast] = Toast();
@@ -152,6 +153,39 @@ const TasksProvider = ({ children }: IProps) => {
     }
   };
 
+  const getTasksByFilter = async (situation: string) => {
+    toggleLoading();
+    console.log(situation);
+    try {
+      const { data: res } = await TasksServiceImpl.getTasksByFilter(situation);
+      setFilteredTasks(res);
+
+      makeToast(
+        "Filtro aplicado com sucesso!",
+        `Você filtrou as tasks por: ${
+          situation === "1" ? "Concluídas" : "Não Concluídas"
+        }`,
+        ToastStatus.success,
+        3000,
+        "top-right",
+        true
+      );
+
+      toggleLoading();
+    } catch (e: any) {
+      makeToast(
+        "Ocorreu um erro!",
+        e?.response?.data?.message ||
+          "Ocorreu um erro inesperado! Por favor, tente novamente",
+        ToastStatus.error,
+        3000,
+        "top-right",
+        true
+      );
+      // console.log(e);
+    }
+  };
+
   const clearTask = () => {
     setTask(null);
   };
@@ -162,12 +196,14 @@ const TasksProvider = ({ children }: IProps) => {
         isLoading,
         task,
         tasks,
+        filteredTasks,
         getAll,
         create,
         getById,
         clearTask,
         update,
         deleteTask,
+        getTasksByFilter,
       }}
     >
       {children}
