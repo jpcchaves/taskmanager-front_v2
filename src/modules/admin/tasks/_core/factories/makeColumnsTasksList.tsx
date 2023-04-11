@@ -48,9 +48,13 @@ export const makeColumnsTasksList = ({
         return (
           <Box display="flex" alignItems="center" justifyContent="center">
             {row.concluded ? (
-              <MdCheckCircleOutline size={"22px"} />
+              <Icon
+                as={MdCheckCircleOutline}
+                boxSize={"22px"}
+                color={"green.500"}
+              />
             ) : (
-              <MdOutlineCancel size={"22px"} />
+              <Icon as={MdOutlineCancel} boxSize={"22px"} color={"red.500"} />
             )}
           </Box>
         );
