@@ -9,7 +9,7 @@ const FiltersBar = () => {
   const validation = useFormik({
     enableReinitialize: false,
     initialValues: {
-      situation: "",
+      situation: "1",
     },
     onSubmit: async (values) => {
       await getTasksByFilter(values.situation);

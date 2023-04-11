@@ -158,7 +158,6 @@ const TasksProvider = ({ children }: IProps) => {
     try {
       const { data: res } = await TasksServiceImpl.getTasksByFilter(situation);
       setFilteredTasks(res);
-
       makeToast(
         "Filtro aplicado com sucesso!",
         `Você filtrou as tasks por: ${
