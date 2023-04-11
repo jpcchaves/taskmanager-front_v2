@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import { TasksContext } from "../../../../../contexts/tasks/context/TasksContext";
 
 const FiltersBar = () => {
-  const { getTasksByFilter, filteredTasks } = useContext(TasksContext);
+  const { getTasksByFilter, clearFilter, isLoading } = useContext(TasksContext);
 
   const validation = useFormik({
     enableReinitialize: false,
@@ -15,8 +15,6 @@ const FiltersBar = () => {
       await getTasksByFilter(values.situation);
     },
   });
-
-  console.log(filteredTasks);
 
   return (
     <form
@@ -38,7 +36,17 @@ const FiltersBar = () => {
           <option value="1">Concluidas</option>
           <option value="2">Não Concluídas</option>
         </Select>
-        <Button type="submit">Filtrar</Button>
+        <Button variant="brand" px={7} type="submit" isLoading={isLoading}>
+          Filtrar
+        </Button>
+        <Button
+          variant="ghost"
+          px={10}
+          type="button"
+          onClick={() => clearFilter()}
+        >
+          Limpar Filtro
+        </Button>
       </Flex>
     </form>
   );

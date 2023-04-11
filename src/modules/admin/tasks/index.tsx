@@ -12,7 +12,7 @@ import TasksFormModal from "./components/tasksModal";
 import DeleteTaskModal from "./components/deleteTaskModal";
 
 export default function TasksView() {
-  const { tasks, getAll, getById, deleteTask } =
+  const { tasks, getAll, getById, deleteTask, filteredTasks } =
     useContext(TasksContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -64,7 +64,7 @@ export default function TasksView() {
               handleEdit,
               toggleOpenDeleteModal,
             })}
-            data={tasks?.content || []}
+            data={filteredTasks || tasks?.content || []}
           />
         </TableWrapper>
       </SimpleGrid>

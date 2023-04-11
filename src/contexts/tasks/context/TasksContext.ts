@@ -12,6 +12,7 @@ export type TasksContextType = {
   update: ({ onClose, validation, data, id }: IArgsUpdate) => Promise<void>;
   deleteTask: (id: string) => Promise<void>;
   getTasksByFilter: (situation: string) => Promise<void>;
+  clearFilter: () => void;
   clearTask: () => void;
   tasks: TasksPaginated;
   task: Task;

@@ -155,7 +155,6 @@ const TasksProvider = ({ children }: IProps) => {
 
   const getTasksByFilter = async (situation: string) => {
     toggleLoading();
-    console.log(situation);
     try {
       const { data: res } = await TasksServiceImpl.getTasksByFilter(situation);
       setFilteredTasks(res);
@@ -190,6 +189,10 @@ const TasksProvider = ({ children }: IProps) => {
     setTask(null);
   };
 
+  const clearFilter = () => {
+    setFilteredTasks(null);
+  };
+
   return (
     <TasksContext.Provider
       value={{
@@ -201,6 +204,7 @@ const TasksProvider = ({ children }: IProps) => {
         create,
         getById,
         clearTask,
+        clearFilter,
         update,
         deleteTask,
         getTasksByFilter,
