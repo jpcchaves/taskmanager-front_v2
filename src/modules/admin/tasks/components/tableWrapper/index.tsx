@@ -2,10 +2,10 @@
 import CustomCard from "../customCard";
 import { ReactNode } from "react";
 import {
+  Box,
   Button,
-  Flex,
-  HStack,
   Icon,
+  SimpleGrid,
   Text,
   useColorMode,
 } from "@chakra-ui/react";
@@ -24,29 +24,22 @@ export const TableWrapper = ({ children, onOpen }: IProps) => {
 
   return (
     <CustomCard>
-      <Flex
-        justifyContent="space-between"
-        borderBottom="2"
-        borderColor={"gray.300"}
-        mb={6}
-      >
-        <HStack>
-          <Text
-            color={colorMode === "light" ? "gray.700" : "white"}
-            fontSize={"18px"}
-            fontWeight={"bold"}
-            mr={5}
-          >
-            Listagem de Tarefas
-          </Text>
-          <FiltersBar />
-        </HStack>
-        <HStack>
-          <Button size={"sm"} rounded={"full"} onClick={() => onOpen()}>
-            <Icon as={MdOutlineAdd} boxSize={5} />
-          </Button>
-        </HStack>
-      </Flex>
+      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px" mb="20px">
+        <Text
+          color={colorMode === "light" ? "gray.700" : "white"}
+          fontSize={"18px"}
+          fontWeight={"bold"}
+          mr={5}
+        >
+          Listagem de Tarefas
+        </Text>
+      </SimpleGrid>
+      <FiltersBar />
+      <Box position="absolute" right={5}>
+        <Button size={"sm"} rounded={"full"} onClick={() => onOpen()}>
+          <Icon as={MdOutlineAdd} boxSize={5} />
+        </Button>
+      </Box>
       {children}
     </CustomCard>
   );

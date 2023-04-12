@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button, Flex, Select } from "@chakra-ui/react";
+import { Box, Button, Select, SimpleGrid } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { TasksContext } from "../../../../../contexts/tasks/context/TasksContext";
 
@@ -24,7 +24,12 @@ const FiltersBar = () => {
         return false;
       }}
     >
-      <Flex gap={2}>
+      <SimpleGrid
+        columns={{ sm: 1, md: 2, lg: 2 }}
+        justifyItems={{ sm: "center", md: "normal", lg: "normal" }}
+        gap="10px"
+        mb={"30px"}
+      >
         <Select
           name="situation"
           colorScheme="brandScheme"
@@ -36,18 +41,15 @@ const FiltersBar = () => {
           <option value="1">Concluidas</option>
           <option value="2">Não Concluídas</option>
         </Select>
-        <Button variant="brand" px={7} type="submit" isLoading={isLoading}>
-          Filtrar
-        </Button>
-        <Button
-          variant="ghost"
-          px={10}
-          type="button"
-          onClick={() => clearFilter()}
-        >
-          Limpar Filtro
-        </Button>
-      </Flex>
+        <Box>
+          <Button mr="2" variant="brand" type="submit" isLoading={isLoading}>
+            Filtrar
+          </Button>
+          <Button variant="ghost" type="button" onClick={() => clearFilter()}>
+            Limpar Filtro
+          </Button>
+        </Box>
+      </SimpleGrid>
     </form>
   );
 };
