@@ -1,6 +1,5 @@
 // Chakra imports
 import { Avatar, Box, Text, useColorModeValue } from "@chakra-ui/react";
-import Card from "../../../../components/card/Card";
 
 export default function Banner(props: {
   banner: string;
@@ -16,7 +15,7 @@ export default function Banner(props: {
     "#111C44 !important"
   );
   return (
-    <Card mb={{ base: "0px", lg: "20px" }} alignItems="center">
+    <>
       <Box
         bg={`url(${banner})`}
         bgSize="cover"
@@ -33,9 +32,15 @@ export default function Banner(props: {
         border="4px solid"
         borderColor={borderColor}
       />
-      <Text color={textColorPrimary} fontWeight="bold" fontSize="xl" mt="10px">
+      <Text
+        color={textColorPrimary}
+        fontWeight="bold"
+        fontSize="xl"
+        mt="10px"
+        textAlign="center"
+      >
         {name}
       </Text>
-    </Card>
+    </>
   );
 }
