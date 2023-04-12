@@ -5,6 +5,7 @@ import { UserLoginResponse } from "../../../../../types/user/login/UserLoginResp
 import { AuthService } from "../models/AuthService";
 import { UserRegisterRequest } from "../../../../../types/user/register/UserRegisterRequest";
 import { UserRegisterResponse } from "../../../../../types/user/register/UserRegisterResponse";
+import { UserUpdateRequest } from "types";
 
 class AuthServiceImpl implements AuthService {
   async login(
@@ -24,6 +25,25 @@ class AuthServiceImpl implements AuthService {
       data
     );
   }
+
+  async update(
+    data: UserUpdateRequest
+  ): Promise<AxiosResponse<UpdateUseResponse, UserUpdateRequest>> {
+    const updatedUser = {
+      name: data.name,
+      password: data.password,
+      currentPassword: data.currentPassword,
+    };
+
+    return http.put<UpdateUseResponse>(
+      import.meta.env.VITE_API_UPDATE_USER_ENDPOINT + `/${data.id}`,
+      updatedUser
+    );
+  }
 }
+
+export type UpdateUseResponse = {
+  message: string;
+};
 
 export default new AuthServiceImpl();

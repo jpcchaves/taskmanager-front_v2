@@ -9,6 +9,7 @@ import { SessionStorageUtils } from "../../../utils/SessionStorageUtils";
 import { isValidLoginResponse } from "../utils/isValidLoginResponse";
 import { UserRegisterRequest } from "../../../types/user/register/UserRegisterRequest";
 import { setDefaultAuthorization } from "../utils/setDefaultAuthorization";
+import { UserUpdateRequest } from "../../../types";
 
 interface IProps {
   children: JSX.Element;
@@ -116,6 +117,43 @@ const AuthProvider = ({ children }: IProps) => {
     return true;
   };
 
+  const update = async (data: UserUpdateRequest) => {
+    toggleLoading();
+    try {
+      const { data: res } = await AuthService.update(data);
+
+      const updatedUser = {
+        id: user.id,
+        name: data.name,
+        username: user.username,
+        email: user.email,
+      };
+
+      setUser(updatedUser);
+      makeToast(
+        "Usuário atualizado com sucesso",
+        `${res?.message}` || "",
+        ToastStatus.success,
+        3000,
+        "top-right",
+        true
+      );
+      toggleLoading();
+    } catch (e: any) {
+      makeToast(
+        "Ocorreu um erro!",
+        e?.response?.data?.message ||
+          "Ocorreu um erro inesperado! Por favor, tente novamente",
+        ToastStatus.error,
+        3000,
+        "top-right",
+        true
+      );
+      // console.log(e);
+      toggleLoading();
+    }
+  };
+
   const logout = (navigate: NavigateFunction) => {
     if (remember) {
       sessionStorage.removeItem("accessToken");
@@ -127,7 +165,9 @@ const AuthProvider = ({ children }: IProps) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ user, isLoading, login, register, update, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

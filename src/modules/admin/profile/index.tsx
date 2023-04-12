@@ -29,7 +29,7 @@ import { updateUserValidation } from "./utils/validation/updateUserValidation";
 export default function ProfileOverview() {
   const brandStars = useColorModeValue("brand.500", "brand.400");
 
-  const { user } = useContext(AuthContext);
+  const { user, update } = useContext(AuthContext);
 
   const validation = useFormik({
     enableReinitialize: true,
@@ -39,7 +39,15 @@ export default function ProfileOverview() {
       password: "",
     },
     validationSchema: updateUserValidation,
-    onSubmit: (values) => console.log(values),
+    onSubmit: async (values) => {
+      const valuesToSubmit = {
+        id: user.id,
+        name: values.name,
+        currentPassword: values.currentPassword,
+        password: values.password,
+      };
+      await update(valuesToSubmit);
+    },
   });
 
   return (

@@ -1,8 +1,12 @@
-import { UserLoginRequest } from "../../../../../types/user/login/UserLoginRequest";
 import { AxiosResponse } from "axios";
-import { UserLoginResponse } from "../../../../../types/user/login/UserLoginResponse";
-import { UserRegisterRequest } from "../../../../../types/user/register/UserRegisterRequest";
-import { UserRegisterResponse } from "../../../../../types/user/register/UserRegisterResponse";
+import {
+  UserLoginRequest,
+  UserLoginResponse,
+  UserRegisterRequest,
+  UserRegisterResponse,
+  UserUpdateRequest,
+} from "../../../../../types";
+import { UpdateUseResponse } from "../impl/AuthServiceImpl";
 
 export interface AuthService {
   login: (
@@ -12,4 +16,8 @@ export interface AuthService {
   register: (
     data: UserRegisterRequest
   ) => Promise<AxiosResponse<UserRegisterResponse, UserRegisterRequest>>;
+
+  update: (
+    data: UserUpdateRequest
+  ) => Promise<AxiosResponse<UpdateUseResponse>>;
 }
