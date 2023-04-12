@@ -9,7 +9,7 @@ const FiltersBar = () => {
   const validation = useFormik({
     enableReinitialize: false,
     initialValues: {
-      situation: "1",
+      situation: null,
     },
     onSubmit: async (values) => {
       await getTasksByFilter(values.situation);
@@ -35,7 +35,7 @@ const FiltersBar = () => {
           colorScheme="brandScheme"
           onChange={validation.handleChange}
         >
-          <option disabled value="" hidden>
+          <option value={null} selected disabled hidden>
             Selecione para Filtrar
           </option>
           <option value="1">Concluidas</option>
@@ -45,7 +45,14 @@ const FiltersBar = () => {
           <Button mr="2" variant="brand" type="submit" isLoading={isLoading}>
             Filtrar
           </Button>
-          <Button variant="ghost" type="button" onClick={() => clearFilter()}>
+          <Button
+            variant="ghost"
+            type="button"
+            onClick={() => {
+              validation.resetForm();
+              clearFilter();
+            }}
+          >
             Limpar Filtro
           </Button>
         </Box>

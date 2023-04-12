@@ -15,8 +15,10 @@ const TasksProvider = ({ children }: IProps) => {
   const [task, setTask] = useState<Task>(null);
   const [tasks, setTasks] = useState<TasksPaginated>(null);
   const [filteredTasks, setFilteredTasks] = useState<Task[]>(null);
-  const [currentFilter, setCurrentFilter] = useState("");
+  const [currentFilter, setCurrentFilter] = useState(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  console.log(currentFilter);
 
   const [makeToast] = Toast();
 
@@ -222,6 +224,7 @@ const TasksProvider = ({ children }: IProps) => {
 
   const clearFilter = async () => {
     setFilteredTasks(null);
+    setCurrentFilter(null);
     await getAll();
   };
 
