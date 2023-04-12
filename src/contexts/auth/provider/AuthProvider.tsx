@@ -10,6 +10,7 @@ import { isValidLoginResponse } from "../utils/isValidLoginResponse";
 import { UserRegisterRequest } from "../../../types/user/register/UserRegisterRequest";
 import { setDefaultAuthorization } from "../utils/setDefaultAuthorization";
 import { UserUpdateRequest } from "../../../types";
+import { FormikValues } from "formik";
 
 interface IProps {
   children: JSX.Element;
@@ -117,7 +118,7 @@ const AuthProvider = ({ children }: IProps) => {
     return true;
   };
 
-  const update = async (data: UserUpdateRequest) => {
+  const update = async (data: UserUpdateRequest, validation: FormikValues) => {
     toggleLoading();
     try {
       const { data: res } = await AuthService.update(data);
@@ -130,6 +131,11 @@ const AuthProvider = ({ children }: IProps) => {
       };
 
       setUser(updatedUser);
+
+      if (remember) {
+        sessionStorage.setItem("user", JSON.stringify(updatedUser));
+      }
+
       makeToast(
         "Usuário atualizado com sucesso",
         `${res?.message}` || "",
@@ -138,6 +144,14 @@ const AuthProvider = ({ children }: IProps) => {
         "top-right",
         true
       );
+
+      validation.resetForm({
+        values: {
+          name: data.name,
+          password: "",
+          confirmPassword: "",
+        },
+      });
       toggleLoading();
     } catch (e: any) {
       makeToast(

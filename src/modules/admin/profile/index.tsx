@@ -29,7 +29,7 @@ import { updateUserValidation } from "./utils/validation/updateUserValidation";
 export default function ProfileOverview() {
   const brandStars = useColorModeValue("brand.500", "brand.400");
 
-  const { user, update } = useContext(AuthContext);
+  const { user, update, isLoading } = useContext(AuthContext);
 
   const validation = useFormik({
     enableReinitialize: true,
@@ -46,7 +46,8 @@ export default function ProfileOverview() {
         currentPassword: values.currentPassword,
         password: values.password,
       };
-      await update(valuesToSubmit);
+
+      await update(valuesToSubmit, validation);
     },
   });
 
@@ -185,7 +186,12 @@ export default function ProfileOverview() {
               </FormControl>
             </SimpleGrid>
             <SimpleGrid mt="16">
-              <Button colorScheme="brandScheme" color="white" type="submit">
+              <Button
+                colorScheme="brandScheme"
+                color="white"
+                type="submit"
+                isLoading={isLoading}
+              >
                 Atualizar Perfil
               </Button>
             </SimpleGrid>
