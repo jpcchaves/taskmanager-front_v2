@@ -1,5 +1,5 @@
 // Chakra imports
-import { Box, Flex, Select, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, Text, useColorModeValue } from "@chakra-ui/react";
 // Custom components
 import Card from "../../../../components/card/Card";
 import PieChart from "../../../../components/charts/PieChart";
@@ -46,8 +46,8 @@ export default function Conversion(props: { [x: string]: any }) {
         chartData={
           dashboardData
             ? [
-                dashboardData?.dashboard.totalTasksNotConcluded,
-                dashboardData?.dashboard?.totalTasksConcluded,
+                dashboardData?.dashboard.totalTasksConcluded,
+                dashboardData?.dashboard?.totalTasksNotConcluded,
               ]
             : []
         }
