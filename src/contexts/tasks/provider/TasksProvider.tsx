@@ -97,11 +97,17 @@ const TasksProvider = ({ children }: IProps) => {
     }
   };
 
-  const update = async ({ onClose, validation, id, data }: IArgsUpdate) => {
+  const update = async ({
+    onClose,
+    validation,
+    id,
+    data,
+    navigate,
+  }: IArgsUpdate) => {
     toggleLoading();
     try {
       await TasksServiceImpl.update(id, data);
-
+      navigate("/tarefas");
       if (currentFilter) {
         const { data: res } = await TasksServiceImpl.getTasksByFilter(
           currentFilter

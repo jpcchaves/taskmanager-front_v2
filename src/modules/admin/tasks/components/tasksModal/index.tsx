@@ -61,7 +61,13 @@ const TasksFormModal = ({ id, isOpen, onClose }: IProps) => {
       };
 
       if (id) {
-        await update({ id, data: valuesToSubmit, onClose, validation });
+        await update({
+          id,
+          data: valuesToSubmit,
+          onClose,
+          validation,
+          navigate,
+        });
       } else {
         await create({ data: valuesToSubmit, onClose, validation });
       }

@@ -5,11 +5,10 @@ import MiniStatistics from "../../../components/card/MiniStatistics";
 import IconBox from "../../../components/icons/IconBox";
 import {
   MdAddTask,
-  MdRocketLaunch,
-  MdTrendingUp,
-  MdTrendingDown,
-  MdFileCopy,
   MdClear,
+  MdRocketLaunch,
+  MdTrendingDown,
+  MdTrendingUp,
 } from "react-icons/md";
 import PieCard from "../../../modules/admin/default/components/PieCard";
 import { useCallback, useContext, useEffect } from "react";
@@ -116,11 +115,13 @@ export default function Dashboard() {
         />
       </SimpleGrid>
 
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap="20px" mb="20px">
-        <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap="20px">
-          <PieCard />
+      {dashboardData ? (
+        <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap="20px" mb="20px">
+          <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap="20px">
+            <PieCard />
+          </SimpleGrid>
         </SimpleGrid>
-      </SimpleGrid>
+      ) : null}
     </Box>
   );
 }
