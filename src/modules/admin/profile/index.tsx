@@ -7,7 +7,10 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
+  Icon,
   Input,
+  InputGroup,
+  InputRightElement,
   SimpleGrid,
   Text,
   useColorModeValue,
@@ -18,18 +21,31 @@ import Banner from "../../../modules/admin/profile/components/Banner";
 
 // Assets
 import banner from "../../../assets/img/auth/banner.png";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../../../contexts/auth/context/AuthContext";
 import Card from "../../../components/card/Card";
 import { generateAvatar } from "./utils/helpers/generateAvatar";
 import { trimUsernameOrName } from "./utils/helpers/trimUsernameOrName";
 import { useFormik } from "formik";
 import { updateUserValidation } from "./utils/validation/updateUserValidation";
+import { RiEyeCloseLine } from "react-icons/ri";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 
 export default function ProfileOverview() {
+  const [show, setShow] = useState(false);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const brandStars = useColorModeValue("brand.500", "brand.400");
+  const textColorSecondary = "gray.400";
 
   const { user, update, isLoading } = useContext(AuthContext);
+
+  const handleClick = (input: string) => {
+    if (input === "password") {
+      setShow((prevState) => !prevState);
+    } else {
+      setShowCurrentPassword((prevState) => !prevState);
+    }
+  };
 
   const validation = useFormik({
     enableReinitialize: true,
@@ -139,19 +155,34 @@ export default function ProfileOverview() {
                     *
                   </Text>
                 </FormLabel>
-                <Input
-                  variant="auth"
-                  name="currentPassword"
-                  value={validation.values.currentPassword}
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  isInvalid={
-                    !!(
-                      validation.touched.currentPassword &&
-                      validation.errors.currentPassword
-                    )
-                  }
-                />
+                <InputGroup>
+                  <Input
+                    variant="auth"
+                    name="currentPassword"
+                    type={showCurrentPassword ? "text" : "password"}
+                    value={validation.values.currentPassword}
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    isInvalid={
+                      !!(
+                        validation.touched.currentPassword &&
+                        validation.errors.currentPassword
+                      )
+                    }
+                  />
+                  <InputRightElement display="flex" alignItems="center">
+                    <Icon
+                      color={textColorSecondary}
+                      _hover={{ cursor: "pointer" }}
+                      as={
+                        showCurrentPassword
+                          ? RiEyeCloseLine
+                          : MdOutlineRemoveRedEye
+                      }
+                      onClick={() => handleClick("currentPassword")}
+                    />
+                  </InputRightElement>
+                </InputGroup>
                 <FormErrorMessage>
                   {validation.errors.currentPassword}
                 </FormErrorMessage>
@@ -167,18 +198,30 @@ export default function ProfileOverview() {
                     *
                   </Text>
                 </FormLabel>
-                <Input
-                  variant="auth"
-                  name="password"
-                  value={validation.values.password}
-                  onChange={validation.handleChange}
-                  onBlur={validation.handleBlur}
-                  isInvalid={
-                    !!(
-                      validation.touched.password && validation.errors.password
-                    )
-                  }
-                />
+                <InputGroup>
+                  <Input
+                    variant="auth"
+                    name="password"
+                    type={show ? "text" : "password"}
+                    value={validation.values.password}
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    isInvalid={
+                      !!(
+                        validation.touched.password &&
+                        validation.errors.password
+                      )
+                    }
+                  />
+                  <InputRightElement display="flex" alignItems="center">
+                    <Icon
+                      color={textColorSecondary}
+                      _hover={{ cursor: "pointer" }}
+                      as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
+                      onClick={() => handleClick("password")}
+                    />
+                  </InputRightElement>
+                </InputGroup>
 
                 <FormErrorMessage>
                   {validation.errors.password}
