@@ -18,8 +18,6 @@ const TasksProvider = ({ children }: IProps) => {
   const [currentFilter, setCurrentFilter] = useState(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  console.log(currentFilter);
-
   const [makeToast] = Toast();
 
   const toggleLoading = () => {
