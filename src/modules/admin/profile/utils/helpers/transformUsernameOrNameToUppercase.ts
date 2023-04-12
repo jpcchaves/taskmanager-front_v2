@@ -1,3 +1,3 @@
 export const transformUsernameOrNameToUppercase = (nameOrUsername: string) => {
-  return nameOrUsername.toUpperCase();
+  return nameOrUsername?.toUpperCase();
 };

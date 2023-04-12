@@ -2,6 +2,6 @@ import { transformUsernameOrNameToUppercase } from "./transformUsernameOrNameToU
 
 export const trimUsernameOrName = (nameOrUsername: string) => {
   return transformUsernameOrNameToUppercase(
-    nameOrUsername.slice(0, 2).toUpperCase()
+    nameOrUsername?.slice(0, 2).toUpperCase()
   );
 };
