@@ -1,21 +1,35 @@
 /* eslint-disable */
-
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 // chakra imports
 import {
   Box,
+  Button,
   Flex,
   HStack,
   Icon,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalOverlay,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 
 import { MdLogout } from "react-icons/md";
-import { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../../../contexts/auth/context/AuthContext";
+import Lottie from "lottie-react";
+import logOutAnimation from "../../../assets/animations/log-out.json";
 
 export function SidebarLinks(props: { routes: RoutesType[] }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsOpen((prevState) => !prevState);
+  };
+
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -137,11 +151,35 @@ export function SidebarLinks(props: { routes: RoutesType[] }) {
     logout(navigate);
   };
 
+  const style = {
+    height: "300px",
+  };
+
   //  BRAND
   return (
     <>
       {createLinks(routes)}
-      <NavLink to="/login" onClick={() => handleLogout()}>
+      <Modal onClose={toggleModal} isOpen={isOpen} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalBody>
+            <Lottie animationData={logOutAnimation} style={style} />
+            <Text align="center" letterSpacing="wide" fontSize="lg">
+              Deseja sair?
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={toggleModal} mr="2">
+              Cancelar
+            </Button>
+            <Button variant="brand" onClick={() => handleLogout()}>
+              Sair
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      <Box cursor="pointer" onClick={() => toggleModal()}>
         <Box>
           <HStack spacing={"26px"} py="5px" ps="10px">
             <Flex w="100%" alignItems="center" justifyContent="center">
@@ -160,7 +198,7 @@ export function SidebarLinks(props: { routes: RoutesType[] }) {
             <Box h="36px" w="4px" bg={"transparent"} borderRadius="5px" />
           </HStack>
         </Box>
-      </NavLink>
+      </Box>
     </>
   );
 }
