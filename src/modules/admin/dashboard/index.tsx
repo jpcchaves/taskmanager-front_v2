@@ -22,9 +22,9 @@ export default function Dashboard() {
   const { getDashboard, dashboardData, isLoading } =
     useContext(DashboardContext);
 
-  const getDashboardData = useCallback(async () => {
+  const getDashboardData = async () => {
     await getDashboard();
-  }, []);
+  };
 
   useEffect(() => {
     getDashboardData();
