@@ -12,10 +12,8 @@ import {
 
 import { MdLogout } from "react-icons/md";
 import React, { useContext, useState } from "react";
-import { AuthContext } from "../../../contexts/auth/context/AuthContext";
+import { AuthContext, TasksContext, DashboardContext } from "../../../contexts";
 import LogoutModal from "./LogoutModal";
-import { TasksContext } from "contexts/tasks/context/TasksContext";
-import { DashboardContext } from "contexts/dashboard/context/DashboardContext";
 
 export function SidebarLinks(props: { routes: RoutesType[] }) {
   const [isOpen, setIsOpen] = useState(false);
