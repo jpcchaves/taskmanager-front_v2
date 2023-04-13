@@ -38,9 +38,13 @@ const DashboardProvider = ({ children }: IProps) => {
     }
   };
 
+  const clearDashboard = () => {
+    setDashboardData(null);
+  };
+
   return (
     <DashboardContext.Provider
-      value={{ isLoading, getDashboard, dashboardData }}
+      value={{ isLoading, getDashboard, dashboardData, clearDashboard }}
     >
       {children}
     </DashboardContext.Provider>

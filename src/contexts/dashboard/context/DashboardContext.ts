@@ -5,6 +5,7 @@ export type DashboardContextType = {
   isLoading: boolean;
   dashboardData: Dashboard;
   getDashboard: () => Promise<void>;
+  clearDashboard: () => void;
 };
 
 export const DashboardContext = createContext<DashboardContextType>(null);

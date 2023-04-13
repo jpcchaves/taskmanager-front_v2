@@ -14,6 +14,7 @@ export type TasksContextType = {
   getTasksByFilter: (situation: string) => Promise<void>;
   clearFilter: () => void;
   clearTask: () => void;
+  clearTasks: () => void;
   tasks: TasksPaginated;
   task: Task;
   filteredTasks: Task[];

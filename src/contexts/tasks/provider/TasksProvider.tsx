@@ -220,6 +220,11 @@ const TasksProvider = ({ children }: IProps) => {
     setTask(null);
   };
 
+  const clearTasks = () => {
+    setTasks(null);
+    clearTask();
+  };
+
   const clearFilter = async () => {
     setFilteredTasks(null);
     setCurrentFilter(null);
@@ -241,6 +246,7 @@ const TasksProvider = ({ children }: IProps) => {
         update,
         deleteTask,
         getTasksByFilter,
+        clearTasks,
       }}
     >
       {children}
