@@ -107,6 +107,7 @@ const TasksProvider = ({ children }: IProps) => {
     toggleLoading();
     try {
       await TasksServiceImpl.update(id, data);
+      onClose();
       navigate("/tarefas");
       if (currentFilter) {
         const { data: res } = await TasksServiceImpl.getTasksByFilter(
@@ -128,7 +129,6 @@ const TasksProvider = ({ children }: IProps) => {
 
       clearTask();
 
-      onClose();
       validation.resetForm();
       toggleLoading();
     } catch (e: any) {

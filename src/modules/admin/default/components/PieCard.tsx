@@ -2,16 +2,14 @@
 import { Box, Flex, Text, useColorModeValue } from "@chakra-ui/react";
 // Custom components
 import Card from "../../../../components/card/Card";
-import PieChart from "../../../../components/charts/PieChart";
-import { pieChartOptions } from "../../../../variables/charts";
 import { VSeparator } from "../../../../components/separator/Separator";
-import { useContext } from "react";
-import { DashboardContext } from "../../../../contexts/dashboard/context/DashboardContext";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function Conversion(props: { [x: string]: any }) {
-  const { ...rest } = props;
-
-  const { dashboardData } = useContext(DashboardContext);
+  const { dashboardData, ...rest } = props;
 
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -20,6 +18,23 @@ export default function Conversion(props: { [x: string]: any }) {
     "0px 18px 40px rgba(112, 144, 176, 0.12)",
     "unset"
   );
+
+  const data = {
+    labels: ["Não Concluidas", "Concluidas"],
+    datasets: [
+      {
+        label: "Tarefas",
+        data: [
+          dashboardData?.dashboard.totalTasksNotConcluded,
+          dashboardData?.dashboard.totalTasksConcluded,
+        ],
+        backgroundColor: ["rgba(255, 99, 132, 0.8)", "rgba(54, 162, 235, 0.8)"],
+        borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
+        borderWidth: 1,
+      },
+    ],
+  };
+
   return (
     <Card
       p="20px"
@@ -39,20 +54,7 @@ export default function Conversion(props: { [x: string]: any }) {
           Tarefas
         </Text>
       </Flex>
-
-      <PieChart
-        h="100%"
-        w="100%"
-        chartData={
-          dashboardData
-            ? [
-                dashboardData?.dashboard.totalTasksConcluded,
-                dashboardData?.dashboard?.totalTasksNotConcluded,
-              ]
-            : []
-        }
-        chartOptions={pieChartOptions}
-      />
+      <Pie data={data} />
       <Card
         bg={cardColor}
         flexDirection="row"

@@ -22,9 +22,9 @@ export default function Dashboard() {
   const { getDashboard, dashboardData, isLoading } =
     useContext(DashboardContext);
 
-  const getDashboardData = async () => {
+  const getDashboardData = useCallback(async () => {
     await getDashboard();
-  };
+  }, []);
 
   useEffect(() => {
     getDashboardData();
@@ -120,7 +120,7 @@ export default function Dashboard() {
       {dashboardData ? (
         <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap="20px" mb="20px">
           <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap="20px">
-            <PieCard />
+            <PieCard dashboardData={dashboardData} />
           </SimpleGrid>
         </SimpleGrid>
       ) : null}
