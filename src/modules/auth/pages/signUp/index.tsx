@@ -19,7 +19,7 @@ import {
 // Custom components
 import DefaultAuth from "../../../../layouts/auth/Default";
 // Assets
-import illustration from "../../../../assets/img/auth/auth.png";
+import illustration from "../../../../assets/img/auth/auth.jpg";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 
@@ -29,7 +29,7 @@ import { signUpValidation } from "../../utils/validation/signUpValidation";
 import { AuthContext } from "../../../../contexts/auth/context/AuthContext";
 
 function SignUp() {
-  const { register } = useContext(AuthContext);
+  const { register, isLoading } = useContext(AuthContext);
 
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
@@ -347,7 +347,7 @@ function SignUp() {
               h="50"
               mb="24px"
               type="submit"
-              //   isLoading={isLoading}
+              isLoading={isLoading}
             >
               Cadastrar
             </Button>

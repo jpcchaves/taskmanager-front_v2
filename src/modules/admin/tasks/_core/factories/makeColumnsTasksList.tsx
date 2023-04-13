@@ -1,6 +1,7 @@
 import * as React from "react";
 // import {ITasks} from "../../variables/tableDataTasks";
 import { TableColumn } from "react-data-table-component";
+import moment from "moment";
 
 import {
   MdCheckCircleOutline,
@@ -8,25 +9,37 @@ import {
   MdEditSquare,
   MdOutlineCancel,
 } from "react-icons/md";
-import { Box, Icon } from "@chakra-ui/react";
+import { Box, Icon, Text } from "@chakra-ui/react";
 
-interface IProps {}
+interface IProps {
+  handleEdit: (id: string) => void;
+  toggleOpenDeleteModal: (id: string) => void;
+}
 
-export const makeColumnsTasksList = (): TableColumn<any>[] => {
+export const makeColumnsTasksList = ({
+  handleEdit,
+  toggleOpenDeleteModal,
+}: IProps): TableColumn<any>[] => {
   return [
     {
       name: "Tarefa",
-      selector: (row) => row.task,
+      cell: (row) => {
+        return row.concluded ? (
+          <Text textDecoration="line-through">{row.task}</Text>
+        ) : (
+          <>{row.task}</>
+        );
+      },
       sortable: true,
     },
     {
       name: "Data de Criação",
-      selector: (row) => row.createdAt,
+      selector: (row) => moment(row.createdAt).format("DD/MM/YYYY"),
       sortable: true,
     },
     {
       name: "Prazo",
-      selector: (row) => row.deadline,
+      selector: (row) => moment(row.deadline).utc().format("DD/MM/YYYY"),
       sortable: true,
     },
     {
@@ -35,9 +48,13 @@ export const makeColumnsTasksList = (): TableColumn<any>[] => {
         return (
           <Box display="flex" alignItems="center" justifyContent="center">
             {row.concluded ? (
-              <MdCheckCircleOutline size={"22px"} />
+              <Icon
+                as={MdCheckCircleOutline}
+                boxSize={"22px"}
+                color={"green.500"}
+              />
             ) : (
-              <MdOutlineCancel size={"22px"} />
+              <Icon as={MdOutlineCancel} boxSize={"22px"} color={"red.500"} />
             )}
           </Box>
         );
@@ -58,7 +75,7 @@ export const makeColumnsTasksList = (): TableColumn<any>[] => {
             alignItems="center"
             gap="2"
           >
-            <Box onClick={() => console.log("editar")}>
+            <Box onClick={() => handleEdit(cell.id)}>
               <Icon
                 cursor="pointer"
                 as={MdEditSquare}
@@ -70,11 +87,9 @@ export const makeColumnsTasksList = (): TableColumn<any>[] => {
                   color: "green.500",
                 }}
                 boxSize={5}
-              >
-                Editar{" "}
-              </Icon>
+              />
             </Box>
-            <Box onClick={() => console.log("editar")}>
+            <Box onClick={() => toggleOpenDeleteModal(cell.id)}>
               <Icon
                 cursor="pointer"
                 as={MdDelete}
@@ -86,9 +101,7 @@ export const makeColumnsTasksList = (): TableColumn<any>[] => {
                   transform: "scale(1.1)",
                   color: "red.500",
                 }}
-              >
-                excluir
-              </Icon>
+              />
             </Box>
           </Box>
         );

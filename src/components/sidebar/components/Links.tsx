@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 // chakra imports
 import {
   Box,
@@ -12,10 +12,13 @@ import {
 } from "@chakra-ui/react";
 
 import { MdLogout } from "react-icons/md";
-import { useDispatch } from "react-redux";
-// import {logout} from "../../../store/auth/authSlice";
+import { useContext } from "react";
+import { AuthContext } from "../../../contexts/auth/context/AuthContext";
 
 export function SidebarLinks(props: { routes: RoutesType[] }) {
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   //   Chakra color mode
   let location = useLocation();
   let activeColor = useColorModeValue("gray.700", "white");
@@ -31,11 +34,12 @@ export function SidebarLinks(props: { routes: RoutesType[] }) {
 
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName: string) => {
-    return location.pathname.includes(routeName);
-  };
-
-  const handleLogout = () => {
-    // dispatch(logout())
+    if (routeName.includes("*")) {
+      const route = routeName.split("/*")[0];
+      return location.pathname.includes(route);
+    } else {
+      return location.pathname.includes(routeName);
+    }
   };
 
   // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
@@ -43,7 +47,12 @@ export function SidebarLinks(props: { routes: RoutesType[] }) {
     return routes.map((route: RoutesType, index: number) => {
       if (route.layout === "/") {
         return (
-          <NavLink key={index} to={route.path}>
+          <NavLink
+            key={index}
+            to={
+              route.path.includes("*") ? route.path.split("/*")[0] : route.path
+            }
+          >
             {route.icon ? (
               <Box>
                 <HStack
@@ -123,6 +132,11 @@ export function SidebarLinks(props: { routes: RoutesType[] }) {
       }
     });
   };
+
+  const handleLogout = (): void => {
+    logout(navigate);
+  };
+
   //  BRAND
   return (
     <>
