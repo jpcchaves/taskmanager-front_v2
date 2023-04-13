@@ -3,16 +3,9 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 // chakra imports
 import {
   Box,
-  Button,
   Flex,
   HStack,
   Icon,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalOverlay,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -20,8 +13,7 @@ import {
 import { MdLogout } from "react-icons/md";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../../contexts/auth/context/AuthContext";
-import Lottie from "lottie-react";
-import logOutAnimation from "../../../assets/animations/log-out.json";
+import LogoutModal from "./LogoutModal";
 
 export function SidebarLinks(props: { routes: RoutesType[] }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -151,34 +143,15 @@ export function SidebarLinks(props: { routes: RoutesType[] }) {
     logout(navigate);
   };
 
-  const style = {
-    height: "300px",
-  };
-
   //  BRAND
   return (
     <>
       {createLinks(routes)}
-      <Modal onClose={toggleModal} isOpen={isOpen} isCentered>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalCloseButton />
-          <ModalBody>
-            <Lottie animationData={logOutAnimation} style={style} />
-            <Text align="center" letterSpacing="wide" fontSize="lg">
-              Deseja sair?
-            </Text>
-          </ModalBody>
-          <ModalFooter>
-            <Button onClick={toggleModal} mr="2">
-              Cancelar
-            </Button>
-            <Button variant="brand" onClick={() => handleLogout()}>
-              Sair
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <LogoutModal
+        isOpen={isOpen}
+        toggleModal={toggleModal}
+        handleLogout={handleLogout}
+      />
       <Box cursor="pointer" onClick={() => toggleModal()}>
         <Box>
           <HStack spacing={"26px"} py="5px" ps="10px">
