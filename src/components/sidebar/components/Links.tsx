@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 // chakra imports
 import {
@@ -12,10 +11,17 @@ import {
 } from "@chakra-ui/react";
 
 import { MdLogout } from "react-icons/md";
-import { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../../../contexts/auth/context/AuthContext";
+import LogoutModal from "./LogoutModal";
 
 export function SidebarLinks(props: { routes: RoutesType[] }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsOpen((prevState) => !prevState);
+  };
+
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -141,7 +147,12 @@ export function SidebarLinks(props: { routes: RoutesType[] }) {
   return (
     <>
       {createLinks(routes)}
-      <NavLink to="/login" onClick={() => handleLogout()}>
+      <LogoutModal
+        isOpen={isOpen}
+        toggleModal={toggleModal}
+        handleLogout={handleLogout}
+      />
+      <Box cursor="pointer" onClick={() => toggleModal()}>
         <Box>
           <HStack spacing={"26px"} py="5px" ps="10px">
             <Flex w="100%" alignItems="center" justifyContent="center">
@@ -160,7 +171,7 @@ export function SidebarLinks(props: { routes: RoutesType[] }) {
             <Box h="36px" w="4px" bg={"transparent"} borderRadius="5px" />
           </HStack>
         </Box>
-      </NavLink>
+      </Box>
     </>
   );
 }

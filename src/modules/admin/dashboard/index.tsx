@@ -62,7 +62,9 @@ export default function Dashboard() {
               w="56px"
               h="56px"
               bg={boxBg}
-              icon={<Icon w="28px" h="28px" as={MdAddTask} color="white" />}
+              icon={
+                <Icon w="28px" h="28px" as={MdAddTask} color={brandColor} />
+              }
             />
           }
           name="Tarefas Concluidas"

@@ -9,7 +9,9 @@ class TasksServiceImpl implements TasksService {
   private readonly taskApiUrl = import.meta.env.VITE_API_TASKS_ENDPOINT;
 
   async getAll(): Promise<AxiosResponse<TasksPaginated>> {
-    return http.get(this.taskApiUrl + "?size=100");
+    return http.get(
+      this.taskApiUrl + "?size=50&orderBy=createdAt&direction=DESC"
+    );
   }
 
   async create(data: TaskCreateAndUpdate): Promise<AxiosResponse<Task>> {
