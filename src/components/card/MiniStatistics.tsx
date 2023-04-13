@@ -23,9 +23,9 @@ export default function Default(props: {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textColorSecondary = "secondaryGray.600";
 
-  const formatValue = (unformattedValue: string | number) => {
+  const formatValue = (unformattedValue: string | number): number => {
     const newValue = String(unformattedValue).split("%")[0].replace(",", ".");
-    return Number(newValue).toFixed(2);
+    return Number(Number(newValue).toFixed(2));
   };
 
   return (
