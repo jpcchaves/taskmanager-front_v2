@@ -3,7 +3,13 @@ import { Box, Flex, Text, useColorModeValue } from "@chakra-ui/react";
 // Custom components
 import Card from "../../../../components/card/Card";
 import { VSeparator } from "../../../../components/separator/Separator";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CoreChartOptions,
+} from "chart.js";
 import { Pie } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -54,7 +60,9 @@ export default function Conversion(props: { [x: string]: any }) {
           Tarefas
         </Text>
       </Flex>
-      <Pie data={data} />
+      <Box boxSize={"64"}>
+        <Pie data={data} />
+      </Box>
       <Card
         bg={cardColor}
         flexDirection="row"
