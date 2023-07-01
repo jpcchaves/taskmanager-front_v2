@@ -29,7 +29,7 @@ export default function Default(props: {
   };
 
   return (
-    <Card py="15px">
+    <Card py="15px" userSelect={"none"}>
       <Flex
         my="auto"
         h="100%"
