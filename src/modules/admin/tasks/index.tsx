@@ -10,6 +10,7 @@ import { TasksContext } from "../../../contexts/tasks/context/TasksContext";
 import { useNavigate, useParams } from "react-router-dom";
 import TasksFormModal from "./components/tasksModal";
 import DeleteTaskModal from "./components/deleteTaskModal";
+import { useAppSelector } from "../../../hooks/useRedux";
 
 export default function TasksView() {
   const { tasks, getAll, getById, deleteTask, filteredTasks } =
@@ -20,6 +21,8 @@ export default function TasksView() {
 
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const { tasks: tasksList } = useAppSelector((state) => state.task);
 
   const getTasks = useCallback(async () => {
     await getAll();
@@ -64,7 +67,7 @@ export default function TasksView() {
               handleEdit,
               toggleOpenDeleteModal,
             })}
-            data={filteredTasks || tasks?.content || []}
+            data={filteredTasks || tasksList || []}
           />
         </TableWrapper>
       </SimpleGrid>

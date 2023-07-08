@@ -6,6 +6,8 @@ import { TasksPaginated } from "../../../types/tasks/TasksPaginated";
 import Toast, { ToastStatus } from "../../../factories/toast/makeToastFactory";
 import { IArgsUpdate } from "../types/IArgsUpdate";
 import { IArgsCreate } from "../types/IArgsCreate";
+import { useDispatch } from "react-redux";
+import { loadTasks } from "../../../store/task/taskSlice";
 
 interface IProps {
   children: JSX.Element;
@@ -17,6 +19,8 @@ const TasksProvider = ({ children }: IProps) => {
   const [filteredTasks, setFilteredTasks] = useState<Task[]>(null);
   const [currentFilter, setCurrentFilter] = useState(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
 
   const [makeToast] = Toast();
 
@@ -69,6 +73,7 @@ const TasksProvider = ({ children }: IProps) => {
     toggleLoading();
     try {
       const { data: res } = await TasksServiceImpl.getAll();
+      dispatch(loadTasks(res.content));
       setTasks(res);
       toggleLoading();
     } catch (e) {
