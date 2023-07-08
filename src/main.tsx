@@ -16,9 +16,7 @@ ReactDOM.render(
     <BrowserRouter>
       <ChakraProvider theme={theme}>
         <ContextsInjection>
-          <Provider store={store}>
-            <App />
-          </Provider>
+          <App />
         </ContextsInjection>
       </ChakraProvider>
     </BrowserRouter>
